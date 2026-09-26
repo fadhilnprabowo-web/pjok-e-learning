@@ -70,6 +70,31 @@
 </head>
 <body class="text-slate-800 bg-slate-50 min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white">
 
+    <!-- LOGIN OVERLAY -->
+    <div id="login-overlay" class="fixed inset-0 bg-slate-900 z-[100] flex items-center justify-center p-4 transition-opacity duration-500">
+        <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6 animate-fade-in relative overflow-hidden">
+            <div class="absolute -right-6 -top-6 text-orange-500/10 pointer-events-none">
+                <i class="fa-solid fa-basketball text-9xl"></i>
+            </div>
+            <div class="relative z-10 space-y-2">
+                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white shadow-lg shadow-orange-500/30 mx-auto mb-4">
+                    <i class="fa-solid font-black fa-volleyball text-3xl"></i>
+                </div>
+                <h2 class="text-2xl font-extrabold text-slate-800">EduSport IX</h2>
+                <p class="text-xs text-slate-500">Masukkan nama lengkap kamu. Progres belajarmu akan tersimpan otomatis.</p>
+            </div>
+            
+            <div class="relative z-10">
+                <input type="text" id="login-input-name" placeholder="Ketik Nama Lengkap..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 text-center" onkeypress="handleEnter(event)">
+            </div>
+
+            <button onclick="handleLogin()" class="relative z-10 w-full py-3.5 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-lg shadow-orange-500/30 transition-all flex items-center justify-center space-x-2">
+                <span>Mulai Belajar</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Navigation Bar -->
     <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -106,7 +131,7 @@
                 </nav>
 
                 <!-- Student Quick Badge -->
-                <div class="hidden lg:flex items-center space-x-3 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
+                <div class="hidden lg:flex items-center space-x-3 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 cursor-pointer hover:bg-slate-700 transition-colors" onclick="handleLogout()" title="Klik untuk keluar / ganti akun">
                     <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold">
                         <i class="fa-solid fa-user-ninja"></i>
                     </div>
@@ -141,6 +166,10 @@
                 <i class="fa-solid fa-heart-pulse w-5"></i>
                 <span>Jurnal & Refleksi</span>
             </button>
+            <button onclick="handleLogout()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-red-400 hover:bg-slate-800 border-t border-slate-800 mt-2 pt-3">
+                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
+                <span>Keluar / Ganti Akun</span>
+            </button>
         </div>
     </header>
 
@@ -159,7 +188,7 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
 
         <!-- VIEW 1: DASHBOARD -->
-        <section id="view-dashboard" class="tab-view space-y-8 animate-fade-in">
+        <section id="view-dashboard" class="tab-view space-y-8 animate-fade-in hidden">
             <!-- Hero Banner -->
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white p-6 sm:p-10 shadow-2xl border border-slate-800">
                 <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
@@ -179,11 +208,11 @@
 
                     <div class="pt-2 flex flex-wrap gap-3">
                         <button onclick="switchTab('materi')" class="px-5 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
-                            <span>Mulai Pembelajaran</span>
+                            <span>Lanjutkan Belajar</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
-                        <button onclick="openNameModal()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-sm font-semibold transition-all">
-                            <i class="fa-solid fa-user-pen mr-1"></i> Ubah Nama Siswa
+                        <button onclick="handleLogout()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-sm font-semibold transition-all flex items-center space-x-2">
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Ganti Akun</span>
                         </button>
                     </div>
                 </div>
@@ -517,26 +546,6 @@
 
     </main>
 
-    <!-- Name Input Modal -->
-    <div id="name-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 animate-fade-in">
-            <div class="text-center space-y-2">
-                <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-500 flex items-center justify-center text-xl font-bold mx-auto">
-                    <i class="fa-solid fa-user-gear"></i>
-                </div>
-                <h3 class="text-xl font-extrabold text-slate-800">Profil Siswa</h3>
-                <p class="text-xs text-slate-500">Masukkan nama lengkap kamu untuk sertifikat & dashboard.</p>
-            </div>
-            
-            <input type="text" id="input-student-name" placeholder="Nama Lengkap Siswa..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500">
-
-            <div class="flex space-x-3">
-                <button onclick="closeNameModal()" class="w-1/2 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50">Batal</button>
-                <button onclick="saveStudentName()" class="w-1/2 py-3 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-md shadow-orange-500/20">Simpan</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
@@ -547,25 +556,102 @@
     </footer>
 
     <script>
-        /* APP STATE & LOCALSTORAGE ENGINE */
-        const APP_STORAGE_KEY = 'PJOK_ELEANING_PROGRESS_V1';
+        /* APP STATE & LOCALSTORAGE ENGINE (MULTI-USER) */
+        const DB_KEY = 'PJOK_DB_USERS_V3';
+        let usersDatabase = {};
+        let currentUser = null;
 
-        let appData = {
-            studentName: 'Siswa PJOK',
-            completedModules: [false, false, false, false], // [P1, P2, P3, P4]
-            quizScore: 0,
-            quizCompleted: false,
-            checklists: {},
-            reflection: {
-                bestTech: 'Dribbling & Passing Sepak Bola',
-                rating: 4,
-                notes: ''
-            },
-            journal: [
-                { date: '2026-09-20', activity: 'Latihan Dribbling Zig-zag 15 Menit', status: 'Selesai' },
-                { date: '2026-09-22', activity: 'Passing Bawah Ke Dinding 50x', status: 'Selesai' }
-            ]
-        };
+        let appData = {}; // Menyimpan data user yang sedang aktif
+
+        function createDefaultData(name) {
+            return {
+                studentName: name,
+                completedModules: [false, false, false, false], // [P1, P2, P3, P4]
+                quizScore: 0,
+                quizCompleted: false,
+                checklists: {},
+                reflection: {
+                    bestTech: 'Dribbling & Passing Sepak Bola',
+                    rating: 4,
+                    notes: ''
+                },
+                journal: []
+            };
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDatabase();
+            // Default show login screen
+            document.getElementById('login-overlay').classList.remove('hidden');
+        });
+
+        function loadDatabase() {
+            const saved = localStorage.getItem(DB_KEY);
+            if (saved) {
+                try {
+                    usersDatabase = JSON.parse(saved);
+                } catch(e) {
+                    usersDatabase = {};
+                }
+            }
+        }
+
+        function saveState() {
+            if (currentUser) {
+                usersDatabase[currentUser] = appData;
+                localStorage.setItem(DB_KEY, JSON.stringify(usersDatabase));
+                renderDashboard();
+            }
+        }
+
+        function handleEnter(e) {
+            if (e.key === 'Enter') handleLogin();
+        }
+
+        function handleLogin() {
+            const inputName = document.getElementById('login-input-name').value.trim();
+            if (!inputName) {
+                showToast("Peringatan", "Nama tidak boleh kosong!");
+                return;
+            }
+
+            currentUser = inputName;
+            
+            // Cek apakah user sudah ada di database
+            if (usersDatabase[currentUser]) {
+                appData = usersDatabase[currentUser];
+                showToast("Berhasil Masuk", `Selamat datang kembali, ${currentUser}! Progres dimuat.`);
+            } else {
+                // User baru
+                appData = createDefaultData(currentUser);
+                usersDatabase[currentUser] = appData;
+                showToast("Akun Dibuat", `Halo ${currentUser}! Selamat mulai belajar.`);
+            }
+            
+            saveState();
+            
+            // Sembunyikan layar login
+            document.getElementById('login-overlay').classList.add('hidden');
+            
+            // Inisialisasi antarmuka untuk user tersebut
+            renderDashboard();
+            switchTab('dashboard');
+            switchModuleTab(1);
+            initQuiz();
+            renderJournal();
+            updateRatingStars(appData.reflection.rating || 4);
+            playSound('correct');
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            appData = {};
+            document.getElementById('login-input-name').value = '';
+            document.getElementById('login-overlay').classList.remove('hidden');
+            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+            showToast("Keluar", "Berhasil keluar dari sesi belajar.");
+        }
 
         // Audio Effects using Web Audio API
         function playSound(type) {
@@ -577,8 +663,8 @@
                 gain.connect(ctx.destination);
 
                 if (type === 'correct') {
-                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15);
                     gain.gain.setValueAtTime(0.2, ctx.currentTime);
                     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
                     osc.start();
@@ -594,30 +680,6 @@
                 }
             } catch (e) {
                 // Audio not allowed or unsupported
-            }
-        }
-
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            loadState();
-            renderDashboard();
-            switchModuleTab(1);
-            initQuiz();
-            renderJournal();
-            updateRatingStars(appData.reflection.rating || 4);
-        });
-
-        function saveState() {
-            localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(appData));
-            renderDashboard();
-        }
-
-        function loadState() {
-            const saved = localStorage.getItem(APP_STORAGE_KEY);
-            if (saved) {
-                try {
-                    appData = { ...appData, ...JSON.parse(saved) };
-                } catch(e) {}
             }
         }
 
@@ -645,28 +707,10 @@
             menu.classList.toggle('hidden');
         }
 
-        /* PROFILE MODAL */
-        function openNameModal() {
-            document.getElementById('input-student-name').value = appData.studentName;
-            document.getElementById('name-modal').classList.remove('hidden');
-        }
-
-        function closeNameModal() {
-            document.getElementById('name-modal').classList.add('hidden');
-        }
-
-        function saveStudentName() {
-            const val = document.getElementById('input-student-name').value.trim();
-            if (val) {
-                appData.studentName = val;
-                saveState();
-                showToast("Nama Diberbarui", `Selamat belajar, ${val}!`);
-            }
-            closeNameModal();
-        }
-
         /* DASHBOARD METRICS RENDER */
         function renderDashboard() {
+            if(!appData.studentName) return;
+            
             document.getElementById('dash-student-name').innerText = appData.studentName;
             document.getElementById('student-name-display').innerText = appData.studentName;
 
@@ -742,7 +786,7 @@
                     { id: 'p1_t3', text: 'Melakukan 5x Shooting terarah ke gawang dengan power' }
                 ],
                 videoTitle: "Variasi & Kombinasi Gerak Spesifik Sepak Bola Kelas IX",
-                videoId: "0ALXQOvnNrk",
+                videoId: "0ALXQOvnNrk", 
                 youtubeUrl: "https://www.youtube.com/watch?v=0ALXQOvnNrk"
             },
             2: {
@@ -908,10 +952,6 @@
                                 <h4 class="font-bold text-slate-800 text-base flex items-center">
                                     <i class="fa-solid fa-circle-play mr-2 text-red-500"></i> Video Pembelajaran & Praktik
                                 </h4>
-                                <a href="${data.youtubeUrl}" target="_blank" class="text-xs text-red-600 hover:text-red-700 font-bold flex items-center space-x-1.5 bg-red-50 px-3 py-1.5 rounded-xl border border-red-200 hover:border-red-300 transition-all shadow-sm">
-                                    <i class="fa-brands fa-youtube text-base"></i>
-                                    <span>Tonton di YouTube</span>
-                                </a>
                             </div>
 
                             <!-- Dynamic Player Box -->
@@ -946,7 +986,7 @@
                                 <i class="fa-solid fa-circle-info text-blue-600 text-sm mt-0.5"></i>
                                 <div class="space-y-1">
                                     <p class="text-[11px] font-medium leading-relaxed">
-                                        <strong class="text-slate-900">Petunjuk Pemutaran:</strong> Klik <span class="font-bold text-orange-600">"Putar Langsung di Web"</span>. Jika file dibuka langsung sebagai <code>file://</code>, gunakan tombol YouTube karena embedded player membutuhkan HTTP Referer.
+                                        <strong class="text-slate-900">Petunjuk Pemutaran:</strong> Klik <span class="font-bold text-orange-600">"Putar Langsung di Web"</span> untuk memutar video dengan Iframe YouTube. 
                                     </p>
                                 </div>
                             </div>
@@ -965,40 +1005,9 @@
             if (!container || !data) return;
 
             /*
-             * YouTube mulai mewajibkan HTTP Referer untuk embedded player.
-             * Jika HTML dibuka langsung sebagai file://, browser tidak mengirim
-             * Referer yang valid sehingga YouTube dapat menampilkan Error 153.
-             * Dalam mode file:// kita tampilkan fallback yang aman.
-             * Saat website dijalankan melalui HTTP/HTTPS, iframe akan bekerja normal.
+             * Saat website dijalankan melalui HTTP/HTTPS (misal via Github Pages), 
+             * iframe ini dijamin berjalan normal anti-freeze!
              */
-            const isLocalFile = window.location.protocol === 'file:';
-
-            if (isLocalFile) {
-                container.innerHTML = `
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-slate-900 text-white">
-                        <div class="w-16 h-16 rounded-2xl bg-red-500/15 text-red-400 flex items-center justify-center text-3xl mb-4">
-                            <i class="fa-brands fa-youtube"></i>
-                        </div>
-                        <h5 class="font-bold text-base mb-2">Video siap ditonton</h5>
-                        <p class="text-xs text-slate-400 max-w-md leading-relaxed mb-5">
-                            File HTML sedang dibuka secara lokal (<code>file://</code>).
-                            YouTube memerlukan HTTP Referer untuk embedded player.
-                            Klik tombol di bawah untuk menonton video.
-                        </p>
-                        <a href="${data.youtubeUrl}" target="_blank" rel="noopener noreferrer"
-                           class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-lg transition-all inline-flex items-center gap-2">
-                            <i class="fa-brands fa-youtube"></i>
-                            <span>Tonton di YouTube</span>
-                        </a>
-                        <p class="text-[10px] text-slate-500 mt-4">
-                            Jika ingin video tampil langsung di website, jalankan HTML melalui HTTP/HTTPS.
-                        </p>
-                    </div>
-                `;
-                return;
-            }
-
-            // Hosted via HTTP/HTTPS: use YouTube's official embed player.
             const origin = encodeURIComponent(window.location.origin);
             const embedUrl =
                 `https://www.youtube.com/embed/${encodeURIComponent(data.videoId)}` +
