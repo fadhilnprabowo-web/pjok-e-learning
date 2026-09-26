@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <title>PJOK EduSport IX - Permainan Bola Besar</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        sport: {
+                            navy: '#0f172a',
+                            blue: '#2563eb',
+                            orange: '#f97316',
+                            yellow: '#eab308',
+                            green: '#10b981',
+                            darkBlue: '#1e293b'
+                        }
+                    },
+                    keyframes: {
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(-3%)' },
+                            '50%': { transform: 'translateY(0)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(10px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        'bounce-subtle': 'bounceSubtle 3s infinite ease-in-out',
+                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="text-slate-800 bg-slate-50 min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo / Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
+                        <i class="fa-solid font-black fa-volleyball text-xl animate-spin-slow"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-orange-400 bg-clip-text text-transparent">EduSport IX</span>
+                        <span class="text-xs block text-slate-400 font-medium -mt-1">PJOK Kelas 9 • Bola Besar</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center space-x-1">
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-orange-400 bg-slate-800">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard</span>
+                    </button>
+                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fa-solid fa-book-open"></i>
+                        <span>Pertemuan (4 Module)</span>
+                    </button>
+                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>Kuis Interaktif</span>
+                    </button>
+                    <button onclick="switchTab('refleksi')" id="nav-refleksi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <span>Jurnal & Refleksi</span>
+                    </button>
+                </nav>
+
+                <!-- Student Quick Badge -->
+                <div class="hidden lg:flex items-center space-x-3 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
+                    <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold">
+                        <i class="fa-solid fa-user-ninja"></i>
+                    </div>
+                    <span id="student-name-display" class="text-xs font-medium text-slate-200">Siswa Atletik</span>
+                    <span class="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-orange-500/30" id="header-progress-text">0% Done</span>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Nav -->
+        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('dashboard')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
+                <i class="fa-solid fa-chart-pie w-5"></i>
+                <span>Dashboard</span>
+            </button>
+            <button onclick="switchTab('materi')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
+                <i class="fa-solid fa-book-open w-5"></i>
+                <span>Pertemuan (4 Module)</span>
+            </button>
+            <button onclick="switchTab('kuis')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
+                <i class="fa-solid fa-trophy w-5"></i>
+                <span>Kuis Interaktif</span>
+            </button>
+            <button onclick="switchTab('refleksi')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
+                <i class="fa-solid fa-heart-pulse w-5"></i>
+                <span>Jurnal & Refleksi</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 ease-out pointer-events-none flex items-center space-x-3 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700">
+        <div id="toast-icon" class="w-8 h-8 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-bell"></i>
+        </div>
+        <div>
+            <h4 id="toast-title" class="text-sm font-bold">Notifikasi</h4>
+            <p id="toast-message" class="text-xs text-slate-300">Pesan notifikasi di sini.</p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+
+        <!-- VIEW 1: DASHBOARD -->
+        <section id="view-dashboard" class="tab-view space-y-8 animate-fade-in">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white p-6 sm:p-10 shadow-2xl border border-slate-800">
+                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                    <i class="fa-solid fa-basketball text-[280px]"></i>
+                </div>
+                
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">
+                        <i class="fa-solid fa-fire mr-1.5"></i> Pembelajaran PJOK Semester 1
+                    </span>
+                    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
+                        Selamat Datang, <span id="dash-student-name" class="text-orange-400">Siswa PJOK</span>! 👋
+                    </h1>
+                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Kuasai variasi dan kombinasi teknik dasar Sepak Bola, Bola Voli, dan Bola Basket melalui modul interaktif, latihan fisik, serta kuis seru berhadiah skor maksimal!
+                    </p>
+
+                    <div class="pt-2 flex flex-wrap gap-3">
+                        <button onclick="switchTab('materi')" class="px-5 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
+                            <span>Mulai Pembelajaran</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button onclick="openNameModal()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-sm font-semibold transition-all">
+                            <i class="fa-solid fa-user-pen mr-1"></i> Ubah Nama Siswa
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Progress Tracker Bar -->
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="font-bold text-slate-800 text-lg">Progres Pembelajaran Anda</h3>
+                        <p class="text-xs text-slate-500">Selesaikan 4 pertemuan & kuis untuk mencapai level Master Bola Besar!</p>
+                    </div>
+                    <span id="dash-percentage" class="text-2xl font-black text-orange-500">0%</span>
+                </div>
+                <!-- Multi-segment Progress Bar -->
+                <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden p-0.5 border border-slate-200">
+                    <div id="dash-progress-fill" class="bg-gradient-to-r from-orange-500 to-amber-400 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
+                </div>
+                <!-- 4 Pertemuan Markers -->
+                <div class="grid grid-cols-4 text-center text-xs text-slate-500 pt-1 font-medium">
+                    <div class="flex flex-col items-center">
+                        <span id="p1-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
+                        <span>1. Sepak Bola</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="p2-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
+                        <span>2. Bola Voli</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="p3-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
+                        <span>3. Bola Basket</span>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <span id="p4-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
+                        <span>4. Evaluasi</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-square-check"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Pertemuan Tuntas</p>
+                        <h4 id="stat-completed-lessons" class="text-2xl font-black text-slate-800">0 / 4</h4>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Skor Kuis Tertinggi</p>
+                        <h4 id="stat-quiz-score" class="text-2xl font-black text-slate-800">0 / 100</h4>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-person-running"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Target Fisik</p>
+                        <h4 id="stat-target-count" class="text-2xl font-black text-slate-800">0 / 12</h4>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Lencana Perkembangan</p>
+                        <h4 id="stat-badge-name" class="text-base font-extrabold text-slate-800">Pemula</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Cards Navigation -->
+            <div class="space-y-4">
+                <h3 class="font-bold text-slate-800 text-xl flex items-center space-x-2">
+                    <i class="fa-solid fa-cubes text-orange-500"></i>
+                    <span>Modul Pembelajaran Utama</span>
+                </h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Module 1 -->
+                    <div onclick="openModule(1)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-futbol text-lg"></i>
+                                </span>
+                                <span id="m1-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
+                            </div>
+                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 1</span>
+                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Sepak Bola</h4>
+                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Variasi & Kombinasi Dribbling, Passing, dan Shooting.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
+                            <span>Pelajari Modul</span>
+                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Module 2 -->
+                    <div onclick="openModule(2)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-volleyball text-lg"></i>
+                                </span>
+                                <span id="m2-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
+                            </div>
+                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 2</span>
+                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Bola Voli</h4>
+                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Passing Bawah, Passing Atas, dan Servis Atas/Bawah.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
+                            <span>Pelajari Modul</span>
+                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div onclick="openModule(3)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-basketball text-lg"></i>
+                                </span>
+                                <span id="m3-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
+                            </div>
+                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 3</span>
+                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Bola Basket</h4>
+                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Chest Pass, Bounce Pass, Dribbling Cepat, dan Lay-up Shoot.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
+                            <span>Pelajari Modul</span>
+                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+
+                    <!-- Module 4 -->
+                    <div onclick="openModule(4)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-4">
+                                <span class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold">
+                                    <i class="fa-solid fa-trophy text-lg"></i>
+                                </span>
+                                <span id="m4-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
+                            </div>
+                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 4</span>
+                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Evaluasi & Turnamen</h4>
+                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Mini Tournament, Rubrik Penilaian Diri & Evaluasi Akhir.</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
+                            <span>Pelajari Modul</span>
+                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 2: MATERI PERTEMUAN 1 - 4 -->
+        <section id="view-materi" class="tab-view space-y-8 hidden animate-fade-in">
+            <!-- Selector Tabs for Pertemuan -->
+            <div class="flex space-x-2 border-b border-slate-200 pb-2 overflow-x-auto">
+                <button onclick="switchModuleTab(1)" id="mod-tab-1" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-orange-500 text-white shadow-md">
+                    <i class="fa-solid fa-futbol mr-1.5"></i> Pertemuan 1: Sepak Bola
+                </button>
+                <button onclick="switchModuleTab(2)" id="mod-tab-2" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-volleyball mr-1.5"></i> Pertemuan 2: Bola Voli
+                </button>
+                <button onclick="switchModuleTab(3)" id="mod-tab-3" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-basketball mr-1.5"></i> Pertemuan 3: Bola Basket
+                </button>
+                <button onclick="switchModuleTab(4)" id="mod-tab-4" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100">
+                    <i class="fa-solid fa-award mr-1.5"></i> Pertemuan 4: Evaluasi
+                </button>
+            </div>
+
+            <!-- MODULE CONTENT CONTAINER -->
+            <div id="module-content-area" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 min-h-[500px]">
+                <!-- Dynamic Content Loaded via JavaScript -->
+            </div>
+        </section>
+
+        <!-- VIEW 3: KUIS INTERAKTIF -->
+        <section id="view-kuis" class="tab-view space-y-8 hidden animate-fade-in">
+            <!-- Quiz Start / Active View -->
+            <div id="quiz-container" class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 max-w-3xl mx-auto">
+                <!-- Header Quiz -->
+                <div class="flex justify-between items-center pb-6 border-b border-slate-100">
+                    <div>
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Uji Pemahaman</span>
+                        <h2 class="text-2xl font-extrabold text-slate-800">Kuis Evaluasi Bola Besar</h2>
+                    </div>
+                    <div class="bg-slate-100 px-4 py-2 rounded-2xl text-center">
+                        <span class="text-xs text-slate-400 font-semibold block">Soal</span>
+                        <span id="quiz-progress-text" class="text-lg font-black text-slate-800">1 / 10</span>
+                    </div>
+                </div>
+
+                <!-- Quiz Question Block -->
+                <div id="quiz-active-block" class="py-6 space-y-6">
+                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
+                        <span id="quiz-category" class="inline-block px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-blue-100 text-blue-700 mb-2">Sepak Bola</span>
+                        <p id="quiz-question" class="text-base sm:text-lg font-bold text-slate-800 leading-snug"> Loading pertanyaan...</p>
+                    </div>
+
+                    <!-- Options -->
+                    <div id="quiz-options" class="space-y-3">
+                        <!-- Options injected by JS -->
+                    </div>
+
+                    <!-- Feedback Box -->
+                    <div id="quiz-feedback" class="hidden p-4 rounded-2xl border text-sm space-y-2">
+                        <div class="flex items-center space-x-2 font-bold" id="quiz-feedback-title"></div>
+                        <p id="quiz-feedback-text" class="text-slate-600 text-xs leading-relaxed"></p>
+                    </div>
+
+                    <!-- Quiz Navigation Buttons -->
+                    <div class="flex justify-between items-center pt-4">
+                        <button id="quiz-prev-btn" onclick="prevQuestion()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 disabled:opacity-50">
+                            <i class="fa-solid fa-arrow-left mr-1"></i> Sebelum
+                        </button>
+                        <button id="quiz-next-btn" onclick="nextQuestion()" class="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-md shadow-orange-500/20">
+                            Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quiz Result Summary Block (Hidden by default) -->
+                <div id="quiz-result-block" class="hidden py-8 text-center space-y-6">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-orange-100 text-orange-500 flex items-center justify-center text-4xl shadow-inner">
+                        <i class="fa-solid fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-black text-slate-800">Kuis Selesai!</h3>
+                        <p class="text-slate-500 text-sm mt-1">Berikut adalah hasil evaluasi pemahaman Anda:</p>
+                    </div>
+
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 max-w-sm mx-auto space-y-2">
+                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Skor Akhir</span>
+                        <div id="final-quiz-score" class="text-5xl font-black text-orange-500">0</div>
+                        <p id="quiz-score-message" class="text-xs font-medium text-slate-600">Tetap semangat belajar!</p>
+                    </div>
+
+                    <div class="pt-4 flex justify-center space-x-4">
+                        <button onclick="resetQuiz()" class="px-6 py-3 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 shadow-lg">
+                            <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Kuis
+                        </button>
+                        <button onclick="switchTab('dashboard')" class="px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-lg shadow-orange-500/20">
+                            Kembali ke Dashboard
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VIEW 4: REFLEKSI & JURNAL -->
+        <section id="view-refleksi" class="tab-view space-y-8 hidden animate-fade-in">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
+                <!-- Refleksi Diri Form -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                    <div class="border-b border-slate-100 pb-4">
+                        <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Evaluasi Mandiri</span>
+                        <h3 class="text-xl font-extrabold text-slate-800">Formulir Refleksi Diri</h3>
+                        <p class="text-xs text-slate-500 mt-1">Isi evaluasi ini sesuai dengan apa yang kamu rasakan selama latihan.</p>
+                    </div>
+
+                    <form id="reflection-form" onsubmit="saveReflection(event)" class="space-y-5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Teknik Mana yang Paling Kamu Kuasai?</label>
+                            <select id="ref-best-tech" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
+                                <option>Dribbling & Passing Sepak Bola</option>
+                                <option>Passing Bawah & Servis Bola Voli</option>
+                                <option>Chest Pass & Lay-up Bola Basket</option>
+                                <option>Semuanya Dikuasai Dengan Baik</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tingkat Kepercayaan Diri (1 - 5 Stars)</label>
+                            <div class="flex items-center space-x-2 text-2xl text-amber-400 cursor-pointer" id="star-rating-container">
+                                <i class="fa-solid fa-star star-btn" data-value="1" onclick="setRating(1)"></i>
+                                <i class="fa-solid fa-star star-btn" data-value="2" onclick="setRating(2)"></i>
+                                <i class="fa-solid fa-star star-btn" data-value="3" onclick="setRating(3)"></i>
+                                <i class="fa-solid fa-star star-btn" data-value="4" onclick="setRating(4)"></i>
+                                <i class="fa-regular fa-star star-btn" data-value="5" onclick="setRating(5)"></i>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Kendala / Hal yang Masih Sulit Dilakukan</label>
+                            <textarea id="ref-notes" rows="3" placeholder="Contoh: Masih kesulitan menjaga keseimbangan saat melakukan Lay-up shoot..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all">
+                            <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan Catatan Refleksi
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Jurnal Kebugaran Pekanan -->
+                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
+                    <div class="border-b border-slate-100 pb-4 flex justify-between items-center">
+                        <div>
+                            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Aktivitas Fisik</span>
+                            <h3 class="text-xl font-extrabold text-slate-800">Jurnal Latihan Pekanan</h3>
+                        </div>
+                        <button onclick="addJournalEntry()" class="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-bold transition-all">
+                            + Tambah Entri
+                        </button>
+                    </div>
+
+                    <div id="journal-list" class="space-y-3 max-h-[350px] overflow-y-auto pr-1">
+                        <!-- Entries added dynamically -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Name Input Modal -->
+    <div id="name-modal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl space-y-5 animate-fade-in">
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-orange-100 text-orange-500 flex items-center justify-center text-xl font-bold mx-auto">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <h3 class="text-xl font-extrabold text-slate-800">Profil Siswa</h3>
+                <p class="text-xs text-slate-500">Masukkan nama lengkap kamu untuk sertifikat & dashboard.</p>
+            </div>
+            
+            <input type="text" id="input-student-name" placeholder="Nama Lengkap Siswa..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500">
+
+            <div class="flex space-x-3">
+                <button onclick="closeNameModal()" class="w-1/2 py-3 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50">Batal</button>
+                <button onclick="saveStudentName()" class="w-1/2 py-3 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-md shadow-orange-500/20">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
+        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
+            <p class="font-semibold text-slate-300">Website Pembelajaran Interaktif PJOK Kelas IX • Permainan Bola Besar</p>
+            <p class="text-slate-500">Dikembangkan sesuai Kurikulum Merdeka SMP. Siap Digunakan untuk Guru & Siswa.</p>
+            <p class="text-slate-600 pt-2">© 2026 EduSport PJOK IX. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        /* APP STATE & LOCALSTORAGE ENGINE */
+        const APP_STORAGE_KEY = 'PJOK_ELEANING_PROGRESS_V1';
+
+        let appData = {
+            studentName: 'Siswa PJOK',
+            completedModules: [false, false, false, false], // [P1, P2, P3, P4]
+            quizScore: 0,
+            quizCompleted: false,
+            checklists: {},
+            reflection: {
+                bestTech: 'Dribbling & Passing Sepak Bola',
+                rating: 4,
+                notes: ''
+            },
+            journal: [
+                { date: '2026-09-20', activity: 'Latihan Dribbling Zig-zag 15 Menit', status: 'Selesai' },
+                { date: '2026-09-22', activity: 'Passing Bawah Ke Dinding 50x', status: 'Selesai' }
+            ]
+        };
+
+        // Audio Effects using Web Audio API
+        function playSound(type) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'correct') {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                } else if (type === 'wrong') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    osc.frequency.exponentialRampToValueAtTime(130, ctx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.25);
+                }
+            } catch (e) {
+                // Audio not allowed or unsupported
+            }
+        }
+
+        // Initialize App
+        window.addEventListener('DOMContentLoaded', () => {
+            loadState();
+            renderDashboard();
+            switchModuleTab(1);
+            initQuiz();
+            renderJournal();
+            updateRatingStars(appData.reflection.rating || 4);
+        });
+
+        function saveState() {
+            localStorage.setItem(APP_STORAGE_KEY, JSON.stringify(appData));
+            renderDashboard();
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem(APP_STORAGE_KEY);
+            if (saved) {
+                try {
+                    appData = { ...appData, ...JSON.parse(saved) };
+                } catch(e) {}
+            }
+        }
+
+        /* NAVIGATION & TABS */
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-orange-400', 'bg-slate-800');
+                btn.classList.add('text-slate-300');
+            });
+
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add('text-orange-400', 'bg-slate-800');
+                activeBtn.classList.remove('text-slate-300');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        /* PROFILE MODAL */
+        function openNameModal() {
+            document.getElementById('input-student-name').value = appData.studentName;
+            document.getElementById('name-modal').classList.remove('hidden');
+        }
+
+        function closeNameModal() {
+            document.getElementById('name-modal').classList.add('hidden');
+        }
+
+        function saveStudentName() {
+            const val = document.getElementById('input-student-name').value.trim();
+            if (val) {
+                appData.studentName = val;
+                saveState();
+                showToast("Nama Diberbarui", `Selamat belajar, ${val}!`);
+            }
+            closeNameModal();
+        }
+
+        /* DASHBOARD METRICS RENDER */
+        function renderDashboard() {
+            document.getElementById('dash-student-name').innerText = appData.studentName;
+            document.getElementById('student-name-display').innerText = appData.studentName;
+
+            // Calculate overall percentage
+            const completedCount = appData.completedModules.filter(Boolean).length;
+            const quizScoreContribution = (appData.quizScore / 100) * 25; // 25% weight
+            const lessonContribution = (completedCount / 4) * 75; // 75% weight
+            const totalPercent = Math.round(lessonContribution + quizScoreContribution);
+
+            document.getElementById('dash-percentage').innerText = `${totalPercent}%`;
+            document.getElementById('header-progress-text').innerText = `${totalPercent}% Done`;
+            document.getElementById('dash-progress-fill').style.width = `${totalPercent}%`;
+
+            // Stat counters
+            document.getElementById('stat-completed-lessons').innerText = `${completedCount} / 4`;
+            document.getElementById('stat-quiz-score').innerText = `${appData.quizScore} / 100`;
+
+            // Checked target tasks
+            const checkedTargets = Object.values(appData.checklists).filter(Boolean).length;
+            document.getElementById('stat-target-count').innerText = `${checkedTargets} / 12`;
+
+            // Badge determination
+            let badge = 'Pemula';
+            if (totalPercent >= 90) badge = 'Master Bola Besar 🏆';
+            else if (totalPercent >= 60) badge = 'Atlit Berbakat 🌟';
+            else if (totalPercent >= 30) badge = 'Pemain Aktif 🏃';
+            document.getElementById('stat-badge-name').innerText = badge;
+
+            // Module status badges
+            const moduleBadges = ['m1-status-badge', 'm2-status-badge', 'm3-status-badge', 'm4-status-badge'];
+            const dotBadges = ['p1-dot', 'p2-dot', 'p3-dot', 'p4-dot'];
+
+            appData.completedModules.forEach((isDone, idx) => {
+                const badgeEl = document.getElementById(moduleBadges[idx]);
+                const dotEl = document.getElementById(dotBadges[idx]);
+                if (isDone) {
+                    badgeEl.innerText = 'SELESAI';
+                    badgeEl.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase';
+                    dotEl.className = 'w-3 h-3 rounded-full bg-emerald-500 mb-1 border-2 border-white shadow';
+                } else {
+                    badgeEl.innerText = 'BELUM';
+                    badgeEl.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase';
+                    dotEl.className = 'w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow';
+                }
+            });
+        }
+
+        function openModule(num) {
+            switchTab('materi');
+            switchModuleTab(num);
+        }
+
+        /* MODULE DATA & CONTENT GENERATOR WITH VERIFIED YOUTUBE EMBED CODES */
+        const moduleContents = {
+            1: {
+                title: "Pertemuan 1: Sepak Bola (Variasi & Kombinasi)",
+                icon: "fa-futbol",
+                color: "green",
+                badge: "Variasi & Kombinasi Dribbling, Passing & Shooting",
+                objectives: [
+                    "Siswa dapat mempraktikkan variasi menggiring (dribbling) dengan kaki bagian dalam & luar.",
+                    "Siswa mampu mengombinasikan passing presisi dengan menembak bola (shooting) ke gawang.",
+                    "Mengembangkan koordinasi mata-kaki dan kelincahan gerak di lapangan."
+                ],
+                steps: [
+                    { title: "Langkah 1: Dribbling Zig-Zag", desc: "Gunakan kaki bagian dalam dan luar secara bergantian melewati 5 kerucut/cone. Jaga jarak bola tetap dekat dengan kaki." },
+                    { title: "Langkah 2: Kombinasi Passing Wall-Pass", desc: "Lakukan umpan pendek satu-dua (one-two) dengan rekan atau dinding pantul lalu bergerak membuka ruang." },
+                    { title: "Langkah 3: Finishing Shooting", desc: "Terima bola pantulan, lakukan 1 sentuhan kontrol, lalu lepaskan tembakan terarah ke sudut gawang menggunakan punggung kaki." }
+                ],
+                targets: [
+                    { id: 'p1_t1', text: 'Melakukan Dribbling Zig-Zag 3x putaran tanpa menyenggol cone' },
+                    { id: 'p1_t2', text: 'Melakukan 20x Passing akurat berpasangan jarak 5 meter' },
+                    { id: 'p1_t3', text: 'Melakukan 5x Shooting terarah ke gawang dengan power' }
+                ],
+                videoTitle: "Variasi & Kombinasi Gerak Spesifik Sepak Bola Kelas IX",
+                videoId: "0ALXQOvnNrk",
+                youtubeUrl: "https://www.youtube.com/watch?v=0ALXQOvnNrk"
+            },
+            2: {
+                title: "Pertemuan 2: Bola Voli (Variasi & Kombinasi)",
+                icon: "fa-volleyball",
+                color: "blue",
+                badge: "Passing Bawah, Passing Atas & Servis",
+                objectives: [
+                    "Memahami posisi tubuh dan sudut lengan saat menerima smash atau servis lawan.",
+                    "Menguasai kombinasi Passing Bawah melambung dilanjutkan Passing Atas umpan smasher.",
+                    "Mampu melakukan servis atas/bawah yang akurat menyeberangi net."
+                ],
+                steps: [
+                    { title: "Langkah 1: Posisi Kuda-Kuda & Perkenaan Tangan", desc: "Tekuk lutut, rapatkan dan luruskan kedua lengan. Pastikan bola mengenai pergelangan tangan bawah." },
+                    { title: "Langkah 2: Kombinasi Passing Bawah -> Passing Atas", desc: "Terima bola rendah dengan passing bawah, lalu kawan setim melambungkan dengan passing atas memakai jari-jari tangan terbuka." },
+                    { title: "Langkah 3: Servis Atas / Bawah Terarah", desc: "Lakukan pukulan servis menargetkan area kosong lapangan lawan dengan dorongan bahu & pergelangan tangan." }
+                ],
+                targets: [
+                    { id: 'p2_t1', text: 'Passing bawah mandiri ke udara sebanyak 30x berturut-turut' },
+                    { id: 'p2_t2', text: 'Kombinasi Passing Bawah & Atas berpasangan 15x tanpa jatuh' },
+                    { id: 'p2_t3', text: 'Servis atas melewati net masuk area target 5/5 percobaan' }
+                ],
+                videoTitle: "Pembelajaran Bola Voli Kelas IX Semester 1 (Passing & Servis)",
+                videoId: "NhXiDGByTyU",
+                youtubeUrl: "https://www.youtube.com/watch?v=NhXiDGByTyU"
+            },
+            3: {
+                title: "Pertemuan 3: Bola Basket (Variasi & Kombinasi)",
+                icon: "fa-basketball",
+                color: "orange",
+                badge: "Chest Pass, Dribble Cepat & Lay-Up Shoot",
+                objectives: [
+                    "Menguasai teknik variasi Chest Pass (umpan dada) dan Bounce Pass (umpan pantul).",
+                    "Mengombinasikan dribble cepat berirama dengan irama langkah dua langkah (lay-up).",
+                    "Memahami timing dan tolakan satu kaki saat melepaskan bola di dekat ring."
+                ],
+                steps: [
+                    { title: "Langkah 1: Dribble Cepat Tinggi-Rendah", desc: "Pantulkan bola setinggi pinggang saat bergerak cepat, lalu rendahkan badan saat melewati rintangan." },
+                    { title: "Langkah 2: Umpan Kombinasi Chest & Bounce Pass", desc: "Oper bola tepat di depan dada lawan, selingi dengan umpan pantul untuk mengelabui lawan." },
+                    { title: "Langkah 3: Lay-Up Shoot 2 Langkah", desc: "Pegang bola di langkah pertama, langkah kedua melompat dengan tumpuan satu kaki, lepaskan bola perlahan ke papan pantul." }
+                ],
+                targets: [
+                    { id: 'p3_t1', text: 'Dribble melingkari lapangan dengan tangan kanan & kiri ganti' },
+                    { id: 'p3_t2', text: 'Chest pass presisi ke target sasaran 20x' },
+                    { id: 'p3_t3', text: 'Berhasil melakukan 5x Lay-Up Shoot kanan dan kiri' }
+                ],
+                videoTitle: "Permainan Bola Basket Kelas IX (Variasi & Kombinasi Gerak)",
+                videoId: "Qs2WvW92oxE",
+                youtubeUrl: "https://www.youtube.com/watch?v=Qs2WvW92oxE"
+            },
+            4: {
+                title: "Pertemuan 4: Mini Tournament & Evaluasi Keterampilan",
+                icon: "fa-trophy",
+                color: "purple",
+                badge: "Aplikasi Taktik, Kerjasama Tim & Penilaian",
+                objectives: [
+                    "Menerapkan seluruh kombinasi teknik dalam pertandingan mini (Mini Game 3v3 / 5v5).",
+                    "Menumbuhkan nilai sportivitas, komunikasi efektif, dan kerjasama tim.",
+                    "Melakukan evaluasi keterampilan mandiri dan rekan sejawat."
+                ],
+                steps: [
+                    { title: "Langkah 1: Pemanasan Dinamis & Peraturan Modifikasi", desc: "Lakukan pemanasan otot secara menyeluruh. Pahami aturan bermain cepat mini-tournament." },
+                    { title: "Langkah 2: Mini Match Rotasi Cepat", desc: "Bermain dalam durasi 2 x 7 menit. Terapkan variasi strategi menyerang dan bertahan." },
+                    { title: "Langkah 3: Debriefing & Self-Assessment", desc: "Diskusikan catatan strategi tim dan isi rubrik penilaian keterampilan diri." }
+                ],
+                targets: [
+                    { id: 'p4_t1', text: 'Mengikuti pertandingan mini game dengan menerapkan strategi tim' },
+                    { id: 'p4_t2', text: 'Menjunjung tinggi sportivitas & tidak melakukan pelanggaran konyol' },
+                    { id: 'p4_t3', text: 'Mengisi form refleksi dan jurnal kebugaran secara jujur' }
+                ],
+                videoTitle: "Video Pembelajaran PJOK Basket & Evaluasi Kelas IX",
+                videoId: "9xsOWnpTPDg",
+                youtubeUrl: "https://www.youtube.com/watch?v=9xsOWnpTPDg"
+            }
+        };
+
+        function switchModuleTab(num) {
+            document.querySelectorAll('.mod-tab-btn').forEach(btn => {
+                btn.className = 'mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100';
+            });
+            const activeTab = document.getElementById(`mod-tab-${num}`);
+            if (activeTab) {
+                activeTab.className = 'mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-orange-500 text-white shadow-md';
+            }
+
+            renderModuleContent(num);
+        }
+
+        function renderModuleContent(num) {
+            const data = moduleContents[num];
+            const isCompleted = appData.completedModules[num - 1];
+
+            let targetsHTML = data.targets.map(t => {
+                const checked = appData.checklists[t.id] ? 'checked' : '';
+                return `
+                    <label class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:bg-slate-100 transition-colors">
+                        <input type="checkbox" onchange="toggleTarget('${t.id}')" ${checked} class="mt-1 w-4 h-4 text-orange-500 rounded focus:ring-orange-400">
+                        <span class="text-xs font-semibold text-slate-700">${t.text}</span>
+                    </label>
+                `;
+            }).join('');
+
+            let stepsHTML = data.steps.map((s, idx) => `
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+                    <span class="text-[10px] font-black uppercase text-orange-500 tracking-wider">Langkah 0${idx+1}</span>
+                    <h5 class="font-bold text-slate-800 text-sm">${s.title}</h5>
+                    <p class="text-xs text-slate-600 leading-relaxed">${s.desc}</p>
+                </div>
+            `).join('');
+
+            const html = `
+                <div class="space-y-8 animate-fade-in">
+                    <!-- Top Info Header -->
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-slate-100">
+                        <div>
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-600 mb-2">
+                                <i class="fa-solid ${data.icon} mr-1.5"></i> ${data.badge}
+                            </span>
+                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">${data.title}</h2>
+                        </div>
+                        
+                        <button onclick="toggleModuleComplete(${num})" class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center space-x-2 ${isCompleted ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-slate-900 text-white hover:bg-slate-800'}">
+                            <i class="fa-solid ${isCompleted ? 'fa-circle-check' : 'fa-check'}"></i>
+                            <span>${isCompleted ? 'Pertemuan Tuntas!' : 'Tandai Selesai'}</span>
+                        </button>
+                    </div>
+
+                    <!-- Objectives -->
+                    <div class="bg-blue-50/70 border border-blue-200/60 rounded-2xl p-5 space-y-2">
+                        <h4 class="text-xs font-black uppercase text-blue-800 tracking-wider flex items-center">
+                            <i class="fa-solid fa-bullseye mr-2"></i> Tujuan Pembelajaran Ringkas
+                        </h4>
+                        <ul class="list-disc list-inside text-xs text-slate-700 space-y-1.5 font-medium">
+                            ${data.objectives.map(o => `<li>${o}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <!-- Step by Step Kombinasi -->
+                    <div class="space-y-3">
+                        <h4 class="font-bold text-slate-800 text-base flex items-center">
+                            <i class="fa-solid fa-list-ol mr-2 text-orange-500"></i> Panduan Tahapan Kombinasi Gerak
+                        </h4>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            ${stepsHTML}
+                        </div>
+                    </div>
+
+                    <!-- Latihan Fisik Target & Video Demo Grid -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
+                        <!-- Left: Checkbox Targets -->
+                        <div class="space-y-3">
+                            <h4 class="font-bold text-slate-800 text-base flex items-center">
+                                <i class="fa-solid fa-list-check mr-2 text-orange-500"></i> Target Latihan Praktik Mandiri
+                            </h4>
+                            <div class="space-y-2">
+                                ${targetsHTML}
+                            </div>
+                        </div>
+
+                        <!-- Right: Interactive Dynamic Video Player with Dual-Access -->
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <h4 class="font-bold text-slate-800 text-base flex items-center">
+                                    <i class="fa-solid fa-circle-play mr-2 text-red-500"></i> Video Pembelajaran & Praktik
+                                </h4>
+                                <a href="${data.youtubeUrl}" target="_blank" class="text-xs text-red-600 hover:text-red-700 font-bold flex items-center space-x-1.5 bg-red-50 px-3 py-1.5 rounded-xl border border-red-200 hover:border-red-300 transition-all shadow-sm">
+                                    <i class="fa-brands fa-youtube text-base"></i>
+                                    <span>Tonton di YouTube</span>
+                                </a>
+                            </div>
+
+                            <!-- Dynamic Player Box -->
+                            <div id="video-player-box-${num}" class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 aspect-video relative group flex items-center justify-center">
+                                <!-- Default Poster View -->
+                                <img src="https://img.youtube.com/vi/${data.videoId}/hqdefault.jpg" alt="${data.videoTitle}" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 pointer-events-none">
+                                
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent flex flex-col justify-between p-5 z-10">
+                                    <div class="flex justify-between items-start">
+                                        <span class="bg-emerald-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-md shadow flex items-center gap-1">
+                                            <i class="fa-solid fa-circle-check"></i> YouTube Player Ready
+                                        </span>
+                                        <span class="bg-slate-900/80 backdrop-blur text-slate-200 text-[10px] font-semibold px-2.5 py-1 rounded-md border border-slate-700">
+                                            Modul ${num}
+                                        </span>
+                                    </div>
+
+                                    <div class="space-y-3 text-center sm:text-left">
+                                        <h5 class="text-white font-bold text-sm sm:text-base line-clamp-2 drop-shadow-md">${data.videoTitle}</h5>
+                                        <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
+                                            <button onclick="playEmbeddedVideo(${num})" class="px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs shadow-lg shadow-orange-500/40 transition-all flex items-center space-x-2">
+                                                <i class="fa-solid fa-play"></i>
+                                                <span>Putar Langsung di Web</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Helpful Notice for Video Playback -->
+                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-slate-700 flex items-start space-x-2.5 shadow-sm">
+                                <i class="fa-solid fa-circle-info text-blue-600 text-sm mt-0.5"></i>
+                                <div class="space-y-1">
+                                    <p class="text-[11px] font-medium leading-relaxed">
+                                        <strong class="text-slate-900">Petunjuk Pemutaran:</strong> Klik <span class="font-bold text-orange-600">"Putar Langsung di Web"</span>. Jika file dibuka langsung sebagai <code>file://</code>, gunakan tombol YouTube karena embedded player membutuhkan HTTP Referer.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('module-content-area').innerHTML = html;
+        }
+
+        /* FUNCTION TO LOAD NATIVE YOUTUBE IFRAME PLAYER (FIXED FREEZING ISSUE) */
+        function playEmbeddedVideo(moduleNum) {
+            const data = moduleContents[moduleNum];
+            const container = document.getElementById(`video-player-box-${moduleNum}`);
+            if (!container || !data) return;
+
+            /*
+             * YouTube mulai mewajibkan HTTP Referer untuk embedded player.
+             * Jika HTML dibuka langsung sebagai file://, browser tidak mengirim
+             * Referer yang valid sehingga YouTube dapat menampilkan Error 153.
+             * Dalam mode file:// kita tampilkan fallback yang aman.
+             * Saat website dijalankan melalui HTTP/HTTPS, iframe akan bekerja normal.
+             */
+            const isLocalFile = window.location.protocol === 'file:';
+
+            if (isLocalFile) {
+                container.innerHTML = `
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-slate-900 text-white">
+                        <div class="w-16 h-16 rounded-2xl bg-red-500/15 text-red-400 flex items-center justify-center text-3xl mb-4">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <h5 class="font-bold text-base mb-2">Video siap ditonton</h5>
+                        <p class="text-xs text-slate-400 max-w-md leading-relaxed mb-5">
+                            File HTML sedang dibuka secara lokal (<code>file://</code>).
+                            YouTube memerlukan HTTP Referer untuk embedded player.
+                            Klik tombol di bawah untuk menonton video.
+                        </p>
+                        <a href="${data.youtubeUrl}" target="_blank" rel="noopener noreferrer"
+                           class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-lg transition-all inline-flex items-center gap-2">
+                            <i class="fa-brands fa-youtube"></i>
+                            <span>Tonton di YouTube</span>
+                        </a>
+                        <p class="text-[10px] text-slate-500 mt-4">
+                            Jika ingin video tampil langsung di website, jalankan HTML melalui HTTP/HTTPS.
+                        </p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Hosted via HTTP/HTTPS: use YouTube's official embed player.
+            const origin = encodeURIComponent(window.location.origin);
+            const embedUrl =
+                `https://www.youtube.com/embed/${encodeURIComponent(data.videoId)}` +
+                `?autoplay=1&rel=0&playsinline=1&origin=${origin}`;
+
+            container.innerHTML = `
+                <iframe
+                    class="w-full h-full rounded-2xl shadow-inner border-0"
+                    src="${embedUrl}"
+                    title="${data.videoTitle}"
+                    loading="lazy"
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            `;
+        }
+
+        function toggleTarget(targetId) {
+            appData.checklists[targetId] = !appData.checklists[targetId];
+            saveState();
+        }
+
+        function toggleModuleComplete(num) {
+            appData.completedModules[num - 1] = !appData.completedModules[num - 1];
+            saveState();
+            renderModuleContent(num);
+            if (appData.completedModules[num - 1]) {
+                playSound('correct');
+                showToast("Pertemuan Selesai!", `Selamat, kamu telah melengkapi Pertemuan ${num}!`);
+            }
+        }
+
+        const quizQuestions = [
+            {
+                category: "Sepak Bola",
+                question: "Teknik menghentikan atau mengontrol bola yang melayang di udara dapat menggunakan bagian tubuh berikut, KECUALI...",
+                options: ["Dada", "Paha", "Telapak Tangan", "Punggung Kaki"],
+                answer: 2,
+                explanation: "Dalam permainan sepak bola, pemain lapangan selain kiper dilarang menyentuh bola menggunakan tangan atau lengan."
+            },
+            {
+                category: "Sepak Bola",
+                question: "Untuk menghasilkan tendangan melambung jauh (passing jarak jauh), perkenaan bola yang benar pada kaki adalah...",
+                options: ["Ujung jari kaki", "Kaki bagian dalam", "Punggung kaki bagian bawah bola", "Tumit kaki"],
+                answer: 2,
+                explanation: "Menendang bagian bawah bola dengan punggung kaki memberi daya angkat dan jarak tempuh yang jauh."
+            },
+            {
+                category: "Bola Voli",
+                question: "Saat melakukan passing bawah bola voli, posisi kedua lengan yang benar adalah...",
+                options: ["Ditekuk di depan dada", "Direnggangkan selebar bahu", "Rapat dan lurus dikunci di depan bawah", "Ditinggikan di atas kepala"],
+                answer: 2,
+                explanation: "Kedua lengan harus dirapatkan dan diluruskan agar permukaan bidang pantul bola rata dan stabil."
+            },
+            {
+                category: "Bola Voli",
+                question: "Pukulan keras dan tajam menukik ke area lapangan lawan untuk mematikan pertahanan disebut...",
+                options: ["Passing", "Smash / Spike", "Servis", "Blocking"],
+                answer: 1,
+                explanation: "Smash atau spike adalah pukulan serangan utama yang dilakukan dengan lompatan tinggi dan pukulan menukik."
+            },
+            {
+                category: "Bola Basket",
+                question: "Operan mendatar setinggi dada dalam permainan bola basket dinamakan...",
+                options: ["Bounce Pass", "Overhead Pass", "Chest Pass", "Baseball Pass"],
+                answer: 2,
+                explanation: "Chest pass adalah teknik mengumpan bola lurus mendatar setinggi dada rekan satu tim."
+            },
+            {
+                category: "Bola Basket",
+                question: "Jumlah langkah maksimal yang diperbolehkan saat memegang bola sebelum melompat pada gerakan Lay-Up Shoot adalah...",
+                options: ["1 Langkah", "2 Langkah", "3 Langkah", "Bebas"],
+                answer: 1,
+                explanation: "Lay-up shoot diawali dengan gerakan memasukkan bola dengan melangkah maksimal 2 langkah lalu melompat dekat ring."
+            },
+            {
+                category: "Sepak Bola",
+                question: "Variasi gerak menggiring bola (dribbling) zig-zag bertujuan untuk melatih...",
+                options: ["Kekuatan pukulan", "Kelincahan dan kontrol bola", "Ketinggian lompatan", "Daya tahan pernapasan"],
+                answer: 1,
+                explanation: "Dribbling zig-zag mengasah kelincahan kelenturan tubuh serta kontrol jarak bola dengan kaki."
+            },
+            {
+                category: "Bola Voli",
+                question: "Pemain yang bertugas khusus sebagai pemain bertahan dan bebas keluar masuk tanpa servis dinamakan...",
+                options: ["Tosser / Setter", "Spaker", "Libero", "Universalist"],
+                answer: 2,
+                explanation: "Libero adalah pemain spesialis bertahan yang memakai jersey berbeda warna."
+            },
+            {
+                category: "Bola Basket",
+                question: "Gerakan memutar badan dengan satu kaki sebagai poros pertumpuan untuk melindungi bola dinamakan...",
+                options: ["Pivot", "Rebound", "Screen", "Dribble"],
+                answer: 0,
+                explanation: "Pivot adalah gerakan menyelamatkan bola dari sergapan lawan dengan berputar pada satu kaki tumpuan."
+            },
+            {
+                category: "Evaluasi PJOK",
+                question: "Nilai utama yang paling penting dijunjung tinggi saat mengikuti mini tournament olahraga adalah...",
+                options: ["Menang dengan segala cara", "Sportivitas dan kerja sama tim", "Menghina lawan saat unggul", "Bermain secara individu"],
+                answer: 1,
+                explanation: "Sportivitas, saling menghormati, dan kerja sama tim adalah nilai karakter utama dalam pembelajaran PJOK."
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let selectedAnswers = new Array(quizQuestions.length).fill(null);
+
+        function initQuiz() {
+            currentQuizIndex = 0;
+            selectedAnswers = new Array(quizQuestions.length).fill(null);
+            document.getElementById('quiz-active-block').classList.remove('hidden');
+            document.getElementById('quiz-result-block').classList.add('hidden');
+            renderQuizQuestion();
+        }
+
+        function renderQuizQuestion() {
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-progress-text').innerText = `${currentQuizIndex + 1} / ${quizQuestions.length}`;
+            document.getElementById('quiz-category').innerText = q.category;
+            document.getElementById('quiz-question').innerText = q.question;
+
+            const prevBtn = document.getElementById('quiz-prev-btn');
+            prevBtn.disabled = currentQuizIndex === 0;
+
+            const nextBtn = document.getElementById('quiz-next-btn');
+            if (currentQuizIndex === quizQuestions.length - 1) {
+                nextBtn.innerHTML = `Selesai & Lihat Hasil <i class="fa-solid fa-check-double ml-1"></i>`;
+            } else {
+                nextBtn.innerHTML = `Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>`;
+            }
+
+            const optionsContainer = document.getElementById('quiz-options');
+            const feedbackBox = document.getElementById('quiz-feedback');
+            feedbackBox.classList.add('hidden');
+
+            optionsContainer.innerHTML = q.options.map((opt, idx) => {
+                const isSelected = selectedAnswers[currentQuizIndex] === idx;
+                let activeStyle = "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100";
+                if (isSelected) {
+                    activeStyle = "bg-orange-500 border-orange-500 text-white font-bold shadow-md";
+                }
+
+                return `
+                    <button onclick="selectQuizOption(${idx})" class="w-full text-left p-4 rounded-xl border text-sm transition-all duration-200 flex items-center justify-between ${activeStyle}">
+                        <span><strong class="mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
+                        ${isSelected ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-regular fa-circle text-slate-400"></i>'}
+                    </button>
+                `;
+            }).join('');
+
+            if (selectedAnswers[currentQuizIndex] !== null) {
+                const isCorrect = selectedAnswers[currentQuizIndex] === q.answer;
+                feedbackBox.classList.remove('hidden');
+                if (isCorrect) {
+                    feedbackBox.className = "p-4 rounded-2xl border text-sm space-y-1 bg-emerald-50 border-emerald-200 text-emerald-800";
+                    document.getElementById('quiz-feedback-title').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> Jawaban Tepat!`;
+                } else {
+                    feedbackBox.className = "p-4 rounded-2xl border text-sm space-y-1 bg-amber-50 border-amber-200 text-amber-800";
+                    document.getElementById('quiz-feedback-title').innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600"></i> Penjelasan Ringkas`;
+                }
+                document.getElementById('quiz-feedback-text').innerText = q.explanation;
+            }
+        }
+
+        function selectQuizOption(idx) {
+            selectedAnswers[currentQuizIndex] = idx;
+            if (idx === quizQuestions[currentQuizIndex].answer) {
+                playSound('correct');
+            } else {
+                playSound('wrong');
+            }
+            renderQuizQuestion();
+        }
+
+        function prevQuestion() {
+            if (currentQuizIndex > 0) {
+                currentQuizIndex--;
+                renderQuizQuestion();
+            }
+        }
+
+        function nextQuestion() {
+            if (selectedAnswers[currentQuizIndex] === null) {
+                showToast("Pilih Jawaban", "Silakan pilih salah satu opsi jawaban sebelum melanjutkan.");
+                return;
+            }
+
+            if (currentQuizIndex < quizQuestions.length - 1) {
+                currentQuizIndex++;
+                renderQuizQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        function finishQuiz() {
+            let correctCount = 0;
+            quizQuestions.forEach((q, idx) => {
+                if (selectedAnswers[idx] === q.answer) correctCount++;
+            });
+
+            const score = Math.round((correctCount / quizQuestions.length) * 100);
+            appData.quizScore = score;
+            appData.quizCompleted = true;
+            saveState();
+
+            document.getElementById('quiz-active-block').classList.add('hidden');
+            document.getElementById('quiz-result-block').classList.remove('hidden');
+            document.getElementById('final-quiz-score').innerText = score;
+
+            let msg = "Tetap semangat berlatih dan pelajari materi lagi!";
+            if (score >= 80) msg = "Luar biasa! Pemahaman teori dan teknik kamu sangat mantap! 🏆";
+            else if (score >= 60) msg = "Bagus! Kamu sudah memahami konsep dasar bola besar dengan baik! 👍";
+            document.getElementById('quiz-score-message').innerText = msg;
+
+            playSound('correct');
+            showToast("Kuis Selesai", `Skor kamu: ${score}/100`);
+        }
+
+        function resetQuiz() {
+            initQuiz();
+        }
+
+        function setRating(val) {
+            appData.reflection.rating = val;
+            updateRatingStars(val);
+        }
+
+        function updateRatingStars(val) {
+            const stars = document.querySelectorAll('#star-rating-container .star-btn');
+            stars.forEach((star, index) => {
+                if (index < val) {
+                    star.className = 'fa-solid fa-star star-btn text-amber-400 cursor-pointer';
+                } else {
+                    star.className = 'fa-regular fa-star star-btn text-slate-300 cursor-pointer';
+                }
+            });
+        }
+
+        function saveReflection(event) {
+            event.preventDefault();
+            const bestTech = document.getElementById('ref-best-tech').value;
+            const notes = document.getElementById('ref-notes').value;
+
+            appData.reflection = {
+                bestTech: bestTech,
+                rating: appData.reflection.rating || 4,
+                notes: notes
+            };
+
+            saveState();
+            playSound('correct');
+            showToast("Refleksi Tersimpan", "Catatan evaluasi diri kamu berhasil diperbarui!");
+        }
+
+        function renderJournal() {
+            const container = document.getElementById('journal-list');
+            if (!container) return;
+
+            if (appData.journal.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-4">Belum ada catatan jurnal. Klik tombol (+ Tambah Entri) di atas.</p>`;
+                return;
+            }
+
+            container.innerHTML = appData.journal.map((item, idx) => `
+                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex justify-between items-center text-xs">
+                    <div class="space-y-0.5">
+                        <span class="text-[10px] font-bold text-slate-400 block">${item.date}</span>
+                        <h6 class="font-bold text-slate-800">${item.activity}</h6>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase">${item.status}</span>
+                        <button onclick="deleteJournalEntry(${idx})" class="text-slate-400 hover:text-red-500 transition-colors p-1">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addJournalEntry() {
+            const act = prompt("Masukkan aktivitas fisik/latihan mandiri yang dilakukan:");
+            if (act && act.trim() !== '') {
+                const today = new Date().toISOString().split('T')[0];
+                appData.journal.unshift({
+                    date: today,
+                    activity: act.trim(),
+                    status: 'Selesai'
+                });
+                saveState();
+                renderJournal();
+                showToast("Entri Ditambahkan", "Aktivitas latihan berhasil dicatat di jurnal!");
+            }
+        }
+
+        function deleteJournalEntry(index) {
+            appData.journal.splice(index, 1);
+            saveState();
+            renderJournal();
+            showToast("Dihapus", "Catatan jurnal berhasil dihapus.");
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            if (!toast) return;
+
+            document.getElementById('toast-title').innerText = title;
+            document.getElementById('toast-message').innerText = message;
+
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
