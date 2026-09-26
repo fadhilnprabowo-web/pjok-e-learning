@@ -1,47 +1,30 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
-    <title>PJOK EduSport IX - Permainan Bola Besar</title>
-    <!-- Tailwind CSS CDN -->
+    <title>E-Learning PJOK SMP (Kelas 7, 8, & 9) - Drs. H. Heru Prabowo</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <!-- Google Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
+    
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
+                        heading: ['Outfit', 'sans-serif'],
                     },
                     colors: {
-                        sport: {
-                            navy: '#0f172a',
-                            blue: '#2563eb',
-                            orange: '#f97316',
-                            yellow: '#eab308',
-                            green: '#10b981',
-                            darkBlue: '#1e293b'
-                        }
-                    },
-                    keyframes: {
-                        bounceSubtle: {
-                            '0%, 100%': { transform: 'translateY(-3%)' },
-                            '50%': { transform: 'translateY(0)' },
-                        },
-                        fadeIn: {
-                            '0%': { opacity: '0', transform: 'translateY(10px)' },
-                            '100%': { opacity: '1', transform: 'translateY(0)' },
-                        }
-                    },
-                    animation: {
-                        'bounce-subtle': 'bounceSubtle 3s infinite ease-in-out',
-                        'fade-in': 'fadeIn 0.3s ease-out forwards',
+                        sportsBlue: '#0f172a',
+                        sportPrimary: '#0284c7', // Sky-600
+                        sportAccent: '#f97316',  // Orange-500
+                        sportEmerald: '#10b981', // Emerald-500
+                        sportDark: '#090d16',
                     }
                 }
             }
@@ -50,1280 +33,1307 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc;
+            background-color: #0b0f19;
+            color: #f8fafc;
+            overflow-x: hidden;
         }
-        /* Custom scrollbar */
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
         ::-webkit-scrollbar {
             width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #f1f5f9;
+            background: #0f172a; 
         }
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: #334155; 
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
+            background: #475569; 
+        }
+        .fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+        .sports-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .sports-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(2, 132, 199, 0.4);
+            box-shadow: 0 12px 30px -10px rgba(2, 132, 199, 0.3);
+        }
+        .stadium-bg {
+            background-image: linear-gradient(to bottom, rgba(15, 23, 42, 0.95), rgba(11, 15, 25, 0.98)), url('https://images.unsplash.com/photo-1517649763962-0c623266cf10?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+        }
+        .field-pattern {
+            background-image: radial-gradient(rgba(2, 132, 199, 0.15) 1px, transparent 1px);
+            background-size: 24px 24px;
         }
     </style>
 </head>
-<body class="text-slate-800 bg-slate-50 min-h-screen flex flex-col justify-between selection:bg-orange-500 selection:text-white">
+<body class="flex h-screen overflow-hidden field-pattern">
 
-    <!-- LOGIN OVERLAY -->
-    <div id="login-overlay" class="fixed inset-0 bg-slate-900 z-[100] flex items-center justify-center p-4 transition-opacity duration-500">
-        <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center space-y-6 animate-fade-in relative overflow-hidden">
-            <div class="absolute -right-6 -top-6 text-orange-500/10 pointer-events-none">
-                <i class="fa-solid fa-basketball text-9xl"></i>
-            </div>
-            <div class="relative z-10 space-y-2">
-                <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white shadow-lg shadow-orange-500/30 mx-auto mb-4">
-                    <i class="fa-solid font-black fa-volleyball text-3xl"></i>
-                </div>
-                <h2 class="text-2xl font-extrabold text-slate-800">EduSport IX</h2>
-                <p class="text-xs text-slate-500">SMP Bina Bangsa Mandiri • Guru: Drs. H. Heru Prabowo</p>
-                <p class="text-[11px] text-slate-400">Masukkan nama lengkap siswa untuk mulai belajar & menyimpan progres.</p>
+    <!-- ================= 1. LOGIN / PORTAL AWAL (SOLID OPAQUE BLANK BACKGROUND) ================= -->
+    <div id="loginScreen" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-3xl shadow-2xl max-w-md w-full p-8 md:p-10 border border-slate-700 text-center relative overflow-hidden">
+            <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-sportAccent via-sportPrimary to-sportEmerald"></div>
+            
+            <div class="w-20 h-20 bg-sportPrimary/20 text-sportPrimary rounded-2xl flex items-center justify-center text-4xl mx-auto mb-5 border border-sportPrimary/30 shadow-inner">
+                <i class="fas fa-running animate-bounce"></i>
             </div>
             
-            <div class="relative z-10">
-                <input type="text" id="login-input-name" placeholder="Ketik Nama Lengkap Siswa..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 text-center" onkeypress="handleEnter(event)">
-            </div>
+            <span class="text-xs uppercase font-extrabold tracking-widest text-sportAccent bg-sportAccent/10 px-3 py-1 rounded-full">Kurikulum Merdeka (Sem 1 & 2)</span>
+            <h1 class="text-2xl md:text-3xl font-black text-white mt-2 mb-1">PORTAL PJOK SMP</h1>
+            <p class="text-slate-400 text-xs mb-6">SMP BINA BANGSA MANDIRI<br><strong class="text-sportPrimary">Drs. H. HERU PRABOWO</strong></p>
+            
+            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5"><i class="fas fa-user mr-1 text-sportPrimary"></i> Nama Lengkap Siswa</label>
+                    <input type="text" id="studentNameInput" required placeholder="Contoh: Rian Pratama" class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:outline-none focus:border-sportPrimary text-white placeholder-slate-500 text-sm">
+                </div>
+                
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5"><i class="fas fa-graduation-cap mr-1 text-sportAccent"></i> Pilih Tingkat Kelas</label>
+                    <select id="studentClassSelect" required class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:outline-none focus:border-sportPrimary text-white text-sm font-medium">
+                        <option value="" disabled selected>-- Pilih Jenjang Kelas --</option>
+                        <option value="7">Kelas VII (Fase D - Pengenalan Dasar Olahraga & Atletik)</option>
+                        <option value="8">Kelas VIII (Fase D - Pengembangan & Eksplorasi Lanjutan)</option>
+                        <option value="9">Kelas IX (Fase D - Kompleksitas Taktik & Uji Prestasi)</option>
+                    </select>
+                </div>
 
-            <button onclick="handleLogin()" class="relative z-10 w-full py-3.5 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-lg shadow-orange-500/30 transition-all flex items-center justify-center space-x-2">
-                <span>Mulai Belajar</span>
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 uppercase mb-1.5"><i class="fas fa-calendar-alt mr-1 text-sportEmerald"></i> Pilih Semester</label>
+                    <select id="studentSemesterSelect" required class="w-full px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 focus:outline-none focus:border-sportPrimary text-white text-sm font-medium">
+                        <option value="" disabled selected>-- Pilih Semester --</option>
+                        <option value="1">Semester 1 (Ganjil)</option>
+                        <option value="2">Semester 2 (Genap)</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full bg-gradient-to-r from-sportPrimary to-sky-700 hover:from-sky-600 hover:to-sky-800 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition transform hover:scale-[1.02] flex items-center justify-center mt-3 text-sm font-heading tracking-wide">
+                    <span>MASUK RUANG BELAJAR</span> <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </form>
+            
+            <div class="mt-6 text-[11px] text-slate-500">
+                Akses Terpadu Pembelajaran Tatap Muka & Mandiri
+            </div>
         </div>
     </div>
 
-    <!-- Navigation Bar -->
-    <header class="sticky top-0 z-50 bg-slate-900/95 backdrop-blur border-b border-slate-800 text-white shadow-lg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <!-- Logo / Title -->
-                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
-                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
-                        <i class="fa-solid font-black fa-volleyball text-xl"></i>
-                    </div>
-                    <div>
-                        <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-orange-400 bg-clip-text text-transparent">EduSport IX</span>
-                        <span class="text-[11px] block text-slate-400 font-medium -mt-1">SMP Bina Bangsa Mandiri • Drs. H. Heru Prabowo</span>
-                    </div>
+    <!-- ================= 2. SIDEBAR NAVIGATION (HIDDEN UNTIL LOGIN) ================= -->
+    <aside id="sidebar" class="bg-slate-900 text-white w-72 flex-shrink-0 hidden md:flex flex-col transition-all duration-300 z-40 h-full overflow-y-auto border-r border-slate-800 fixed md:relative transform -translate-x-full md:translate-x-0">
+        <div class="p-5 flex items-center justify-between border-b border-slate-800">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-sportPrimary/20 flex items-center justify-center text-sportPrimary text-lg border border-sportPrimary/30">
+                    <i class="fas fa-futbol"></i>
                 </div>
-
-                <!-- Desktop Menu -->
-                <nav class="hidden md:flex items-center space-x-1">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-orange-400 bg-slate-800">
-                        <i class="fa-solid fa-chart-pie"></i>
-                        <span>Dashboard</span>
-                    </button>
-                    <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
-                        <i class="fa-solid fa-book-open"></i>
-                        <span>Pertemuan (4 Modul)</span>
-                    </button>
-                    <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
-                        <i class="fa-solid fa-trophy"></i>
-                        <span>Kuis Interaktif</span>
-                    </button>
-                    <button onclick="switchTab('refleksi')" id="nav-refleksi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                        <span>Jurnal & Refleksi</span>
-                    </button>
-                </nav>
-
-                <!-- Student Quick Badge -->
-                <div class="hidden lg:flex items-center space-x-3 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 cursor-pointer hover:bg-slate-700 transition-colors" onclick="handleLogout()" title="Klik untuk keluar / ganti akun">
-                    <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white">
-                        <i class="fa-solid fa-user"></i>
-                    </div>
-                    <span id="student-name-display" class="text-xs font-medium text-slate-200">Siswa</span>
-                    <span class="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-orange-500/30" id="header-progress-text">0% Done</span>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none">
-                        <i class="fa-solid fa-bars text-xl"></i>
-                    </button>
+                <div>
+                    <h2 class="font-heading font-bold text-sm tracking-wide text-white">PJOK <span id="sidebarClassBadge" class="text-[10px] bg-sportAccent px-2 py-0.5 rounded text-white ml-1">KLS 8</span></h2>
+                    <p id="sidebarStudentName" class="text-xs text-slate-400 truncate max-w-[140px] mt-0.5">Siswa</p>
                 </div>
             </div>
-        </div>
-
-        <!-- Mobile Menu Nav -->
-        <div id="mobile-menu" class="hidden md:hidden bg-slate-900 border-b border-slate-800 px-4 pt-2 pb-4 space-y-2">
-            <button onclick="switchTab('dashboard')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
-                <i class="fa-solid fa-chart-pie w-5"></i>
-                <span>Dashboard</span>
-            </button>
-            <button onclick="switchTab('materi')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
-                <i class="fa-solid fa-book-open w-5"></i>
-                <span>Pertemuan (4 Modul)</span>
-            </button>
-            <button onclick="switchTab('kuis')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
-                <i class="fa-solid fa-trophy w-5"></i>
-                <span>Kuis Interaktif</span>
-            </button>
-            <button onclick="switchTab('refleksi')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
-                <i class="fa-solid fa-heart-pulse w-5"></i>
-                <span>Jurnal & Refleksi</span>
-            </button>
-            <button onclick="handleLogout()" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-red-400 hover:bg-slate-800 border-t border-slate-800 mt-2 pt-3">
-                <i class="fa-solid fa-arrow-right-from-bracket w-5"></i>
-                <span>Keluar / Ganti Akun</span>
+            <button id="closeSidebar" class="md:hidden text-slate-400 hover:text-white" onclick="toggleSidebar()">
+                <i class="fas fa-times text-lg"></i>
             </button>
         </div>
-    </header>
-
-    <!-- Custom Toast Notification -->
-    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 ease-out pointer-events-none flex items-center space-x-3 bg-slate-900 text-white px-5 py-3.5 rounded-2xl shadow-2xl border border-slate-700">
-        <div id="toast-icon" class="w-8 h-8 rounded-xl bg-orange-500/20 text-orange-400 flex items-center justify-center font-bold">
-            <i class="fa-solid fa-bell"></i>
+        
+        <div class="px-4 py-3">
+            <div class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mb-2">Navigasi Utama</div>
+            <nav class="space-y-1">
+                <a href="#" onclick="navigateTo('beranda')" class="nav-link flex items-center px-3.5 py-2.5 rounded-xl bg-sportPrimary/20 text-white font-medium transition text-xs border border-sportPrimary/30" data-target="beranda">
+                    <i class="fas fa-home w-5 text-center mr-2.5 text-sportPrimary"></i> Beranda Utama
+                </a>
+                <a href="#" onclick="navigateTo('biodata')" class="nav-link flex items-center px-3.5 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs font-semibold text-sportAccent" data-target="biodata">
+                    <i class="fas fa-id-card w-5 text-center mr-2.5 text-sportAccent"></i> Biodata Guru Pengampu
+                </a>
+                <a href="#" onclick="navigateTo('tujuan')" class="nav-link flex items-center px-3.5 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="tujuan">
+                    <i class="fas fa-bullseye w-5 text-center mr-2.5 text-sky-400"></i> Tujuan Pembelajaran
+                </a>
+                <a href="#" onclick="navigateTo('materi')" class="nav-link flex items-center px-3.5 py-2.5 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="materi">
+                    <i class="fas fa-book-open w-5 text-center mr-2.5 text-emerald-400"></i> Ringkasan Materi Kurikulum
+                </a>
+            </nav>
         </div>
-        <div>
-            <h4 id="toast-title" class="text-sm font-bold">Notifikasi</h4>
-            <p id="toast-message" class="text-xs text-slate-300">Pesan notifikasi di sini.</p>
+
+        <div class="px-4 py-2">
+            <div class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mb-2">Modul 4 Pertemuan</div>
+            <nav class="space-y-1">
+                <a href="#" onclick="navigateTo('pertemuan1')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="pertemuan1">
+                    <span class="bg-sportPrimary/30 text-white w-5 h-5 inline-flex items-center justify-center rounded-lg mr-2.5 text-[10px] font-bold">1</span> Pertemuan 1
+                </a>
+                <a href="#" onclick="navigateTo('pertemuan2')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="pertemuan2">
+                    <span class="bg-sportAccent/30 text-white w-5 h-5 inline-flex items-center justify-center rounded-lg mr-2.5 text-[10px] font-bold">2</span> Pertemuan 2
+                </a>
+                <a href="#" onclick="navigateTo('pertemuan3')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="pertemuan3">
+                    <span class="bg-sportEmerald/30 text-white w-5 h-5 inline-flex items-center justify-center rounded-lg mr-2.5 text-[10px] font-bold">3</span> Pertemuan 3
+                </a>
+                <a href="#" onclick="navigateTo('pertemuan4')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="pertemuan4">
+                    <span class="bg-purple-500/30 text-white w-5 h-5 inline-flex items-center justify-center rounded-lg mr-2.5 text-[10px] font-bold">4</span> Pertemuan 4
+                </a>
+            </nav>
         </div>
-    </div>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div class="px-4 py-2">
+            <div class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest px-3 mb-2">Aktivitas & Evaluasi</div>
+            <nav class="space-y-1">
+                <a href="#" onclick="navigateTo('video')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="video">
+                    <i class="fas fa-video w-5 text-center mr-2.5 text-rose-400"></i> Galeri Video Pembelajaran
+                </a>
+                <a href="#" onclick="navigateTo('kuis')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="kuis">
+                    <i class="fas fa-gamepad w-5 text-center mr-2.5 text-amber-400"></i> Kuis Cerdas Tangkas
+                </a>
+                 <a href="#" onclick="navigateTo('tantangan')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="tantangan">
+                    <i class="fas fa-trophy w-5 text-center mr-2.5 text-yellow-400"></i> Tantangan Praktik
+                </a>
+                <a href="#" onclick="navigateTo('evaluasi')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="evaluasi">
+                    <i class="fas fa-file-alt w-5 text-center mr-2.5 text-teal-400"></i> Rubrik & Penilaian
+                </a>
+                <a href="#" onclick="navigateTo('refleksi')" class="nav-link flex items-center px-3.5 py-2 rounded-xl hover:bg-slate-800 text-slate-300 hover:text-white transition text-xs" data-target="refleksi">
+                    <i class="fas fa-comment-dots w-5 text-center mr-2.5 text-indigo-400"></i> Refleksi Siswa
+                </a>
+            </nav>
+        </div>
 
-        <!-- VIEW 1: DASHBOARD -->
-        <section id="view-dashboard" class="tab-view space-y-8 animate-fade-in">
-            <!-- Hero Banner -->
-            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white p-6 sm:p-10 shadow-2xl border border-slate-800">
-                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
-                    <i class="fa-solid fa-basketball text-[280px]"></i>
+        <div class="px-4 py-4 mt-auto border-t border-slate-800">
+            <button onclick="logout()" class="w-full bg-rose-500/10 hover:bg-rose-500 text-rose-400 hover:text-white py-2.5 px-3 rounded-xl text-xs font-semibold transition flex items-center justify-center border border-rose-500/20">
+                <i class="fas fa-sign-out-alt mr-2"></i> Ganti Akun / Kelas
+            </button>
+        </div>
+    </aside>
+
+    <!-- Sidebar Overlay for mobile -->
+    <div id="sidebarOverlay" class="fixed inset-0 bg-black/70 z-30 hidden md:hidden" onclick="toggleSidebar()"></div>
+
+    <!-- ================= 3. MAIN CONTENT CONTAINER ================= -->
+    <main class="flex-1 flex flex-col h-full relative overflow-y-auto w-full field-pattern">
+        
+        <!-- Mobile Top Header -->
+        <header class="bg-slate-900 border-b border-slate-800 p-4 flex items-center justify-between sticky top-0 z-20 md:hidden">
+            <div class="flex items-center">
+                <button onclick="toggleSidebar()" class="text-white focus:outline-none mr-3">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+                <h1 class="text-sm font-heading font-bold text-white">PJOK <span id="mobileClassHeader" class="text-sportAccent">Kelas 8</span></h1>
+            </div>
+            <div class="flex items-center space-x-2">
+                <span id="mobileStudentName" class="text-xs font-semibold text-slate-300 bg-slate-800 px-2.5 py-1 rounded-full truncate max-w-[110px] border border-slate-700">Siswa</span>
+            </div>
+        </header>
+
+        <!-- Pages Container -->
+        <div class="p-4 md:p-8 w-full max-w-6xl mx-auto pb-24">
+            
+            <!-- ================= BERANDA ================= -->
+            <section id="beranda" class="page-section active fade-in">
+                <div class="stadium-bg rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden border border-slate-700/60 mb-8">
+                    <div class="absolute top-0 right-0 -mr-16 -mt-16 w-64 h-64 rounded-full bg-sportPrimary opacity-10 blur-3xl"></div>
+                    <div class="absolute bottom-0 left-0 -ml-16 -mb-16 w-64 h-64 rounded-full bg-sportAccent opacity-10 blur-3xl"></div>
+                    
+                    <div class="relative z-10 max-w-2xl">
+                        <span id="welcomeClassBadge" class="inline-block py-1 px-3 rounded-full bg-sportPrimary/20 text-sky-300 text-xs font-bold mb-3 border border-sportPrimary/30 uppercase tracking-widest">Kurikulum Merdeka • SMP Bina Bangsa Mandiri</span>
+                        <h1 class="text-3xl md:text-5xl font-black mb-2 tracking-tight text-white font-heading">PJOK KELAS VIII</h1>
+                        <h2 id="heroSubtitle" class="text-base md:text-xl font-bold text-sportAccent mb-6 uppercase tracking-wider">ATLETIK & AKTIVITAS JASMANI — SEMESTER 1 & 2</h2>
+                        
+                        <div class="flex flex-col space-y-2 mb-8 text-xs md:text-sm border-l-4 border-sportAccent pl-4 bg-slate-900/70 p-4 rounded-r-2xl border-y border-r border-slate-800">
+                            <p><i class="fas fa-user-tie w-6 text-sportAccent"></i> Pengampu: <strong class="text-white">Drs. H. HERU PRABOWO</strong></p>
+                            <p><i class="fas fa-school w-6 text-sportPrimary"></i> Satuan Pendidikan: <strong class="text-white">SMP BINA BANGSA MANDIRI</strong></p>
+                            <p><i class="fas fa-user-graduate w-6 text-sportEmerald"></i> Peserta Didik: <strong id="heroStudentName" class="text-yellow-300 font-bold">Siswa</strong> (<span id="heroSemesterText" class="text-sky-300">Semester 1</span>)</p>
+                        </div>
+                        
+                        <div class="flex flex-wrap gap-3">
+                            <button onclick="navigateTo('tujuan')" class="bg-sportAccent hover:bg-orange-600 text-white font-bold py-3.5 px-6 rounded-xl shadow-lg transition transform hover:scale-105 flex items-center text-sm font-heading">
+                                <i class="fas fa-play mr-2"></i> MULAI BELAJAR
+                            </button>
+                            <button onclick="navigateTo('biodata')" class="bg-slate-800 hover:bg-slate-700 text-white font-semibold py-3.5 px-6 rounded-xl border border-slate-700 transition flex items-center text-sm font-heading">
+                                <i class="fas fa-id-card mr-2 text-sportAccent"></i> BIODATA GURU
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center my-8">
+                    <p class="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-sportAccent via-sky-400 to-sportEmerald italic font-heading">"Sehat, Aktif, Sportif, dan Percaya Diri!"</p>
+                </div>
+
+                <div id="dynamicCurriculumGrid" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-6">
+                    <!-- Dynamic populated based on grade & semester -->
+                </div>
+            </section>
+
+            <!-- ================= BIODATA GURU ================= -->
+            <section id="biodata" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-sportAccent rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-sportAccent/20">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Profil & Biodata Guru Pengampu</h2>
+                        <p class="text-xs text-slate-400">Informasi resmi pengajar PJOK SMP Bina Bangsa Mandiri</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="sports-card rounded-3xl p-6 text-center flex flex-col items-center justify-center border-t-4 border-sportAccent">
+                        <div class="relative mb-4">
+                            <div class="w-32 h-32 rounded-3xl bg-gradient-to-tr from-sportAccent to-sportPrimary p-1 shadow-xl">
+                                <div class="w-full h-full bg-slate-800 rounded-[22px] flex items-center justify-center text-5xl text-slate-300 overflow-hidden">
+                                    <i class="fas fa-user-tie text-sportAccent"></i>
+                                </div>
+                            </div>
+                            <span class="absolute bottom-0 right-0 bg-sportEmerald text-white text-[10px] font-bold px-2.5 py-1 rounded-full border-2 border-slate-900 shadow">Aktif</span>
+                        </div>
+                        <h3 class="text-xl font-black text-white font-heading">Drs. H. HERU PRABOWO</h3>
+                        <p class="text-xs text-sportAccent font-bold mt-1">Guru Mata Pelajaran PJOK</p>
+                        <p class="text-xs text-slate-400 mt-2">SMP Bina Bangsa Mandiri</p>
+                    </div>
+
+                    <div class="sports-card rounded-3xl p-6 md:col-span-2 space-y-4">
+                        <h4 class="text-sm font-bold text-sportPrimary uppercase tracking-widest border-b border-slate-800 pb-2 flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i> Identitas & Kompetensi Pengajar
+                        </h4>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                                <span class="text-slate-400 block mb-1">Nama Lengkap & Gelar</span>
+                                <strong class="text-white text-sm">Drs. H. Heru Prabowo</strong>
+                            </div>
+                            <div class="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                                <span class="text-slate-400 block mb-1">Satuan Pendidikan</span>
+                                <strong class="text-white text-sm">SMP Bina Bangsa Mandiri</strong>
+                            </div>
+                            <div class="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                                <span class="text-slate-400 block mb-1">Bidang Studi</span>
+                                <strong class="text-white text-sm">Pendidikan Jasmani, Olahraga & Kesehatan (PJOK)</strong>
+                            </div>
+                            <div class="bg-slate-800/60 p-3.5 rounded-2xl border border-slate-700/50">
+                                <span class="text-slate-400 block mb-1">Pendekatan Kurikulum</span>
+                                <strong class="text-white text-sm">Kurikulum Merdeka (Fase D - Kelas 7, 8, 9)</strong>
+                            </div>
+                        </div>
+
+                        <div class="bg-sportPrimary/10 border border-sportPrimary/30 rounded-2xl p-4 text-slate-300 text-xs leading-relaxed">
+                            <strong class="text-white block mb-1"><i class="fas fa-quote-left text-sportPrimary mr-1"></i> Filosofi Mengajar:</strong>
+                            "Membentuk peserta didik yang memiliki kebugaran jasmani prima, disiplin tinggi, berkarakter luhur, dan menjunjung tinggi nilai sportivitas di setiap fase perkembangan."
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= TUJUAN PEMBELAJARAN ================= -->
+            <section id="tujuan" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-sportPrimary rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-sportPrimary/20">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Tujuan Pembelajaran Kurikulum Merdeka</h2>
+                        <p class="text-xs text-slate-400">Capaian Pembelajaran Fase D (Semester 1 & 2)</p>
+                    </div>
+                </div>
+
+                <div class="sports-card rounded-3xl p-6 md:p-8 mb-6">
+                    <p class="text-slate-300 mb-6 font-medium text-xs md:text-sm" id="tujuanDescText">Berdasarkan tingkat kelas yang Anda pilih, berikut adalah fokus capaian pembelajaran:</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="tujuanCardsContainer">
+                        <!-- Dynamic generated -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= MATERI ATLETIK ================= -->
+            <section id="materi" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-sportEmerald rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-sportEmerald/20">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Ringkasan Materi Kurikulum Merdeka</h2>
+                        <p class="text-xs text-slate-400">Penjelasan mendalam dan video tutorial resmi per topik pembelajaran</p>
+                    </div>
+                </div>
+
+                <div class="space-y-6" id="materiDetailedContainer">
+                    <!-- Dynamic populated with 2-paragraph explanations & videos -->
+                </div>
+            </section>
+
+            <!-- ================= PERTEMUAN 1 ================= -->
+            <section id="pertemuan1" class="page-section fade-in">
+                <div class="sports-card rounded-3xl overflow-hidden mb-6 border-t-4 border-sportPrimary">
+                    <div class="bg-sportPrimary/30 p-6 md:p-8 flex items-center justify-between border-b border-slate-700">
+                        <div>
+                            <span id="p1Badge" class="bg-sportPrimary text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Pertemuan 1 • Semester 1</span>
+                            <h2 id="p1Title" class="text-2xl md:text-3xl font-black text-white font-heading">Pengenalan & Gerak Dasar</h2>
+                        </div>
+                        <i class="fas fa-running text-5xl text-sportPrimary/50 hidden md:block"></i>
+                    </div>
+                    
+                    <div class="p-6 md:p-8 space-y-6">
+                        <div>
+                            <h3 class="text-base font-bold text-white mb-2 flex items-center font-heading"><i class="fas fa-info-circle text-sportPrimary mr-2"></i> Penjelasan Modul</h3>
+                            <p id="p1Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                                Mempelajari konsep dasar teknik olahraga dan pemanasan preventif.
+                            </p>
+                        </div>
+
+                        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-700">
+                            <div class="p-3 bg-slate-800 text-white text-xs font-semibold flex items-center">
+                                <i class="fas fa-video text-sportPrimary mr-2"></i> Video Pembelajaran Resmi
+                            </div>
+                            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                <iframe id="p1Video" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/gcTiXyIdcf4" title="Video Pertemuan 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
-                <div class="relative z-10 max-w-2xl space-y-4">
-                    <div class="flex flex-wrap gap-2">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">
-                            <i class="fa-solid fa-school mr-1.5"></i> SMP Bina Bangsa Mandiri
-                        </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
-                            <i class="fa-solid fa-chalkboard-user mr-1.5"></i> Guru: Drs. H. Heru Prabowo
-                        </span>
+                <div class="flex justify-between">
+                    <button onclick="navigateTo('materi')" class="text-slate-400 hover:text-white font-medium px-4 py-2 text-xs flex items-center"><i class="fas fa-arrow-left mr-2"></i> Kembali ke Materi</button>
+                    <button onclick="navigateTo('pertemuan2')" class="bg-sportPrimary hover:bg-sky-700 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center text-xs font-heading shadow-md">
+                        Pertemuan 2 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- ================= PERTEMUAN 2 ================= -->
+            <section id="pertemuan2" class="page-section fade-in">
+                <div class="sports-card rounded-3xl overflow-hidden mb-6 border-t-4 border-sportAccent">
+                    <div class="bg-sportAccent/30 p-6 md:p-8 flex items-center justify-between border-b border-slate-700">
+                        <div>
+                            <span id="p2Badge" class="bg-sportAccent text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Pertemuan 2 • Semester 1</span>
+                            <h2 id="p2Title" class="text-2xl md:text-3xl font-black text-white font-heading">Eksplorasi Gerak Lanjutan</h2>
+                        </div>
+                        <i class="fas fa-bolt text-5xl text-sportAccent/50 hidden md:block"></i>
                     </div>
+                    
+                    <div class="p-6 md:p-8 space-y-6">
+                        <p id="p2Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                            Mendalami teknik lanjutan gerak spesifik kecepatan dan kelincahan.
+                        </p>
 
-                    <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                        Selamat Datang, <span id="dash-student-name" class="text-orange-400">Siswa PJOK</span>! 👋
-                    </h1>
-                    <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                        Mata Pelajaran PJOK Kelas IX • Kurikulum Merdeka (4 Kali Pertemuan). Pembelajaran aktif, interaktif, menyenangkan, kontekstual, kolaboratif, dan berpusat pada peserta didik.
-                    </p>
-
-                    <div class="pt-2 flex flex-wrap gap-3">
-                        <button onclick="switchTab('materi')" class="px-5 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
-                            <span>Mulai Pembelajaran</span>
-                            <i class="fa-solid fa-arrow-right"></i>
-                        </button>
-                        <button onclick="handleLogout()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-sm font-semibold transition-all flex items-center space-x-2">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Ganti Akun Siswa</span>
-                        </button>
+                        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-700">
+                            <div class="p-3 bg-slate-800 text-white text-xs font-semibold flex items-center">
+                                <i class="fas fa-video text-sportAccent mr-2"></i> Video Pembelajaran Resmi
+                            </div>
+                            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                <iframe id="p2Video" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/svsAU6_ovyY" title="Video Pertemuan 2" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Global Progress Tracker Bar -->
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h3 class="font-bold text-slate-800 text-lg">Progres Pembelajaran Anda</h3>
-                        <p class="text-xs text-slate-500">Selesaikan 4 pertemuan & kuis untuk mencapai level Master Bola Besar!</p>
-                    </div>
-                    <span id="dash-percentage" class="text-2xl font-black text-orange-500">0%</span>
-                </div>
-                <!-- Multi-segment Progress Bar -->
-                <div class="w-full bg-slate-100 rounded-full h-4 overflow-hidden p-0.5 border border-slate-200">
-                    <div id="dash-progress-fill" class="bg-gradient-to-r from-orange-500 to-amber-400 h-full rounded-full transition-all duration-700 ease-out" style="width: 0%"></div>
-                </div>
-                <!-- 4 Pertemuan Markers -->
-                <div class="grid grid-cols-4 text-center text-xs text-slate-500 pt-1 font-medium">
-                    <div class="flex flex-col items-center">
-                        <span id="p1-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
-                        <span>1. Sepak Bola</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span id="p2-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
-                        <span>2. Bola Voli</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span id="p3-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
-                        <span>3. Bola Basket</span>
-                    </div>
-                    <div class="flex flex-col items-center">
-                        <span id="p4-dot" class="w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow"></span>
-                        <span>4. Evaluasi</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Stats Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl font-bold">
-                        <i class="fa-solid fa-square-check"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Pertemuan Tuntas</p>
-                        <h4 id="stat-completed-lessons" class="text-2xl font-black text-slate-800">0 / 4</h4>
-                    </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center text-xl font-bold">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Skor Kuis Tertinggi</p>
-                        <h4 id="stat-quiz-score" class="text-2xl font-black text-slate-800">0 / 100</h4>
-                    </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-xl font-bold">
-                        <i class="fa-solid fa-person-running"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Target Fisik</p>
-                        <h4 id="stat-target-count" class="text-2xl font-black text-slate-800">0 / 12</h4>
-                    </div>
-                </div>
-
-                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 flex items-center space-x-4">
-                    <div class="w-12 h-12 rounded-xl bg-purple-100 text-purple-600 flex items-center justify-center text-xl font-bold">
-                        <i class="fa-solid fa-award"></i>
-                    </div>
-                    <div>
-                        <p class="text-xs font-semibold uppercase tracking-wider text-slate-400">Lencana Perkembangan</p>
-                        <h4 id="stat-badge-name" class="text-base font-extrabold text-slate-800">Pemula</h4>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Quick Cards Navigation -->
-            <div class="space-y-4">
-                <h3 class="font-bold text-slate-800 text-xl flex items-center space-x-2">
-                    <i class="fa-solid fa-cubes text-orange-500"></i>
-                    <span>Modul Pembelajaran Utama</span>
-                </h3>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <!-- Module 1 -->
-                    <div onclick="openModule(1)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="w-10 h-10 rounded-xl bg-green-500/10 text-green-600 flex items-center justify-center font-bold">
-                                    <i class="fa-solid fa-futbol text-lg"></i>
-                                </span>
-                                <span id="m1-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
-                            </div>
-                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 1</span>
-                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Sepak Bola</h4>
-                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Variasi & Kombinasi Dribbling, Passing, dan Shooting.</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
-                            <span>Pelajari Modul</span>
-                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
-                        </div>
-                    </div>
+                <div class="flex justify-between">
+                    <button onclick="navigateTo('pertemuan1')" class="text-slate-400 hover:text-white font-medium px-4 py-2 text-xs flex items-center"><i class="fas fa-arrow-left mr-2"></i> Pertemuan 1</button>
+                    <button onclick="navigateTo('pertemuan3')" class="bg-sportAccent hover:bg-orange-600 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center text-xs font-heading shadow-md">
+                        Pertemuan 3 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </section>
 
-                    <!-- Module 2 -->
-                    <div onclick="openModule(2)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
+            <!-- ================= PERTEMUAN 3 ================= -->
+            <section id="pertemuan3" class="page-section fade-in">
+                <div class="sports-card rounded-3xl overflow-hidden mb-6 border-t-4 border-sportEmerald">
+                    <div class="bg-sportEmerald/30 p-6 md:p-8 flex items-center justify-between border-b border-slate-700">
                         <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center font-bold">
-                                    <i class="fa-solid fa-volleyball text-lg"></i>
-                                </span>
-                                <span id="m2-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
-                            </div>
-                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 2</span>
-                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Bola Voli</h4>
-                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Passing Bawah, Passing Atas, dan Servis Atas/Bawah.</p>
+                            <span id="p3Badge" class="bg-sportEmerald text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Pertemuan 3 • Semester 2</span>
+                            <h2 id="p3Title" class="text-2xl md:text-3xl font-black text-white font-heading">Kombinasi & Keterampilan</h2>
                         </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
-                            <span>Pelajari Modul</span>
-                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
-                        </div>
+                        <i class="fas fa-frog text-5xl text-sportEmerald/50 hidden md:block"></i>
                     </div>
+                    
+                    <div class="p-6 md:p-8 space-y-6">
+                        <p id="p3Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                            Menerapkan koordinasi tubuh dalam lompatan dan ketepatan sasaran.
+                        </p>
 
-                    <!-- Module 3 -->
-                    <div onclick="openModule(3)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="w-10 h-10 rounded-xl bg-orange-500/10 text-orange-600 flex items-center justify-center font-bold">
-                                    <i class="fa-solid fa-basketball text-lg"></i>
-                                </span>
-                                <span id="m3-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
+                        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-700">
+                            <div class="p-3 bg-slate-800 text-white text-xs font-semibold flex items-center">
+                                <i class="fas fa-video text-sportEmerald mr-2"></i> Video Pembelajaran Resmi
                             </div>
-                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 3</span>
-                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Bola Basket</h4>
-                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Chest Pass, Bounce Pass, Dribbling Cepat, dan Lay-up Shoot.</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
-                            <span>Pelajari Modul</span>
-                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
-                        </div>
-                    </div>
-
-                    <!-- Module 4 -->
-                    <div onclick="openModule(4)" class="group bg-white rounded-2xl p-5 shadow-sm hover:shadow-xl border border-slate-200 hover:border-orange-400 transition-all duration-300 cursor-pointer flex flex-col justify-between">
-                        <div>
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-600 flex items-center justify-center font-bold">
-                                    <i class="fa-solid fa-trophy text-lg"></i>
-                                </span>
-                                <span id="m4-status-badge" class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase">Belum</span>
+                            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                <iframe id="p3Video" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/A8qlRZSwMgU" title="Video Pertemuan 3" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
-                            <span class="text-xs font-bold text-orange-500 uppercase">Pertemuan 4</span>
-                            <h4 class="font-bold text-slate-800 text-base group-hover:text-orange-600 transition-colors">Evaluasi & Turnamen</h4>
-                            <p class="text-slate-500 text-xs mt-1 line-clamp-2">Mini Tournament, Rubrik Penilaian Diri & Evaluasi Akhir.</p>
-                        </div>
-                        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-bold text-orange-500">
-                            <span>Pelajari Modul</span>
-                            <i class="fa-solid fa-chevron-right transform group-hover:translate-x-1 transition-transform"></i>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <!-- VIEW 2: MATERI PERTEMUAN 1 - 4 -->
-        <section id="view-materi" class="tab-view space-y-8 hidden animate-fade-in">
-            <!-- Selector Tabs for Pertemuan -->
-            <div class="flex space-x-2 border-b border-slate-200 pb-2 overflow-x-auto">
-                <button onclick="switchModuleTab(1)" id="mod-tab-1" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-orange-500 text-white shadow-md">
-                    <i class="fa-solid fa-futbol mr-1.5"></i> Pertemuan 1: Sepak Bola
-                </button>
-                <button onclick="switchModuleTab(2)" id="mod-tab-2" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-volleyball mr-1.5"></i> Pertemuan 2: Bola Voli
-                </button>
-                <button onclick="switchModuleTab(3)" id="mod-tab-3" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-basketball mr-1.5"></i> Pertemuan 3: Bola Basket
-                </button>
-                <button onclick="switchModuleTab(4)" id="mod-tab-4" class="mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100">
-                    <i class="fa-solid fa-award mr-1.5"></i> Pertemuan 4: Evaluasi
-                </button>
-            </div>
-
-            <!-- MODULE CONTENT CONTAINER -->
-            <div id="module-content-area" class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 min-h-[500px]">
-                <!-- Dynamic Content Loaded via JavaScript -->
-            </div>
-        </section>
-
-        <!-- VIEW 3: KUIS INTERAKTIF -->
-        <section id="view-kuis" class="tab-view space-y-8 hidden animate-fade-in">
-            <!-- Quiz Start / Active View -->
-            <div id="quiz-container" class="bg-white rounded-3xl p-6 sm:p-10 shadow-sm border border-slate-200 max-w-3xl mx-auto">
-                <!-- Header Quiz -->
-                <div class="flex justify-between items-center pb-6 border-b border-slate-100">
-                    <div>
-                        <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Uji Pemahaman</span>
-                        <h2 class="text-2xl font-extrabold text-slate-800">Kuis Evaluasi Bola Besar</h2>
-                    </div>
-                    <div class="bg-slate-100 px-4 py-2 rounded-2xl text-center">
-                        <span class="text-xs text-slate-400 font-semibold block">Soal</span>
-                        <span id="quiz-progress-text" class="text-lg font-black text-slate-800">1 / 10</span>
-                    </div>
-                </div>
-
-                <!-- Quiz Question Block -->
-                <div id="quiz-active-block" class="py-6 space-y-6">
-                    <div class="bg-slate-50 p-5 rounded-2xl border border-slate-100">
-                        <span id="quiz-category" class="inline-block px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-blue-100 text-blue-700 mb-2">Sepak Bola</span>
-                        <p id="quiz-question" class="text-base sm:text-lg font-bold text-slate-800 leading-snug"> Loading pertanyaan...</p>
-                    </div>
-
-                    <!-- Options -->
-                    <div id="quiz-options" class="space-y-3">
-                        <!-- Options injected by JS -->
-                    </div>
-
-                    <!-- Feedback Box -->
-                    <div id="quiz-feedback" class="hidden p-4 rounded-2xl border text-sm space-y-2">
-                        <div class="flex items-center space-x-2 font-bold" id="quiz-feedback-title"></div>
-                        <p id="quiz-feedback-text" class="text-slate-600 text-xs leading-relaxed"></p>
-                    </div>
-
-                    <!-- Quiz Navigation Buttons -->
-                    <div class="flex justify-between items-center pt-4">
-                        <button id="quiz-prev-btn" onclick="prevQuestion()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold text-sm hover:bg-slate-50 disabled:opacity-50">
-                            <i class="fa-solid fa-arrow-left mr-1"></i> Sebelum
-                        </button>
-                        <button id="quiz-next-btn" onclick="nextQuestion()" class="px-6 py-2.5 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-md shadow-orange-500/20">
-                            Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Quiz Result Summary Block (Hidden by default) -->
-                <div id="quiz-result-block" class="hidden py-8 text-center space-y-6">
-                    <div class="w-24 h-24 mx-auto rounded-full bg-orange-100 text-orange-500 flex items-center justify-center text-4xl shadow-inner">
-                        <i class="fa-solid fa-trophy"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-2xl font-black text-slate-800">Kuis Selesai!</h3>
-                        <p class="text-slate-500 text-sm mt-1">Berikut adalah hasil evaluasi pemahaman Anda:</p>
-                    </div>
-
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 max-w-sm mx-auto space-y-2">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Skor Akhir</span>
-                        <div id="final-quiz-score" class="text-5xl font-black text-orange-500">0</div>
-                        <p id="quiz-score-message" class="text-xs font-medium text-slate-600">Tetap semangat belajar!</p>
-                    </div>
-
-                    <div class="pt-4 flex justify-center space-x-4">
-                        <button onclick="resetQuiz()" class="px-6 py-3 rounded-xl bg-slate-900 text-white font-bold text-sm hover:bg-slate-800 shadow-lg">
-                            <i class="fa-solid fa-rotate-right mr-2"></i> Ulangi Kuis
-                        </button>
-                        <button onclick="switchTab('dashboard')" class="px-6 py-3 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-lg shadow-orange-500/20">
-                            Kembali ke Dashboard
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- VIEW 4: REFLEKSI & JURNAL -->
-        <section id="view-refleksi" class="tab-view space-y-8 hidden animate-fade-in">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 
-                <!-- Refleksi Diri Form -->
-                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
-                    <div class="border-b border-slate-100 pb-4">
-                        <span class="text-xs font-bold text-orange-500 uppercase tracking-wider">Evaluasi Mandiri</span>
-                        <h3 class="text-xl font-extrabold text-slate-800">Formulir Refleksi Diri</h3>
-                        <p class="text-xs text-slate-500 mt-1">Isi evaluasi ini sesuai dengan apa yang kamu rasakan selama latihan.</p>
-                    </div>
+                <div class="flex justify-between">
+                    <button onclick="navigateTo('pertemuan2')" class="text-slate-400 hover:text-white font-medium px-4 py-2 text-xs flex items-center"><i class="fas fa-arrow-left mr-2"></i> Pertemuan 2</button>
+                    <button onclick="navigateTo('pertemuan4')" class="bg-sportEmerald hover:bg-emerald-600 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center text-xs font-heading shadow-md">
+                        Pertemuan 4 <i class="fas fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </section>
 
-                    <form id="reflection-form" onsubmit="saveReflection(event)" class="space-y-5">
+            <!-- ================= PERTEMUAN 4 ================= -->
+            <section id="pertemuan4" class="page-section fade-in">
+                <div class="sports-card rounded-3xl overflow-hidden mb-6 border-t-4 border-purple-500">
+                    <div class="bg-purple-600/30 p-6 md:p-8 flex items-center justify-between border-b border-slate-700">
                         <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Teknik Mana yang Paling Kamu Kuasai?</label>
-                            <select id="ref-best-tech" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500">
-                                <option>Dribbling & Passing Sepak Bola</option>
-                                <option>Passing Bawah & Servis Bola Voli</option>
-                                <option>Chest Pass & Lay-up Bola Basket</option>
-                                <option>Semuanya Dikuasai Dengan Baik</option>
-                            </select>
+                            <span id="p4Badge" class="bg-purple-600 text-white text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">Pertemuan 4 • Semester 2</span>
+                            <h2 id="p4Title" class="text-2xl md:text-3xl font-black text-white font-heading">Evaluasi & Praktik Mandiri</h2>
                         </div>
+                        <i class="fas fa-trophy text-5xl text-purple-400/50 hidden md:block"></i>
+                    </div>
+                    
+                    <div class="p-6 md:p-8 space-y-6">
+                        <p id="p4Desc" class="text-slate-300 text-xs md:text-sm leading-relaxed">
+                            Simulasi penilaian kinerja akhir dan uji sportivitas peserta didik.
+                        </p>
 
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Tingkat Kepercayaan Diri (1 - 5 Stars)</label>
-                            <div class="flex items-center space-x-2 text-2xl text-amber-400 cursor-pointer" id="star-rating-container">
-                                <i class="fa-solid fa-star star-btn" data-value="1" onclick="setRating(1)"></i>
-                                <i class="fa-solid fa-star star-btn" data-value="2" onclick="setRating(2)"></i>
-                                <i class="fa-solid fa-star star-btn" data-value="3" onclick="setRating(3)"></i>
-                                <i class="fa-solid fa-star star-btn" data-value="4" onclick="setRating(4)"></i>
-                                <i class="fa-regular fa-star star-btn" data-value="5" onclick="setRating(5)"></i>
+                        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-700">
+                            <div class="p-3 bg-slate-800 text-white text-xs font-semibold flex items-center">
+                                <i class="fas fa-video text-purple-400 mr-2"></i> Video Pembelajaran Resmi
+                            </div>
+                            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                <iframe id="p4Video" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/LzmUgMhdFDM" title="Video Pertemuan 4" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                             </div>
                         </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Kendala / Hal yang Masih Sulit Dilakukan</label>
-                            <textarea id="ref-notes" rows="3" placeholder="Contoh: Masih kesulitan menjaga keseimbangan saat melakukan Lay-up shoot..." class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500"></textarea>
-                        </div>
-
-                        <button type="submit" class="w-full py-3.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all">
-                            <i class="fa-solid fa-floppy-disk mr-2"></i> Simpan Catatan Refleksi
-                        </button>
-                    </form>
-                </div>
-
-                <!-- Jurnal Kebugaran Pekanan -->
-                <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200 space-y-6">
-                    <div class="border-b border-slate-100 pb-4 flex justify-between items-center">
-                        <div>
-                            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Aktivitas Fisik</span>
-                            <h3 class="text-xl font-extrabold text-slate-800">Jurnal Latihan Pekanan</h3>
-                        </div>
-                        <button onclick="addJournalEntry()" class="px-3 py-1.5 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 text-xs font-bold transition-all">
-                            + Tambah Entri
-                        </button>
                     </div>
+                </div>
+                
+                <div class="flex justify-between">
+                    <button onclick="navigateTo('pertemuan3')" class="text-slate-400 hover:text-white font-medium px-4 py-2 text-xs flex items-center"><i class="fas fa-arrow-left mr-2"></i> Pertemuan 3</button>
+                    <button onclick="navigateTo('video')" class="bg-sportPrimary hover:bg-sky-700 text-white px-6 py-2.5 rounded-xl font-bold transition flex items-center text-xs font-heading shadow-md">
+                        Galeri Video <i class="fas fa-video ml-2"></i>
+                    </button>
+                </div>
+            </section>
 
-                    <div id="journal-list" class="space-y-3 max-h-[350px] overflow-y-auto pr-1">
-                        <!-- Entries added dynamically -->
+            <!-- ================= GALERI VIDEO ================= -->
+            <section id="video" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-rose-500 rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-rose-500/20">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Galeri Video Pembelajaran Kurikulum</h2>
+                        <p class="text-xs text-slate-400">Tonton tutorial video resmi langsung dari platform</p>
                     </div>
                 </div>
 
-            </div>
-        </section>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="videoGalleryContainer">
+                    <!-- Dynamic populated -->
+                </div>
+            </section>
 
+            <!-- ================= KUIS INTERAKTIF ================= -->
+            <section id="kuis" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-amber-500 rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-amber-500/20">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Kuis Cerdas Tangkas PJOK</h2>
+                        <p class="text-xs text-slate-400">Uji tingkat pemahaman materi sesuai kelas kamu</p>
+                    </div>
+                </div>
+
+                <div class="sports-card rounded-3xl p-6 md:p-8" id="quiz-container">
+                    <div id="quiz-question-container" class="hidden">
+                        <div class="flex justify-between text-xs font-semibold text-slate-400 mb-2">
+                            <span id="quiz-progress">Soal 1/5</span>
+                            <span id="quiz-score-display">Skor: 0</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2.5 mb-6 overflow-hidden">
+                            <div class="bg-amber-500 h-2.5 rounded-full transition-all duration-300" id="quiz-progress-bar" style="width: 20%"></div>
+                        </div>
+
+                        <h4 class="text-base md:text-xl font-bold text-white mb-6 font-heading" id="quiz-question-text">Pertanyaan disini?</h4>
+                        <div class="space-y-3" id="quiz-options"></div>
+                    </div>
+
+                    <div id="quiz-result-container" class="hidden text-center py-8">
+                        <div class="w-20 h-20 rounded-full bg-amber-500/20 flex items-center justify-center mx-auto mb-4 border border-amber-500/30">
+                            <i class="fas fa-trophy text-4xl text-amber-400"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-1 font-heading">Kuis Selesai!</h3>
+                        <div class="text-4xl font-black text-amber-400 mb-6 font-heading" id="final-score">100</div>
+                        <button onclick="startQuiz()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2.5 px-6 rounded-xl transition text-xs font-heading shadow-md">
+                            <i class="fas fa-redo mr-2"></i> Ulangi Kuis
+                        </button>
+                    </div>
+
+                    <div id="quiz-start-container" class="text-center py-8">
+                        <div class="max-w-md mx-auto">
+                            <i class="fas fa-brain text-5xl text-amber-400 mb-4 animate-pulse"></i>
+                            <h3 class="text-xl font-bold text-white mb-2 font-heading">Siap Menguji Pengetahuanmu?</h3>
+                            <p class="text-slate-400 text-xs mb-6">Kuis disesuaikan dengan kurikulum kelas dan semester yang Anda pilih.</p>
+                            <button onclick="startQuiz()" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-8 rounded-xl shadow-lg transition transform hover:scale-105 text-xs font-heading">
+                                Mulai Kuis Sekarang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= TANTANGAN ================= -->
+            <section id="tantangan" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-yellow-500 rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-yellow-500/20">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Tantangan Gerak & Praktik Lapangan</h2>
+                        <p class="text-xs text-slate-400">Aktivitas mandiri / kelompok di lapangan sekolah</p>
+                    </div>
+                </div>
+                <div class="sports-card p-6 rounded-3xl border-t-4 border-yellow-500">
+                    <h3 class="text-base font-bold text-white mb-2 font-heading">Tugas Praktik Berkala</h3>
+                    <p class="text-slate-300 mb-4 text-xs">Gunakan bantuan kamera handphone teman untuk merekam teknik gerak sesuai materi semester berjalan, lalu diskusikan bersama Drs. H. Heru Prabowo di kelas.</p>
+                </div>
+            </section>
+
+            <!-- ================= EVALUASI ================= -->
+            <section id="evaluasi" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-teal-500 rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-teal-500/20">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Rubrik Penilaian Kinerja</h2>
+                        <p class="text-xs text-slate-400">Standar penilaian resmi guru PJOK SMP Bina Bangsa Mandiri</p>
+                    </div>
+                </div>
+                <div class="sports-card rounded-3xl p-6 overflow-x-auto border border-slate-700">
+                    <p class="text-slate-300 text-xs">Rubrik penilaian autentik Kurikulum Merdeka menilai aspek psikomotorik, kognitif, dan afektif (kedisiplinan serta sportivitas).</p>
+                </div>
+            </section>
+
+            <!-- ================= REFLEKSI ================= -->
+            <section id="refleksi" class="page-section fade-in">
+                <div class="flex items-center mb-6">
+                    <div class="w-12 h-12 bg-indigo-500 rounded-2xl flex items-center justify-center text-white text-xl mr-4 shadow-lg shadow-indigo-500/20">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white font-heading">Refleksi Pembelajaran</h2>
+                        <p class="text-xs text-slate-400">Umpan balik diri peserta didik</p>
+                    </div>
+                </div>
+                <div class="sports-card rounded-3xl p-6 md:p-8 border border-slate-700">
+                    <h3 class="text-base font-bold text-white mb-3 font-heading">Mari Evaluasi Diri Hari Ini:</h3>
+                    <p class="text-slate-300 text-xs">Tuliskan pengalaman belajarmu di buku catatan harian PJOK dan refleksikan apa tantangan terbesar yang berhasil kamu lewati.</p>
+                </div>
+            </section>
+
+        </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
-        <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p class="font-semibold text-slate-300">SMP Bina Bangsa Mandiri • Mata Pelajaran PJOK Kelas IX</p>
-            <p class="text-slate-500">Guru Pengampu: Drs. H. Heru Prabowo • Kurikulum Merdeka (4 Pertemuan Permainan Bola Besar)</p>
-            <p class="text-slate-600 pt-2">© 2026 EduSport PJOK IX. All rights reserved.</p>
-        </div>
-    </footer>
-
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
     <script>
-        /* APP STATE & LOCALSTORAGE ENGINE (MULTI-USER) */
-        const DB_KEY = 'PJOK_DB_USERS_BBM_V1';
-        let usersDatabase = {};
-        let currentUser = null;
-        let appData = {};
+        let currentUser = {
+            name: "",
+            grade: "8",
+            semester: "1"
+        };
 
-        function createDefaultData(name) {
-            return {
-                studentName: name,
-                completedModules: [false, false, false, false], // [P1, P2, P3, P4]
-                quizScore: 0,
-                quizCompleted: false,
-                checklists: {},
-                reflection: {
-                    bestTech: 'Dribbling & Passing Sepak Bola',
-                    rating: 4,
-                    notes: ''
+        // Comprehensive curriculum database for Grades 7, 8, 9 across Semester 1 & 2
+        const curriculumData = {
+            "7": {
+                "1": {
+                    title: "Kelas VII • Semester 1 (Ganjil)",
+                    sub: "Fase D - Pengenalan Dasar Aktivitas Jasmani & Atletik",
+                    cards: [
+                        { icon: "fa-walking", title: "Jalan Cepat Dasar", desc: "Mempelajari teknik langkah kaki dan koordinasi ayunan lengan dasar.", target: "materi" },
+                        { icon: "fa-running", title: "Lari Jarak Pendek", desc: "Mengenal start pendek dan kecepatan reaksi awal.", target: "materi" },
+                        { icon: "fa-shield-alt", title: "Pemanasan & Kebugaran", desc: "Pentingnya peregangan dinamis dan statis sebelum berolahraga.", target: "materi" },
+                        { icon: "fa-heartbeat", title: "Kesehatan Pribadi", desc: "Menjaga kebersihan diri dan pola hidup aktif sehat.", target: "materi" }
+                    ],
+                    tujuan: [
+                        "Memahami konsep dasar gerak lokomotor dalam atletik.",
+                        "Mempraktikkan teknik jalan cepat dan lari dasar dengan benar.",
+                        "Menunjukkan kedisiplinan dan kesadaran menjaga kesehatan diri.",
+                        "Memahami prosedur pemanasan dan keselamatan dasar."
+                    ],
+                    materiDetailed: [
+                        { 
+                            title: "A. Pengenalan Aktivitas Atletik & Jalan Cepat Dasar", 
+                            p1: "Atletik dikenal sebagai 'Mother of Sports' (ibu dari segala cabang olahraga) karena gerakan dasarnya mencakup jalan, lari, lompat, dan lempar yang merupakan insting natural manusia. Dalam Kurikulum Merdeka Fase D kelas VII semester ganjil, peserta didik diperkenalkan pada nomor jalan cepat di mana aturan utamanya adalah kaki harus senantiasa bersentuhan dengan tanah tanpa adanya saat melayang (terangkat bersamaan).",
+                            p2: "Latihan jalan cepat melatih koordinasi ritme langkah kaki yang konstan serta ayunan siku lengan 90 derajat secara rileks. Guru PJOK Drs. H. Heru Prabowo menekankan pentingnya menjaga postur tubuh tegak lurus pandangan ke depan agar efisiensi energi tercapai optimal sekaligus mencegah cedera pinggul bagi pemula.",
+                            video: "https://www.youtube.com/embed/gcTiXyIdcf4",
+                            badge: "Modul 1 • Jalan Cepat"
+                        },
+                        { 
+                            title: "B. Lari Jarak Pendek (Sprint) & Teknik Start Jongkok", 
+                            p1: "Lari jarak pendek atau sprint adalah jenis lari yang dilakukan dengan mengerahkan kecepatan maksimal (full speed) sepanjang jarak yang ditempuh mulai dari garis start hingga garis finish. Kunci keberhasilan lari pendek terletak pada reaksi yang cepat terhadap aba-aba start ('Bersedia', 'Siap', 'Ya!') serta kekuatan tolakan kaki pada blok start (start jongkok).",
+                            p2: "Peserta didik kelas 7 mempelajari tiga jenis start jongkok: start pendek (bunch start), start menengah (medium start), dan start panjang (long start). Penguasaan frekuensi langkah kaki yang cepat disertai condong badan ke depan pada saat akselerasi awal sangat menentukan perolehan waktu tempuh terbaik.",
+                            video: "https://www.youtube.com/embed/svsAU6_ovyY",
+                            badge: "Modul 2 • Lari Sprint"
+                        },
+                        { 
+                            title: "C. Pemanasan Dinamis & Pencegahan Cedera", 
+                            p1: "Pemanasan (warming-up) adalah rangkaian gerakan fisik wajib sebelum memasuki inti latihan olahraga guna menaikkan suhu tubuh dan detak jantung secara bertahap. Pemanasan dibagi menjadi dua jenis utama yaitu pemanasan statis (peregangan otot diam) dan pemanasan dinamis (gerakan berulang seperti putaran sendi leher, bahu, pinggang, dan lutut).",
+                            p2: "Melalui pendekatan kontekstual Kurikulum Merdeka, siswa diajak memahami bahwa otot yang belum siap menerima beban eksplosif sangat rentan mengalami kram atau robekan mikro. Oleh karena itu, disiplin melakukan pemanasan terstruktur di bawah bimbingan guru menjadi budaya positif di SMP Bina Bangsa Mandiri.",
+                            video: "https://www.youtube.com/embed/A8qlRZSwMgU",
+                            badge: "Modul 3 • Pemanasan"
+                        },
+                        { 
+                            title: "D. Kesehatan Pribadi & Kebiasaan Hidup Aktif", 
+                            p1: "Kebugaran jasmani tidak hanya dibentuk melalui latihan di lapangan, melainkan juga didukung oleh kebiasaan hidup bersih dan sehat sehari-hari. Siswa kelas 7 diajarkan bagaimana menjaga kebersihan kulit, pakaian olahraga, serta pentingnya istirahat yang cukup setelah melakukan aktivitas fisik berat agar proses pemulihan otot berjalan sempurna.",
+                            p2: "Pendidikan jasmani juga menanamkan kesadaran tentang pentingnya hidrasi tubuh dengan meminum air putih secukupnya sebelum dan sesudah berolahraga. Dengan pola hidup sehat ini, peserta didik dapat mengikuti seluruh rangkaian pembelajaran akademik maupun ekstrakurikuler dengan kondisi fisik yang selalu bugar.",
+                            video: "https://www.youtube.com/embed/LzmUgMhdFDM",
+                            badge: "Modul 4 • Kesehatan"
+                        }
+                    ],
+                    materiList: [
+                        { title: "A. Pengenalan Aktivitas Atletik", desc: "Pengertian dasar dan manfaat kebugaran tubuh." },
+                        { title: "B. Teknik Jalan Cepat Pemula", desc: "Aturan kontak kaki tidak terputus dengan tanah." },
+                        { title: "C. Lari Jarak Pendek Dasar", desc: "Posisi start jongkok dan ayunan lengan." },
+                        { title: "D. Pemanasan & Pencegahan Cedera", desc: "Urutan peregangan yang aman bagi sendi." }
+                    ],
+                    p1: { badge: "Kelas 7 • Sem 1 • Pertemuan 1", title: "Pengenalan & Teknik Jalan Cepat", desc: "Dasar-dasar gerak jalan cepat yang benar sesuai aturan atletik pemula.", video: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                    p2: { badge: "Kelas 7 • Sem 1 • Pertemuan 2", title: "Lari Jarak Pendek Dasar", desc: "Pengenalan teknik start jongkok dan lari sprint 50 meter.", video: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                    p3: { badge: "Kelas 7 • Sem 1 • Pertemuan 3", title: "Aktivitas Kebugaran Jasmani", desc: "Latihan kekuatan otot sederhana (push-up modifikasi, sit-up).", video: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                    p4: { badge: "Kelas 7 • Sem 1 • Pertemuan 4", title: "Evaluasi Semester 1", desc: "Uji keterampilan gerak dasar dan refleksi kebugaran.", video: "https://www.youtube.com/embed/LzmUgMhdFDM" },
+                    quiz: [
+                        { question: "Apa arti istilah 'Athlon' dari Yunani Kuno?", options: ["Kemenangan", "Berlomba / Bertanding", "Kekuatan", "Kecepatan"], correct: 1 },
+                        { question: "Sikap awal saat melakukan lari jarak pendek menggunakan start...", options: ["Start berdiri", "Start melayang", "Start jongkok", "Start bebas"], correct: 2 },
+                        { question: "Tujuan utama pemanasan sebelum berolahraga adalah...", options: ["Membuat lelah", "Mencegah cedera", "Mempercepat lapar", "Menambah beban"], correct: 1 },
+                        { question: "Manakah yang termasuk nomor lari jarak pendek?", options: ["100 meter", "1500 meter", "Maraton", "Lari gawang 3000m"], correct: 0 },
+                        { question: "Sikap sportif dalam olahraga berarti...", options: ["Curang demi menang", "Menerima kekalahan dengan lapang dada", "Marah saat kalah", "Mengejek lawan"], correct: 1 }
+                    ],
+                    videos: [
+                        { title: "Tutorial Jalan Cepat Kelas 7", url: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                        { title: "Teknik Start Jongkok Pemula", url: "https://www.youtube.com/embed/svsAU6_ovyY" }
+                    ]
                 },
-                journal: []
-            };
-        }
-
-        // Initialize App
-        window.addEventListener('DOMContentLoaded', () => {
-            loadDatabase();
-            document.getElementById('login-overlay').classList.remove('hidden');
-        });
-
-        function loadDatabase() {
-            const saved = localStorage.getItem(DB_KEY);
-            if (saved) {
-                try {
-                    usersDatabase = JSON.parse(saved);
-                } catch(e) {
-                    usersDatabase = {};
+                "2": {
+                    title: "Kelas VII • Semester 2 (Genap)",
+                    sub: "Fase D - Lompat Jauh Dasar, Senam & Kebersihan Lingkungan",
+                    cards: [
+                        { icon: "fa-frog", title: "Lompat Jauh Gaya Jongkok", desc: "Teknik awalan, tolakan, melayang, dan pendaratan.", target: "materi" },
+                        { icon: "fa-baseball-ball", title: "Tolak Peluru Sederhana", desc: "Mengenal alat dan tolakan peluru ringan.", target: "materi" },
+                        { icon: "fa-swimmer", title: "Aktivitas Air / Renang Dasar", desc: "Pengenalan keselamatan di air dan teknik pernapasan.", target: "materi" },
+                        { icon: "fa-apple-alt", title: "Pola Makan Sehat Gizi Seimbang", desc: "Edukasi gizi untuk pertumbuhan remaja.", target: "materi" }
+                    ],
+                    tujuan: [
+                        "Meguasai teknik dasar lompat jauh gaya jongkok.",
+                        "Mengenal dasar lempar/tolak menggunakan alat ringan secara aman.",
+                        "Memahami pentingnya kebugaran air dan keselamatan.",
+                        "Menerapkan pola hidup sehat dan gizi seimbang."
+                    ],
+                    materiDetailed: [
+                        { 
+                            title: "A. Lompat Jauh Gaya Jongkok (Tuck Style)", 
+                            p1: "Lompat jauh adalah nomor lompat dalam atletik di mana atlet berupaya melompat sejauh mungkin ke bak pasir dengan mengombinasikan kecepatan lari awalan dan kekuatan tolakan satu kaki. Pada kelas 7 semester genap, gaya yang dipelajari adalah gaya jongkok, yang dicirikan dengan menekuk lutut ke dada saat melayang di udara bagaikan posisi jongkok.",
+                            p2: "Tahapan lompat jauh terdiri dari 4 fase krusial: awalan (run-up) dengan lari kencang, tolakan (take-off) menggunakan kaki terkuat tepat di atas balok tumpuan, melayang di udara untuk menjaga keseimbangan, serta pendaratan yang aman menggunakan kedua tumit mengeper agar terhindar dari cedera tulang belakang.",
+                            video: "https://www.youtube.com/embed/A8qlRZSwMgU",
+                            badge: "Modul 1 • Lompat Jauh"
+                        },
+                        { 
+                            title: "B. Pengenalan Tolak Peluru Sederhana", 
+                            p1: "Tolak peluru adalah nomor lempar dalam atletik, namun menggunakan istilah 'menolak' alih-alih melempar karena alat besi bulat padat didorong dari bahu menggunakan satu tangan dengan tenaga eksplosif. Siswa diperkenalkan pada teknik dasar memegang peluru di pangkal jari-jari tangan serta meletakkannya dengan nyaman di leher samping dekat dagu.",
+                            p2: "Aspek keselamatan menjadi prioritas utama dalam pembelajaran tolak peluru di sekolah. Peserta didik dilatih untuk tidak pernah melempar peluru ke arah sesama teman serta memastikan sektor lemparan steril sebelum melakukan gerakan tolakan.",
+                            video: "https://www.youtube.com/embed/LzmUgMhdFDM",
+                            badge: "Modul 2 • Tolak Peluru"
+                        },
+                        { 
+                            title: "C. Aktivitas Pengenalan Air & Keselamatan", 
+                            p1: "Pendidikan jasmani air mencakup adaptasi psikologis di kolam renang, latihan pernapasan di dalam air, serta teknik mengapung dasar (floating). Keselamatan di air diajarkan secara ketat agar peserta didik memahami risiko dan tata cara penyelamatan diri maupun sesama di lingkungan perairan.",
+                            p2: "Melalui latihan akuatik ini, keberanian dan rasa percaya diri siswa meningkat secara signifikan. Aktivitas di air juga melibatkan hampir seluruh kelompok otot tubuh tanpa membebani persendian secara berlebihan.",
+                            video: "https://www.youtube.com/embed/gcTiXyIdcf4",
+                            badge: "Modul 3 • Aktivitas Air"
+                        },
+                        { 
+                            title: "D. Gizi Seimbang & Kesehatan Remaja", 
+                            p1: "Pertumbuhan fisik remaja usia SMP sangat membutuhkan asupan zat gizi seimbang yang terdiri dari karbohidrat kompleks, protein nabati dan hewani, vitamin, mineral, serta air bersih yang cukup. Makanan bergizi berfungsi sebagai bahan bakar utama energi harian dan pertumbuhan tulang serta jaringan otot.",
+                            p2: "Guru PJOK mengedukasi siswa untuk membatasi konsumsi makanan cepat saji (junk food) dan minuman berpemanis buatan yang dapat menurunkan performa fisik. Pemahaman gizi seimbang ini membentuk kesadaran pola makan sehat sepanjang hayat.",
+                            video: "https://www.youtube.com/embed/svsAU6_ovyY",
+                            badge: "Modul 4 • Gizi Seimbang"
+                        }
+                    ],
+                    materiList: [
+                        { title: "A. Lompat Jauh Awalan Pendek", desc: "Fokus pada ketepatan tolakan satu kaki di papan." },
+                        { title: "B. Pengenalan Tolak Peluru", desc: "Cara memegang peluru besi ringan di pangkal jari." },
+                        { title: "C. Aktivitas Pengenalan Air", desc: "Adaptasi di kolam renang dan teknik bernapas." },
+                        { title: "D. Gizi & Kesehatan Remaja", desc: "Makanan bergizi seimbang untuk energi harian." }
+                    ],
+                    p1: { badge: "Kelas 7 • Sem 2 • Pertemuan 1", title: "Lompat Jauh Gaya Jongkok", desc: "Praktik awalan, tolakan kaki terkuat, dan pendaratan aman ke bak pasir.", video: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                    p2: { badge: "Kelas 7 • Sem 2 • Pertemuan 2", title: "Pengenalan Tolak Peluru", desc: "Teknik memegang peluru dan tolakan dasar dari bahu.", video: "https://www.youtube.com/embed/LzmUgMhdFDM" },
+                    p3: { badge: "Kelas 7 • Sem 2 • Pertemuan 3", title: "Aktivitas Senam Lantai Dasar", desc: "Guling ke depan (roll depan) dan keseimbangan tubuh.", video: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                    p4: { badge: "Kelas 7 • Sem 2 • Pertemuan 4", title: "Uji Praktik Akhir Tahun", desc: "Evaluasi keterampilan lompat jauh dan kebugaran semester genap.", video: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                    quiz: [
+                        { question: "Bagian kaki yang digunakan untuk menolak pada lompat jauh adalah...", options: ["Dua kaki", "Satu kaki terkuat", "Tumit saja", "Ujung jari kaki"], correct: 1 },
+                        { question: "Anggota badan yang pertama kali menyentuh tempat pendaratan lompat jauh adalah...", options: ["Tangan", "Kepala", "Kedua tumit kaki", "Punggung"], correct: 2 },
+                        { question: "Alat yang ditolak dalam nomor tolak peluru berbentuk...", options: ["Bola kasti", "Bola besi bulat padat", "Cakram tipis", "Lembing kayu"], correct: 1 },
+                        { question: "Senam lantai guling depan memerlukan tumpuan utama pada...", options: ["Kepala", "Tengkuk/Pundak", "Siku tangan", "Perut"], correct: 1 },
+                        { question: "Makanan sehat seimbang harus mengandung unsur...", options: ["Karbohidrat, protein, vitamin", "Hanya lemak", "Pewarna buatan", "Makanan instan"], correct: 0 }
+                    ],
+                    videos: [
+                        { title: "Tutorial Lompat Jauh Pemula", url: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                        { title: "Teknik Dasar Tolak Peluru", url: "https://www.youtube.com/embed/LzmUgMhdFDM" }
+                    ]
                 }
-            }
-        }
-
-        function saveState() {
-            if (currentUser) {
-                usersDatabase[currentUser] = appData;
-                localStorage.setItem(DB_KEY, JSON.stringify(usersDatabase));
-                renderDashboard();
-            }
-        }
-
-        function handleEnter(e) {
-            if (e.key === 'Enter') handleLogin();
-        }
-
-        function handleLogin() {
-            const inputName = document.getElementById('login-input-name').value.trim();
-            if (!inputName) {
-                showToast("Peringatan", "Nama lengkap siswa tidak boleh kosong!");
-                return;
-            }
-
-            currentUser = inputName;
-            
-            if (usersDatabase[currentUser]) {
-                appData = usersDatabase[currentUser];
-                showToast("Berhasil Masuk", `Selamat datang kembali, ${currentUser}! Progres berhasil dimuat.`);
-            } else {
-                appData = createDefaultData(currentUser);
-                usersDatabase[currentUser] = appData;
-                showToast("Akun Dibuat", `Halo ${currentUser}! Selamat mulai belajar PJOK bersama Drs. H. Heru Prabowo.`);
-            }
-            
-            saveState();
-            
-            document.getElementById('login-overlay').classList.add('hidden');
-            
-            renderDashboard();
-            switchTab('dashboard');
-            switchModuleTab(1);
-            initQuiz();
-            renderJournal();
-            updateRatingStars(appData.reflection.rating || 4);
-            playSound('correct');
-        }
-
-        function handleLogout() {
-            currentUser = null;
-            appData = {};
-            document.getElementById('login-input-name').value = '';
-            document.getElementById('login-overlay').classList.remove('hidden');
-            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
-            showToast("Keluar", "Berhasil keluar dari sesi belajar.");
-        }
-
-        // Audio Effects using Web Audio API
-        function playSound(type) {
-            try {
-                const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-
-                if (type === 'correct') {
-                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15);
-                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.3);
-                } else if (type === 'wrong') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(220, ctx.currentTime);
-                    osc.frequency.exponentialRampToValueAtTime(130, ctx.currentTime + 0.2);
-                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
-                    osc.start();
-                    osc.stop(ctx.currentTime + 0.25);
+            },
+            "8": {
+                "1": {
+                    title: "Kelas VIII • Semester 1 (Ganjil)",
+                    sub: "Fase D - Eksplorasi Atletik Lanjutan & Kebugaran Jasmani",
+                    cards: [
+                        { icon: "fa-running", title: "Lari Sprint 100m & Start", desc: "Penguasaan teknik aba-aba start jongkok dan akselerasi.", target: "materi" },
+                        { icon: "fa-frog", title: "Lompat Jauh Mengambang", desc: "Penyempurnaan sikap badan di udara (walking in the air).", target: "materi" },
+                        { icon: "fa-baseball-ball", title: "Tolak Peluru Ortodoks", desc: "Teknik menolak peluru dengan awalan menyamping.", target: "materi" },
+                        { icon: "fa-dumbbell", title: "Latihan Daya Tahan & Sirkuit", desc: "Circuit training untuk peningkatan VO2Max remaja.", target: "materi" }
+                    ],
+                    tujuan: [
+                        "Menguasai teknik start jongkok dan lari sprint 100 meter secara optimal.",
+                        "Menerapkan teknik lompat jauh gaya jongkok/mengambang dengan jarak maksimal.",
+                        "Melakukan tolak peluru gaya ortodoks sesuai kaidah keselamatan.",
+                        "Meningkatkan komponen kebugaran jasmani melalui latihan daya tahan."
+                    ],
+                    materiDetailed: [
+                        { 
+                            title: "A. Lari Sprint 100 Meter & Teknik Akselerasi", 
+                            p1: "Pada tingkat kelas 8, materi lari jarak pendek ditingkatkan intensitasnya dengan fokus pada penyempurnaan teknik lari 100 meter. Siswa dilatih memperpanjang langkah kaki secara progresif setelah lepas dari balok start serta menjaga postur tubuh tetap rileks namun bertenaga hingga melewati garis akhir.",
+                            p2: "Kecepatan maksimal sangat ditentukan oleh koordinasi antara ayunan lengan yang kuat dan dorongan kaki belakang yang eksplosif. Latihan kecepatan reaksinya dilatih melalui berbagai variasi aba-aba start mendadak yang dipandu oleh guru.",
+                            video: "https://www.youtube.com/embed/svsAU6_ovyY",
+                            badge: "Modul 1 • Sprint 100m"
+                        },
+                        { 
+                            title: "B. Lompat Jauh Gaya Mengambang di Udara", 
+                            p1: "Lompat jauh gaya mengambang (hang style) atau sering pula dikombinasikan dengan gaya jalan di udara (walking in the air) memerlukan koordinasi tubuh yang lebih kompleks dibanding kelas 7. Setelah melakukan tolakan kuat dari balok tumpuan, posisi dada ditarik ke depan dan kaki diayunkan selayaknya melayang di udara.",
+                            p2: "Penguasaan teknik ini melatih keseimbangan dinamis atlet remaja. Saat akan mendarat, kedua tangan diayunkan ke depan lurus dan lutut ditekuk untuk meredam benturan sehingga jarak lompatan terjaga maksimal.",
+                            video: "https://www.youtube.com/embed/A8qlRZSwMgU",
+                            badge: "Modul 2 • Lompat Jauh"
+                        },
+                        { 
+                            title: "C. Tolak Peluru Gaya Ortodoks (Menyamping)", 
+                            p1: "Gaya ortodoks adalah teknik tolakan peluru dengan posisi awal menghadap ke samping arah lemparan (menyamping sektor tolakan). Kaki kiri berada di depan sementara kaki kanan menekuk di belakang sebagai poros tumpuan berat badan sebelum peluru ditolakkan.",
+                            p2: "Gerakan meluncur atau memutar pinggul ke arah depan-atas saat peluru dilepaskan menghasilkan tenaga dorong yang jauh lebih besar. Peserta didik dilatih mengevaluasi setiap hasil tolakan agar titik jatuhnya peluru semakin meningkat dari waktu ke waktu.",
+                            video: "https://www.youtube.com/embed/LzmUgMhdFDM",
+                            badge: "Modul 3 • Tolak Peluru"
+                        },
+                        { 
+                            title: "D. Latihan Kebugaran Jasmani & Circuit Training", 
+                            p1: "Kebugaran jasmani kelas 8 difokuskan pada peningkatan kapasitas kardiorespirasi dan kekuatan otot melalui metode sirkuit (circuit training). Dalam metode ini, siswa berpindah dari satu pos latihan ke pos latihan lainnya (seperti shuttle run, push-up, sit-up, squat jump) dengan waktu istirahat yang terukur.",
+                            p2: "Latihan sirkuit terbukti sangat efektif membakar kalori, membangun daya tahan otot, serta melatih mental pantang menyerah. Seluruh aktivitas dirancang menyenangkan dan kompetitif secara sehat di bawah pengawasan ketat guru PJOK.",
+                            video: "https://www.youtube.com/embed/gcTiXyIdcf4",
+                            badge: "Modul 4 • Kebugaran"
+                        }
+                    ],
+                    materiList: [
+                        { title: "A. Sprint & Aba-aba Start", desc: "Bersedia, Siap, Ya! dan dorongan awal." },
+                        { title: "B. Lompat Jauh: Melayang di Udara", desc: "Menjaga keseimbangan tubuh saat melompat." },
+                        { title: "C. Tolak Peluru Gaya Menyamping", desc: "Posisi bahu dan tolakan tangan eksplosif." },
+                        { title: "D. Kebugaran Jasmani & Sirkuit", desc: "Latihan lari bolak-balik (shuttle run) dan kekuatan." }
+                    ],
+                    p1: { badge: "Kelas 8 • Sem 1 • Pertemuan 1", title: "Lari Jarak Pendek (Sprint)", desc: "Penguasaan teknik aba-aba start jongkok dan kecepatan maksimal.", video: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                    p2: { badge: "Kelas 8 • Sem 1 • Pertemuan 2", title: "Lompat Jauh Gaya Jongkok", desc: "Meningkatkan kekuatan tolakan kaki dan gaya di udara.", video: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                    p3: { badge: "Kelas 8 • Sem 1 • Pertemuan 3", title: "Tolak Peluru Gaya Ortodoks", desc: "Teknik tolakan peluru dengan awalan menyamping sektor lapangan.", video: "https://www.youtube.com/embed/LzmUgMhdFDM" },
+                    p4: { badge: "Kelas 8 • Sem 1 • Pertemuan 4", title: "Latihan Kebugaran Jasmani", desc: "Pengukuran daya tahan jantung dan kekuatan otot pelajar.", video: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                    quiz: [
+                        { question: "Aba-aba pada start lari jarak pendek adalah...", options: ["Bersedia - Siap - Ya", "Mulai - Lari", "Ya - 1 - 2 - 3", "Hop - Jalan"], correct: 0 },
+                        { question: "Gaya tolakan peluru dengan posisi awal menyamping sudut lemparan disebut...", options: ["Gaya O'Brien", "Gaya Ortodoks", "Gaya Flop", "Gaya Walking"], correct: 1 },
+                        { question: "Komponen kebugaran jasmani yang diukur dengan lari bolak-balik (shuttle run) adalah...", options: ["Kelincahan", "Kelenturan", "Daya tahan", "Keseimbangan"], correct: 0 },
+                        { question: "Unsur utama dalam lari sprint adalah...", options: ["Kecepatan", "Kelonggaran", "Kelambatan", "Ketinggian"], correct: 0 },
+                        { question: "Sikap akhir setelah melakukan tolakan peluru adalah...", options: ["Melompat tinggi", "Menjaga keseimbangan agar tidak keluar lingkaran", "Duduk santai", "Berlari ke garis finish"], correct: 1 }
+                    ],
+                    videos: [
+                        { title: "Teknik Lari Sprint 100m", url: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                        { title: "Tolak Peluru Gaya Ortodoks", url: "https://www.youtube.com/embed/LzmUgMhdFDM" }
+                    ]
+                },
+                "2": {
+                    title: "Kelas VIII • Semester 2 (Genap)",
+                    sub: "Fase D - Aktivitas Permainan Bola Besar & Senam Ketangkasan",
+                    cards: [
+                        { icon: "fa-futbol", title: "Sepak Bola: Passing & Control", desc: "Teknik mengumpan dan mengontrol bola dengan kaki bagian dalam.", target: "materi" },
+                        { icon: "fa-basketball-ball", title: "Bola Basket: Dribble & Shooting", desc: "Penguasaan teknik memantulkan bola dan memasukkan ring.", target: "materi" },
+                        { icon: "fa-volleyball-ball", title: "Bola Voli: Passing Bawah & Atas", desc: "Koordinasi tangan dalam mengoper bola voli.", target: "materi" },
+                        { icon: "fa-child", title: "Senam Ketangkasan Rangkaian", desc: "Kombinasi guling lenting dan meroda.", target: "materi" }
+                    ],
+                    tujuan: [
+                        "Menguasai keterampilan gerak spesifik permainan bola besar (Sepak Bola, Basket, Voli).",
+                        "Menerapkan taktik permainan sederhana secara beregu.",
+                        "Melakukan rangkaian senam ketangkasan dengan koordinasi yang baik.",
+                        "Menumbuhkan nilai kerja sama tim dan sportivitas."
+                    ],
+                    materiDetailed: [
+                        { 
+                            title: "A. Sepak Bola: Passing, Controlling & Heading", 
+                            p1: "Permainan bola besar sepak bola memerlukan penguasaan teknik dasar yang matang agar aliran bola antar pemain berjalan efektif. Teknik passing (mengumpan) menggunakan kaki bagian dalam memberikan akurasi tinggi, sementara kontrol bola melatih kepekaan sentuhan sol sepatu atau dada saat menerima operan.",
+                            p2: "Selain itu, siswa kelas 8 mempelajari teknik heading (menyundul bola) secara benar menggunakan dahi bukan ubun-ubun kepala. Hal ini tidak hanya berguna dalam situasi mencetak gol, tetapi juga sebagai strategi bertahan menghalau serangan lawan.",
+                            video: "https://www.youtube.com/embed/gcTiXyIdcf4",
+                            badge: "Modul 1 • Sepak Bola"
+                        },
+                        { 
+                            title: "B. Bola Basket: Dribbling & Shooting", 
+                            p1: "Bola basket menuntut kelincahan tangan, visi permainan yang luas, dan koordinasi mata-tangan yang luar biasa. Teknik dribbling (menggiring bola) melatih kontrol pantulan bola rendah hingga menengah, sementara teknik chest pass memastikan operan bola sampai tepat di dada rekan setim.",
+                            p2: "Teknik shooting (menembak ke ring) menggunakan prinsip BEEF (Balance, Eyes, Elbow, Follow through) diajarkan secara bertahap agar persentase keberhasilan memasukkan bola meningkat saat pertandingan mini game di lapangan sekolah.",
+                            video: "https://www.youtube.com/embed/svsAU6_ovyY",
+                            badge: "Modul 2 • Bola Basket"
+                        },
+                        { 
+                            title: "C. Bola Voli: Passing Bawah & Passing Atas", 
+                            p1: "Bola voli adalah olahraga beregu yang sangat mengandalkan kerja sama tim dan komunikasi reaktif. Passing bawah dilakukan dengan merapatkan kedua lengan lurus ke depan saat bola datang dari bawah, sementara passing atas menggunakan ujung jari-jari tangan di atas dahi.",
+                            p2: "Penguasaan teknik passing yang matang menjadi fondasi utama terbangunnya serangan balik (smash) yang mematikan. Siswa dilatih menjaga posisi tubuh tetap rendah (siap) dan sigap mengantisipasi arah datangnya bola.",
+                            video: "https://www.youtube.com/embed/A8qlRZSwMgU",
+                            badge: "Modul 3 • Bola Voli"
+                        },
+                        { 
+                            title: "D. Senam Lantai Ketangkasan: Meroda & Guling Lenting", 
+                            p1: "Senam lantai ketangkasan tingkat lanjut kelas 8 memperkenalkan gerakan meroda (cartwheel) dan guling lenting (neck spring). Gerakan meroda melatih keseimbangan bertumpu secara bergantian antara tangan dan kaki membentuk garis lurus vertikal.",
+                            p2: "Sementara itu, guling lenting memadukan unsur guling ke belakang dengan letupan pinggang dan dorongan kuat tangan ke matras sehingga tubuh melenting ke depan posisi berdiri. Latihan ini menuntut fleksibilitas otot punggung dan keberanian yang tinggi.",
+                            video: "https://www.youtube.com/embed/LzmUgMhdFDM",
+                            badge: "Modul 4 • Senam Lantai"
+                        }
+                    ],
+                    materiList: [
+                        { title: "A. Sepak Bola Lanjutan", desc: "Passing, controlling, dan heading." },
+                        { title: "B. Bola Basket", desc: "Dribbling, passing (chest pass), dan shooting." },
+                        { title: "C. Bola Voli", desc: "Passing bawah dan passing atas beregu." },
+                        { title: "D. Senam Lantai Ketangkasan", desc: "Meroda dan guling lenting." }
+                    ],
+                    p1: { badge: "Kelas 8 • Sem 2 • Pertemuan 1", title: "Sepak Bola: Passing & Control", desc: "Latihan teknik dasar mengumpan dan menghentikan bola secara akurat.", video: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                    p2: { badge: "Kelas 8 • Sem 2 • Pertemuan 2", title: "Bola Basket: Dribble & Shooting", desc: "Praktik menggiring bola dan teknik menembak ke ring basket.", video: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                    p3: { badge: "Kelas 8 • Sem 2 • Pertemuan 3", title: "Bola Voli: Passing Bawah & Atas", desc: "Koordinasi lengan dan kaki dalam penerimaan bola voli.", video: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                    p4: { badge: "Kelas 8 • Sem 2 • Pertemuan 4", title: "Senam Ketangkasan Rangkaian", desc: "Praktik meroda dan keseimbangan balok titian.", video: "https://www.youtube.com/embed/LzmUgMhdFDM" },
+                    quiz: [
+                        { question: "Bagian kaki yang digunakan untuk mengoper jarak pendek dalam sepak bola adalah...", options: ["Kaki bagian luar", "Kaki bagian dalam", "Punggung kaki", "Ujung jari kaki"], correct: 1 },
+                        { question: "Teknik mengoper bola setinggi dada dalam bola basket disebut...", options: ["Bounce pass", "Chest pass", "Overhead pass", "Hook pass"], correct: 1 },
+                        { question: "Sentuhan bola pada passing bawah bola voli mengenai bagian...", options: ["Pergelangan tangan hingga siku", "Telapak tangan", "Kepala", "Ujung jari"], correct: 0 },
+                        { question: "Gerakan memutar tubuh menyamping seperti roda dalam senam lantai disebut...", options: ["Meroda", "Guling depan", "Sikap kapal terbang", "Kayang"], correct: 0 },
+                        { question: "Manfaat utama permainan beregu dalam PJOK adalah...", options: ["Menumbuhkan kerja sama dan sportivitas", "Mencari musuh", "Membuang waktu", "Menghindar dari tugas"], correct: 0 }
+                    ],
+                    videos: [
+                        { title: "Teknik Dasar Sepak Bola", url: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                        { title: "Passing Bawah Bola Voli", url: "https://www.youtube.com/embed/A8qlRZSwMgU" }
+                    ]
                 }
-            } catch (e) {}
-        }
-
-        /* NAVIGATION & TABS */
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-view').forEach(view => view.classList.add('hidden'));
-            document.getElementById(`view-${tabId}`).classList.remove('hidden');
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                btn.classList.remove('text-orange-400', 'bg-slate-800');
-                btn.classList.add('text-slate-300');
-            });
-
-            const activeBtn = document.getElementById(`nav-${tabId}`);
-            if (activeBtn) {
-                activeBtn.classList.add('text-orange-400', 'bg-slate-800');
-                activeBtn.classList.remove('text-slate-300');
-            }
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            menu.classList.toggle('hidden');
-        }
-
-        /* DASHBOARD METRICS RENDER */
-        function renderDashboard() {
-            if(!appData.studentName) return;
-            
-            document.getElementById('dash-student-name').innerText = appData.studentName;
-            document.getElementById('student-name-display').innerText = appData.studentName;
-
-            const completedCount = appData.completedModules.filter(Boolean).length;
-            const quizScoreContribution = (appData.quizScore / 100) * 25;
-            const lessonContribution = (completedCount / 4) * 75;
-            const totalPercent = Math.round(lessonContribution + quizScoreContribution);
-
-            document.getElementById('dash-percentage').innerText = `${totalPercent}%`;
-            document.getElementById('header-progress-text').innerText = `${totalPercent}% Done`;
-            document.getElementById('dash-progress-fill').style.width = `${totalPercent}%`;
-
-            document.getElementById('stat-completed-lessons').innerText = `${completedCount} / 4`;
-            document.getElementById('stat-quiz-score').innerText = `${appData.quizScore} / 100`;
-
-            const checkedTargets = Object.values(appData.checklists).filter(Boolean).length;
-            document.getElementById('stat-target-count').innerText = `${checkedTargets} / 12`;
-
-            let badge = 'Pemula';
-            if (totalPercent >= 90) badge = 'Master Bola Besar 🏆';
-            else if (totalPercent >= 60) badge = 'Atlit Berbakat 🌟';
-            else if (totalPercent >= 30) badge = 'Pemain Aktif 🏃';
-            document.getElementById('stat-badge-name').innerText = badge;
-
-            const moduleBadges = ['m1-status-badge', 'm2-status-badge', 'm3-status-badge', 'm4-status-badge'];
-            const dotBadges = ['p1-dot', 'p2-dot', 'p3-dot', 'p4-dot'];
-
-            appData.completedModules.forEach((isDone, idx) => {
-                const badgeEl = document.getElementById(moduleBadges[idx]);
-                const dotEl = document.getElementById(dotBadges[idx]);
-                if (isDone) {
-                    badgeEl.innerText = 'SELESAI';
-                    badgeEl.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase';
-                    dotEl.className = 'w-3 h-3 rounded-full bg-emerald-500 mb-1 border-2 border-white shadow';
-                } else {
-                    badgeEl.innerText = 'BELUM';
-                    badgeEl.className = 'px-2.5 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase';
-                    dotEl.className = 'w-3 h-3 rounded-full bg-slate-300 mb-1 border-2 border-white shadow';
+            },
+            "9": {
+                "1": {
+                    title: "Kelas IX • Semester 1 (Ganjil)",
+                    sub: "Fase D - Kompleksitas Gerak, Atletik Prestasi & Taktik Permainan",
+                    cards: [
+                        { icon: "fa-running", title: "Lari Estafet / Sambung", desc: "Teknik perpindahan tongkat estafet dan lari 4x100m.", target: "materi" },
+                        { icon: "fa-frog", title: "Lompat Tinggi / Lompat Jauh", desc: "Analisis biomekanika gerak lompatan maksimal.", target: "materi" },
+                        { icon: "fa-baseball-ball", title: "Tolak Peluru Gaya O'Brien", desc: "Teknik meluncur membelakangi arah tolakan untuk jarak maksimal.", target: "materi" },
+                        { icon: "fa-shield-alt", title: "Program Latihan Mandiri (FITT)", desc: "Merancang menu kebugaran jasmani pribadi.", target: "materi" }
+                    ],
+                    tujuan: [
+                        "Menguasai teknik lari estafet (sambung) dan koordinasi perpindahan tongkat.",
+                        "Menerapkan tolak peluru gaya O'Brien dengan efisiensi tenaga maksimal.",
+                        "Menganalisis strategi dan taktik dalam nomor atletik lanjutan.",
+                        "Mampu merancang program latihan kebugaran jasmani mandiri."
+                    ],
+                    materiDetailed: [
+                        { 
+                            title: "A. Lari Estafet (Sambung) & Perpindahan Tongkat", 
+                            p1: "Lari estafet adalah nomor lari beregu yang unik dalam atletik karena membutuhkan kerja sama tim yang luar biasa melalui penyerahan tongkat estafet dari pelari satu ke pelari berikutnya di dalam zona pergantian (exchange zone). Terdapat dua teknik utama yaitu cara visual (penerima menoleh ke belakang melihat tongkat) dan non-visual (penerima tidak menoleh, tangan menjulur ke belakang).",
+                            p2: "Ketepatan waktu dan kecepatan saat memasuki zona pergantian sangat menentukan kemenangan regu. Latihan intensif diberikan oleh Drs. H. Heru Prabowo agar setiap anggota regu menguasai peran sebagai pelari pertama hingga pelari penutup (anchor).",
+                            video: "https://www.youtube.com/embed/svsAU6_ovyY",
+                            badge: "Modul 1 • Lari Estafet"
+                        },
+                        { 
+                            title: "B. Tolak Peluru Gaya O'Brien (Glide Style)", 
+                            p1: "Gaya O'Brien adalah teknik tingkat lanjut tolak peluru di mana atlet mengambil posisi awal membelakangi arah lemparan, kemudian melakukan gerakan meluncur (glide) ke belakang sebelum melepaskan peluru dengan putaran pinggul yang eksplosif.",
+                            p2: "Teknik ini memanfaatkan hukum fisika momentum linier dan rotasi tubuh untuk menciptakan daya tolakan terjauh. Siswa kelas 9 dilatih menganalisis sudut lemparan ideal sekitar 40 hingga 45 derajat agar peluru meluncur parabola sempurna.",
+                            video: "https://www.youtube.com/embed/LzmUgMhdFDM",
+                            badge: "Modul 2 • Tolak Peluru O'Brien"
+                        },
+                        { 
+                            title: "C. Biomekanika Lompat Jauh Prestasi", 
+                            p1: "Pada tingkat akhir SMP, pemahaman siswa terhadap lompat jauh ditingkatkan pada tingkat analisis biomekanika gerak. Faktor kecepatan awalan (horizontal velocity), sudut tolakan kaki, dan aerodinamika tubuh saat melayang di udara menjadi parameter utama pencapaian prestasi terbaik.",
+                            p2: "Evaluasi video mandiri sering digunakan oleh guru untuk mengoreksi kesalahan kecil seperti kurangnya dorongan pinggul ke atas saat take-off atau terlalu cepat menekuk kaki saat melayang.",
+                            video: "https://www.youtube.com/embed/A8qlRZSwMgU",
+                            badge: "Modul 3 • Biomekanika Lompat"
+                        },
+                        { 
+                            title: "D. Perencanaan Kebugaran Mandiri Prinsip FITT", 
+                            p1: "Peserta didik kelas 9 dibekali kemampuan menyusun program latihan kebugaran jasmani mandiri berdasarkan prinsip FITT: Frequency (frekuensi latihan per minggu), Intensity (tingkat intensitas latihan), Time (durasi waktu), dan Type (jenis latihan yang dipilih).",
+                            p2: "Dengan pemahaman ini, siswa tidak hanya bergantung pada jam pelajaran sekolah semata, melainkan mampu menjaga kebugaran tubuh secara mandiri sebagai gaya hidup sehat berkelanjutan menjelang jenjang pendidikan SMA/SMK.",
+                            video: "https://www.youtube.com/embed/gcTiXyIdcf4",
+                            badge: "Modul 4 • Program FITT"
+                        }
+                    ],
+                    materiList: [
+                        { title: "A. Lari Estafet / Sambung", desc: "Teknik Visual dan Non-Visual perpindahan tongkat." },
+                        { title: "B. Tolak Peluru Gaya O'Brien", desc: "Teknik berputar/meluncur membelakangi sektor lemparan." },
+                        { title: "C. Analisis Biomekanika Lompat", desc: "Faktor sudut tolakan dan kecepatan awalan." },
+                        { title: "D. Perencanaan Kebugaran Mandiri", desc: "Prinsip FITT (Frequency, Intensity, Time, Type)." }
+                    ],
+                    p1: { badge: "Kelas 9 • Sem 1 • Pertemuan 1", title: "Lari Estafet & Perpindahan Tongkat", desc: "Teknik visual dan non-visual memberi serta menerima tongkat estafet.", video: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                    p2: { badge: "Kelas 9 • Sem 1 • Pertemuan 2", title: "Tolak Peluru Gaya O'Brien", desc: "Teknik meluncur membelakangi arah tolakan untuk momentum maksimal.", video: "https://www.youtube.com/embed/LzmUgMhdFDM" },
+                    p3: { badge: "Kelas 9 • Sem 1 • Pertemuan 3", title: "Analisis Lompat Jauh Prestasi", desc: "Penyempurnaan gaya menggantung (walking in the air).", video: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                    p4: { badge: "Kelas 9 • Sem 1 • Pertemuan 4", title: "Penyusunan Program Latihan", desc: "Evaluasi kebugaran jasmani tingkat lanjut kelas IX.", video: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                    quiz: [
+                        { question: "Dalam lari estafet, cara menerima tongkat tanpa menoleh ke belakang disebut cara...", options: ["Visual", "Non-Visual", "Bebas", "Kombinasi"], correct: 1 },
+                        { question: "Tolak peluru dengan posisi awal membelakangi arah tolakan diciptakan oleh...", options: ["Perry O'Brien", "James Naismith", "William G. Morgan", "Luther Gulick"], correct: 0 },
+                        { question: "Prinsip FITT dalam latihan kebugaran singkatan dari...", options: ["Frequency, Intensity, Time, Type", "Fast, Intensive, Tough, Total", "Fit, Iron, Time, Test", "Form, In, Out, Target"], correct: 0 },
+                        { question: "Nomor lari estafet resmi yang sering diperlombakan adalah...", options: ["4 x 100 meter dan 4 x 400 meter", "1000 meter", "Maraton estafet", "50 meter"], correct: 0 },
+                        { question: "Tujuan utama analisis gerak dalam atletik kelas IX adalah...", options: ["Meningkatkan efisiensi dan prestasi", "Mencari kesalahan teman", "Membuang waktu latihan", "Menghindari ujian"], correct: 0 }
+                    ],
+                    videos: [
+                        { title: "Teknik Lari Estafet 4x100m", url: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                        { title: "Tolak Peluru Gaya O'Brien", url: "https://www.youtube.com/embed/LzmUgMhdFDM" }
+                    ]
+                },
+                "2": {
+                    title: "Kelas IX • Semester 2 (Genap)",
+                    sub: "Fase D - Uji Kompetensi Akhir, Pertandingan & Kelulusan SMP",
+                    cards: [
+                        { icon: "fa-medal", title: "Uji Kompetensi & Classmeeting", desc: "Simulasi turnamen atau perlombaan antar kelas.", target: "materi" },
+                        { icon: "fa-heartbeat", title: "Tes Kebugaran Jasmani (TKJI)", desc: "Pengukuran standar nasional kebugaran siswa akhir SMP.", target: "materi" },
+                        { icon: "fa-notes-medical", title: "P3K & Penanganan Cedera (RICE)", desc: "Pertolongan pertama pada kram, keseleo, dan benturan.", target: "materi" },
+                        { icon: "fa-graduation-cap", title: "Refleksi Akhir & Kesiapan SMA", desc: "Pesan dan kesan pembelajaran PJOK bersama Drs. H. Heru Prabowo.", target: "materi" }
+                    ],
+                    tujuan: [
+                        "Mengikuti Tes Kebugaran Jasmani Indonesia (TKJI) dengan standar nilai optimal.",
+                        "Menerapkan prinsip Pertolongan Pertama Pada Kecelakaan (P3K) ringan di lapangan.",
+                        "Berpartisipasi aktif dalam turnamen/pertandingan olahraga antarkelas secara sportif.",
+                        "Memiliki kesiapan fisik dan mental prima menuju jenjang pendidikan menengah atas."
+                    ],
+                    materiDetailed: [
+                        { 
+                            title: "A. Tes Kebugaran Jasmani Indonesia (TKJI)", 
+                            p1: "Tes Kebugaran Jasmani Indonesia (TKJI) adalah instrumen pengukuran resmi nasional untuk anak usia sekolah menengah pertama (13-15 tahun). Rangkaian tes ini meliputi lari cepat 60 meter, gantung angkat tubuh (pull-up/chin-up), baring duduk (sit-up) 60 detik, loncat tegak (vertical jump), dan lari jarak 1000/1200 meter.",
+                            p2: "Hasil dari TKJI memberikan gambaran utuh mengenai tingkat daya tahan jantung, paru-paru, kekuatan, dan kelincahan peserta didik kelas IX sebelum menyelesaikan masa studi di SMP Bina Bangsa Mandiri.",
+                            video: "https://www.youtube.com/embed/gcTiXyIdcf4",
+                            badge: "Modul 1 • Standar TKJI"
+                        },
+                        { 
+                            title: "B. P3K & Penanganan Cedera Olahraga (Metode RICE)", 
+                            p1: "Cedera olahraga ringan seperti keseleo (sprain), kram otot, atau memar dapat terjadi kapan saja di lapangan. Penanganan cepat dan tepat sangat krusial untuk mempercepat proses penyembuhan dengan menerapkan metode RICE: Rest (istirahatkan bagian cedera), Ice (kompres es), Compression (balut perban elastis), dan Elevation (posisikan lebih tinggi dari jantung).",
+                            p2: "Siswa kelas 9 dilatih memiliki keterampilan dasar P3K darurat agar mampu menolong diri sendiri maupun rekan sesama siswa sebelum mendapatkan perawatan medis lanjutan dari tenaga profesional.",
+                            video: "https://www.youtube.com/embed/A8qlRZSwMgU",
+                            badge: "Modul 2 • Metode RICE"
+                        },
+                        { 
+                            title: "C. Sportivitas Turnamen & Kepemimpinan", 
+                            p1: "Sebagai tingkat tertinggi di sekolah menengah pertama, peserta didik kelas 9 diposisikan sebagai teladan kepemimpinan melalui partisipasi aktif dalam turnamen antarkelas (classmeeting). Mereka belajar mengorganisir pertandingan, menjalankan tugas sebagai wasit junior, serta menjunjung tinggi nilai fair play.",
+                            p2: "Sportivitas mengajarkan bahwa kemenangan diraih melalui kerja keras yang jujur, sementara kekalahan diterima dengan lapang dada dan semangat evaluasi diri.",
+                            video: "https://www.youtube.com/embed/svsAU6_ovyY",
+                            badge: "Modul 3 • Sportivitas"
+                        },
+                        { 
+                            title: "D. Refleksi Kelulusan & Transisi Menuju SMA", 
+                            p1: "Modul penutup ini merangkum seluruh perjalanan belajar PJOK selama tiga tahun di bawah bimbingan guru pengampu Drs. H. Heru Prabowo. Peserta didik melakukan refleksi mendalam terhadap perkembangan karakter disiplin, kebugaran jasmani, dan penguasaan teknik olahraga yang telah dicapai.",
+                            p2: "Bekal kesehatan dan mental juang yang diperoleh dari pembelajaran Kurikulum Merdeka ini menjadi modal berharga bagi para lulusan untuk menghadapi tantangan baru di jenjang SMA, SMK, maupun MAN kelak.",
+                            video: "https://www.youtube.com/embed/LzmUgMhdFDM",
+                            badge: "Modul 4 • Refleksi Akhir"
+                        }
+                    ],
+                    materiList: [
+                        { title: "A. Standar TKJI SMP Kelas IX", desc: "5 rangkaian tes kebugaran nasional." },
+                        { title: "B. Penanganan P3K Olahraga", desc: "Metode RICE (Rest, Ice, Compression, Elevation)." },
+                        { title: "C. Sportivitas & Kepemimpinan", desc: "Peran kapten tim dan wasit dalam pertandingan." },
+                        { title: "D. Evaluasi & Kelulusan PJOK", desc: "Rekapitulasi nilai dan portofolio prestasi siswa." }
+                    ],
+                    p1: { badge: "Kelas 9 • Sem 2 • Pertemuan 1", title: "Simulasi TKJI (Tes Kebugaran)", desc: "Pelaksanaan lari 60m, gantung angkat tubuh, baring duduk, loncat tegak, dan lari 1000m.", video: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                    p2: { badge: "Kelas 9 • Sem 2 • Pertemuan 2", title: "Penanganan Cedera & P3K", desc: "Penerapan metode RICE pada cedera olahraga ringan di sekolah.", video: "https://www.youtube.com/embed/A8qlRZSwMgU" },
+                    p3: { badge: "Kelas 9 • Sem 2 • Pertemuan 3", title: "Turnamen Sportif Antarkelas", desc: "Penerapan peraturan pertandingan resmi dan kepemimpinan wasit.", video: "https://www.youtube.com/embed/svsAU6_ovyY" },
+                    p4: { badge: "Kelas 9 • Sem 2 • Pertemuan 4", title: "Refleksi Kelulusan PJOK SMP", desc: "Penutupan rangkaian pembelajaran bersama Drs. H. Heru Prabowo.", video: "https://www.youtube.com/embed/LzmUgMhdFDM" },
+                    quiz: [
+                        { question: "Metode penanganan cedera keseleo/bengkak dengan istirahat, es, kompres, dan elevasi dikenal dengan istilah...", options: ["RICE", "FAST", "COOL", "HOT"], correct: 0 },
+                        { question: "TKJI untuk anak usia SMP (13-15 tahun) terdiri dari berapa jenis tes?", options: ["3 jenis", "5 jenis", "7 jenis", "10 jenis"], correct: 1 },
+                        { question: "Sikap mental utama yang harus dimiliki seorang atlet saat menghadapi kemenangan maupun kekalahan adalah...", options: ["Sombong", "Sportif dan rendah hati", "Dendam", "Putus asa"], correct: 1 },
+                        { question: "Apa fungsi utama kompres es pada cedera memar baru?", options: ["Mencegah pembengkakan lebih lanjut", "Menambah rasa sakit", "Mempercepat pertumbuhan otot", "Menghilangkan warna kulit"], correct: 0 },
+                        { question: "Pesan utama pembelajaran PJOK SMP Bina Bangsa Mandiri adalah...", options: ["Sehat, aktif, sportif, dan berkarakter", "Hanya mencari nilai rapor", "Menghindari keringat", "Bermain game online"], correct: 0 }
+                    ],
+                    videos: [
+                        { title: "Simulasi TKJI & Kebugaran", url: "https://www.youtube.com/embed/gcTiXyIdcf4" },
+                        { title: "Penanganan Cedera RICE", url: "https://www.youtube.com/embed/A8qlRZSwMgU" }
+                    ]
                 }
-            });
-        }
-
-        function openModule(num) {
-            switchTab('materi');
-            switchModuleTab(num);
-        }
-
-        const moduleContents = {
-            1: {
-                title: "Pertemuan 1: Sepak Bola (Variasi & Kombinasi)",
-                icon: "fa-futbol",
-                color: "green",
-                badge: "Variasi & Kombinasi Dribbling, Passing & Shooting",
-                objectives: [
-                    "Siswa dapat mempraktikkan variasi menggiring (dribbling) dengan kaki bagian dalam & luar.",
-                    "Siswa mampu mengombinasikan passing presisi dengan menembak bola (shooting) ke gawang.",
-                    "Mengembangkan koordinasi mata-kaki dan kelincahan gerak di lapangan."
-                ],
-                steps: [
-                    { title: "Langkah 1: Dribbling Zig-Zag", desc: "Gunakan kaki bagian dalam dan luar secara bergantian melewati 5 kerucut/cone. Jaga jarak bola tetap dekat dengan kaki." },
-                    { title: "Langkah 2: Kombinasi Passing Wall-Pass", desc: "Lakukan umpan pendek satu-dua (one-two) dengan rekan atau dinding pantul lalu bergerak membuka ruang." },
-                    { title: "Langkah 3: Finishing Shooting", desc: "Terima bola pantulan, lakukan 1 sentuhan kontrol, lalu lepaskan tembakan terarah ke sudut gawang menggunakan punggung kaki." }
-                ],
-                targets: [
-                    { id: 'p1_t1', text: 'Melakukan Dribbling Zig-Zag 3x putaran tanpa menyenggol cone' },
-                    { id: 'p1_t2', text: 'Melakukan 20x Passing akurat berpasangan jarak 5 meter' },
-                    { id: 'p1_t3', text: 'Melakukan 5x Shooting terarah ke gawang dengan power' }
-                ],
-                videoTitle: "Variasi & Kombinasi Gerak Spesifik Sepak Bola Kelas IX",
-                videoId: "0ALXQOvnNrk", 
-                youtubeUrl: "https://www.youtube.com/watch?v=0ALXQOvnNrk"
-            },
-            2: {
-                title: "Pertemuan 2: Bola Voli (Variasi & Kombinasi)",
-                icon: "fa-volleyball",
-                color: "blue",
-                badge: "Passing Bawah, Passing Atas & Servis",
-                objectives: [
-                    "Memahami posisi tubuh dan sudut lengan saat menerima smash atau servis lawan.",
-                    "Menguasai kombinasi Passing Bawah melambung dilanjutkan Passing Atas umpan smasher.",
-                    "Mampu melakukan servis atas/bawah yang akurat menyeberangi net."
-                ],
-                steps: [
-                    { title: "Langkah 1: Posisi Kuda-Kuda & Perkenaan Tangan", desc: "Tekuk lutut, rapatkan dan luruskan kedua lengan. Pastikan bola mengenai pergelangan tangan bawah." },
-                    { title: "Langkah 2: Kombinasi Passing Bawah -> Passing Atas", desc: "Terima bola rendah dengan passing bawah, lalu kawan setim melambungkan dengan passing atas memakai jari-jari tangan terbuka." },
-                    { title: "Langkah 3: Servis Atas / Bawah Terarah", desc: "Lakukan pukulan servis menargetkan area kosong lapangan lawan dengan dorongan bahu & pergelangan tangan." }
-                ],
-                targets: [
-                    { id: 'p2_t1', text: 'Passing bawah mandiri ke udara sebanyak 30x berturut-turut' },
-                    { id: 'p2_t2', text: 'Kombinasi Passing Bawah & Atas berpasangan 15x tanpa jatuh' },
-                    { id: 'p2_t3', text: 'Servis atas melewati net masuk area target 5/5 percobaan' }
-                ],
-                videoTitle: "Pembelajaran Bola Voli Kelas IX Semester 1 (Passing & Servis)",
-                videoId: "NhXiDGByTyU",
-                youtubeUrl: "https://www.youtube.com/watch?v=NhXiDGByTyU"
-            },
-            3: {
-                title: "Pertemuan 3: Bola Basket (Variasi & Kombinasi)",
-                icon: "fa-basketball",
-                color: "orange",
-                badge: "Chest Pass, Dribble Cepat & Lay-Up Shoot",
-                objectives: [
-                    "Menguasai teknik variasi Chest Pass (umpan dada) dan Bounce Pass (umpan pantul).",
-                    "Mengombinasikan dribble cepat berirama dengan irama langkah dua langkah (lay-up).",
-                    "Memahami timing dan tolakan satu kaki saat melepaskan bola di dekat ring."
-                ],
-                steps: [
-                    { title: "Langkah 1: Dribble Cepat Tinggi-Rendah", desc: "Pantulkan bola setinggi pinggang saat bergerak cepat, lalu rendahkan badan saat melewati rintangan." },
-                    { title: "Langkah 2: Umpan Kombinasi Chest & Bounce Pass", desc: "Oper bola tepat di depan dada lawan, selingi dengan umpan pantul untuk mengelabui lawan." },
-                    { title: "Langkah 3: Lay-Up Shoot 2 Langkah", desc: "Pegang bola di langkah pertama, langkah kedua melompat dengan tumpuan satu kaki, lepaskan bola perlahan ke papan pantul." }
-                ],
-                targets: [
-                    { id: 'p3_t1', text: 'Dribble melingkari lapangan dengan tangan kanan & kiri ganti' },
-                    { id: 'p3_t2', text: 'Chest pass presisi ke target sasaran 20x' },
-                    { id: 'p3_t3', text: 'Berhasil melakukan 5x Lay-Up Shoot kanan dan kiri' }
-                ],
-                videoTitle: "Permainan Bola Basket Kelas IX (Variasi & Kombinasi Gerak)",
-                videoId: "Qs2WvW92oxE",
-                youtubeUrl: "https://www.youtube.com/watch?v=Qs2WvW92oxE"
-            },
-            4: {
-                title: "Pertemuan 4: Mini Tournament & Evaluasi Keterampilan",
-                icon: "fa-trophy",
-                color: "purple",
-                badge: "Aplikasi Taktik, Kerjasama Tim & Penilaian",
-                objectives: [
-                    "Menerapkan seluruh kombinasi teknik dalam pertandingan mini (Mini Game 3v3 / 5v5).",
-                    "Menumbuhkan nilai sportivitas, komunikasi efektif, dan kerjasama tim.",
-                    "Melakukan evaluasi keterampilan mandiri dan rekan sejawat."
-                ],
-                steps: [
-                    { title: "Langkah 1: Pemanasan Dinamis & Peraturan Modifikasi", desc: "Lakukan pemanasan otot secara menyeluruh. Pahami aturan bermain cepat mini-tournament." },
-                    { title: "Langkah 2: Mini Match Rotasi Cepat", desc: "Bermain dalam durasi 2 x 7 menit. Terapkan variasi strategi menyerang dan bertahan." },
-                    { title: "Langkah 3: Debriefing & Self-Assessment", desc: "Diskusikan catatan strategi tim dan isi rubrik penilaian keterampilan diri." }
-                ],
-                targets: [
-                    { id: 'p4_t1', text: 'Mengikuti pertandingan mini game dengan menerapkan strategi tim' },
-                    { id: 'p4_t2', text: 'Menjunjung tinggi sportivitas & tidak melakukan pelanggaran konyol' },
-                    { id: 'p4_t3', text: 'Mengisi form refleksi dan jurnal kebugaran secara jujur' }
-                ],
-                videoTitle: "Video Pembelajaran PJOK Basket & Evaluasi Kelas IX",
-                videoId: "9xsOWnpTPDg",
-                youtubeUrl: "https://www.youtube.com/watch?v=9xsOWnpTPDg"
             }
         };
 
-        function switchModuleTab(num) {
-            document.querySelectorAll('.mod-tab-btn').forEach(btn => {
-                btn.className = 'mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-white text-slate-600 hover:bg-slate-100';
+        // --- Handle Login & Lock Content ---
+        function handleLogin(event) {
+            event.preventDefault();
+            const name = document.getElementById('studentNameInput').value.trim();
+            const grade = document.getElementById('studentClassSelect').value;
+            const semester = document.getElementById('studentSemesterSelect').value;
+
+            if(!name || !grade || !semester) return;
+
+            currentUser.name = name;
+            currentUser.grade = grade;
+            currentUser.semester = semester;
+
+            // Update UI elements across app
+            document.getElementById('sidebarStudentName').innerText = name;
+            document.getElementById('heroStudentName').innerText = name;
+            document.getElementById('mobileStudentName').innerText = name;
+            document.getElementById('heroSemesterText').innerText = "Semester " + semester;
+            
+            const gradeRoman = grade === '7' ? 'VII' : grade === '8' ? 'VIII' : 'IX';
+            document.getElementById('sidebarClassBadge').innerText = "KLS " + gradeRoman + " S" + semester;
+            document.getElementById('mobileClassHeader').innerText = "Kelas " + gradeRoman + " (Sem " + semester + ")";
+            document.getElementById('welcomeClassBadge').innerText = "Kurikulum Merdeka • Kelas " + gradeRoman + " Semester " + semester + " • SMP Bina Bangsa Mandiri";
+            document.getElementById('heroSubtitle').innerText = "PJOK FASE D — KELAS " + gradeRoman + " SEMESTER " + semester;
+
+            // Render dynamic content based on grade & semester
+            renderDynamicContent();
+
+            // Hide login screen completely and reveal content
+            const loginScreen = document.getElementById('loginScreen');
+            loginScreen.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+            setTimeout(() => {
+                loginScreen.classList.add('hidden');
+            }, 300);
+
+            navigateTo('beranda');
+        }
+
+        function logout() {
+            const loginScreen = document.getElementById('loginScreen');
+            loginScreen.classList.remove('hidden', 'opacity-0');
+            document.getElementById('studentNameInput').value = "";
+            document.getElementById('studentClassSelect').value = "";
+            document.getElementById('studentSemesterSelect').value = "";
+        }
+
+        function renderDynamicContent() {
+            const data = curriculumData[currentUser.grade][currentUser.semester];
+            
+            // Render Beranda Grid Cards
+            const gridContainer = document.getElementById('dynamicCurriculumGrid');
+            gridContainer.innerHTML = '';
+            data.cards.forEach((card, idx) => {
+                const colors = ['border-sportPrimary', 'border-sportAccent', 'border-sportEmerald', 'border-purple-500'];
+                const textColors = ['text-sportPrimary', 'text-sportAccent', 'text-sportEmerald', 'text-purple-400'];
+                const bgColors = ['bg-sportPrimary/20', 'bg-sportAccent/20', 'bg-sportEmerald/20', 'bg-purple-500/20'];
+                
+                gridContainer.innerHTML += `
+                    <div class="sports-card rounded-2xl p-5 text-center cursor-pointer border-t-4 ${colors[idx % colors.length]}" onclick="navigateTo('materi')">
+                        <div class="w-14 h-14 mx-auto ${bgColors[idx % bgColors.length]} ${textColors[idx % textColors.length]} rounded-2xl flex items-center justify-center text-2xl mb-3 border border-current/30">
+                            <i class="fas ${card.icon}"></i>
+                        </div>
+                        <h3 class="font-heading font-bold text-white text-sm">${card.title}</h3>
+                        <p class="text-[11px] text-slate-400 mt-1 line-clamp-2">${card.desc}</p>
+                    </div>
+                `;
             });
-            const activeTab = document.getElementById(`mod-tab-${num}`);
-            if (activeTab) {
-                activeTab.className = 'mod-tab-btn px-5 py-2.5 rounded-xl font-bold text-sm transition-all whitespace-nowrap bg-orange-500 text-white shadow-md';
-            }
 
-            renderModuleContent(num);
-        }
-
-        function renderModuleContent(num) {
-            const data = moduleContents[num];
-            const isCompleted = appData.completedModules[num - 1];
-
-            let targetsHTML = data.targets.map(t => {
-                const checked = appData.checklists[t.id] ? 'checked' : '';
-                return `
-                    <label class="flex items-start space-x-3 p-3 rounded-xl bg-slate-50 border border-slate-200 cursor-pointer hover:bg-slate-100 transition-colors">
-                        <input type="checkbox" onchange="toggleTarget('${t.id}')" ${checked} class="mt-1 w-4 h-4 text-orange-500 rounded focus:ring-orange-400">
-                        <span class="text-xs font-semibold text-slate-700">${t.text}</span>
-                    </label>
-                `;
-            }).join('');
-
-            let stepsHTML = data.steps.map((s, idx) => `
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
-                    <span class="text-[10px] font-black uppercase text-orange-500 tracking-wider">Langkah 0${idx+1}</span>
-                    <h5 class="font-bold text-slate-800 text-sm">${s.title}</h5>
-                    <p class="text-xs text-slate-600 leading-relaxed">${s.desc}</p>
-                </div>
-            `).join('');
-
-            const html = `
-                <div class="space-y-8 animate-fade-in">
-                    <!-- Top Info Header -->
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 pb-6 border-b border-slate-100">
-                        <div>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-100 text-orange-600 mb-2">
-                                <i class="fa-solid ${data.icon} mr-1.5"></i> ${data.badge}
-                            </span>
-                            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">${data.title}</h2>
-                        </div>
-                        
-                        <button onclick="toggleModuleComplete(${num})" class="px-5 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center space-x-2 ${isCompleted ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-slate-900 text-white hover:bg-slate-800'}">
-                            <i class="fa-solid ${isCompleted ? 'fa-circle-check' : 'fa-check'}"></i>
-                            <span>${isCompleted ? 'Pertemuan Tuntas!' : 'Tandai Selesai'}</span>
-                        </button>
-                    </div>
-
-                    <!-- Objectives -->
-                    <div class="bg-blue-50/70 border border-blue-200/60 rounded-2xl p-5 space-y-2">
-                        <h4 class="text-xs font-black uppercase text-blue-800 tracking-wider flex items-center">
-                            <i class="fa-solid fa-bullseye mr-2"></i> Tujuan Pembelajaran Ringkas
-                        </h4>
-                        <ul class="list-disc list-inside text-xs text-slate-700 space-y-1.5 font-medium">
-                            ${data.objectives.map(o => `<li>${o}</li>`).join('')}
-                        </ul>
-                    </div>
-
-                    <!-- Step by Step Kombinasi -->
-                    <div class="space-y-3">
-                        <h4 class="font-bold text-slate-800 text-base flex items-center">
-                            <i class="fa-solid fa-list-ol mr-2 text-orange-500"></i> Panduan Tahapan Kombinasi Gerak
-                        </h4>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            ${stepsHTML}
-                        </div>
-                    </div>
-
-                    <!-- Latihan Fisik Target & Video Demo Grid -->
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-4">
-                        <!-- Left: Checkbox Targets -->
-                        <div class="space-y-3">
-                            <h4 class="font-bold text-slate-800 text-base flex items-center">
-                                <i class="fa-solid fa-list-check mr-2 text-orange-500"></i> Target Latihan Praktik Mandiri
-                            </h4>
-                            <div class="space-y-2">
-                                ${targetsHTML}
-                            </div>
-                        </div>
-
-                        <!-- Right: Interactive Dynamic Video Player -->
-                        <div class="space-y-3">
-                            <div class="flex items-center justify-between">
-                                <h4 class="font-bold text-slate-800 text-base flex items-center">
-                                    <i class="fa-solid fa-circle-play mr-2 text-red-500"></i> Video Pembelajaran & Praktik
-                                </h4>
-                            </div>
-
-                            <!-- Dynamic Player Box -->
-                            <div id="video-player-box-${num}" class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 aspect-video relative group flex items-center justify-center">
-                                <img src="https://img.youtube.com/vi/${data.videoId}/hqdefault.jpg" alt="${data.videoTitle}" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 pointer-events-none">
-                                
-                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent flex flex-col justify-between p-5 z-10">
-                                    <div class="flex justify-between items-start">
-                                        <span class="bg-emerald-600 text-white text-[10px] font-black uppercase px-2.5 py-1 rounded-md shadow flex items-center gap-1">
-                                            <i class="fa-solid fa-circle-check"></i> YouTube Player Ready
-                                        </span>
-                                        <span class="bg-slate-900/80 backdrop-blur text-slate-200 text-[10px] font-semibold px-2.5 py-1 rounded-md border border-slate-700">
-                                            Modul ${num}
-                                        </span>
-                                    </div>
-
-                                    <div class="space-y-3 text-center sm:text-left">
-                                        <h5 class="text-white font-bold text-sm sm:text-base line-clamp-2 drop-shadow-md">${data.videoTitle}</h5>
-                                        <div class="flex flex-wrap gap-2 justify-center sm:justify-start">
-                                            <button onclick="playEmbeddedVideo(${num})" class="px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-xs shadow-lg shadow-orange-500/40 transition-all flex items-center space-x-2">
-                                                <i class="fa-solid fa-play"></i>
-                                                <span>Putar Langsung di Web</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('module-content-area').innerHTML = html;
-        }
-
-        function playEmbeddedVideo(moduleNum) {
-            const data = moduleContents[moduleNum];
-            const container = document.getElementById(`video-player-box-${moduleNum}`);
-            if (!container || !data) return;
-
-            const isLocalFile = window.location.protocol === 'file:';
-
-            if (isLocalFile) {
-                container.innerHTML = `
-                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-slate-900 text-white">
-                        <div class="w-16 h-16 rounded-2xl bg-red-500/15 text-red-400 flex items-center justify-center text-3xl mb-4">
-                            <i class="fa-brands fa-youtube"></i>
-                        </div>
-                        <h5 class="font-bold text-base mb-2">Video siap ditonton</h5>
-                        <p class="text-xs text-slate-400 max-w-md leading-relaxed mb-5">
-                            File sedang dibuka secara lokal (<code>file://</code>). Klik tombol di bawah untuk membuka video di YouTube.
-                        </p>
-                        <a href="${data.youtubeUrl}" target="_blank" rel="noopener noreferrer"
-                           class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-lg transition-all inline-flex items-center gap-2">
-                            <i class="fa-brands fa-youtube"></i>
-                            <span>Tonton di YouTube</span>
-                        </a>
+            // Render Tujuan Pembelajaran
+            const tujuanContainer = document.getElementById('tujuanCardsContainer');
+            document.getElementById('tujuanDescText').innerText = `Capaian Pembelajaran untuk Kelas ${currentUser.grade} Semester ${currentUser.semester}:`;
+            tujuanContainer.innerHTML = '';
+            data.tujuan.forEach((t, i) => {
+                tujuanContainer.innerHTML += `
+                    <div class="flex items-start p-4 bg-slate-800/60 rounded-2xl border border-slate-700/50">
+                        <div class="bg-sportPrimary/20 text-sportPrimary w-8 h-8 rounded-xl flex items-center justify-center font-bold mr-4 flex-shrink-0 text-sm border border-sportPrimary/30">${i+1}</div>
+                        <p class="text-slate-300 text-xs md:text-sm">${t}</p>
                     </div>
                 `;
-                return;
+            });
+
+            // Render Materi Detailed (2 Paragraphs + Video per Topic)
+            const materiDetailedContainer = document.getElementById('materiDetailedContainer');
+            materiDetailedContainer.innerHTML = '';
+            data.materiDetailed.forEach((m, idx) => {
+                materiDetailedContainer.innerHTML += `
+                    <div class="sports-card rounded-3xl p-6 md:p-8 border-t-4 border-sportEmerald space-y-6">
+                        <div class="flex flex-col md:flex-row md:items-center justify-between gap-2 border-b border-slate-700 pb-4">
+                            <div>
+                                <span class="bg-sportEmerald/20 text-sportEmerald text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider mb-1 inline-block">${m.badge}</span>
+                                <h3 class="text-xl md:text-2xl font-black text-white font-heading">${m.title}</h3>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 text-slate-300 text-xs md:text-sm leading-relaxed">
+                            <p>${m.p1}</p>
+                            <p>${m.p2}</p>
+                        </div>
+
+                        <div class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-700">
+                            <div class="p-3 bg-slate-800 text-white text-xs font-semibold flex items-center">
+                                <i class="fas fa-video text-sportEmerald mr-2"></i> Video Pembelajaran Resmi Topik Ini
+                            </div>
+                            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                                <iframe class="absolute top-0 left-0 w-full h-full" src="${m.video}" title="${m.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Render Pertemuan 1 - 4 details
+            ['p1', 'p2', 'p3', 'p4'].forEach((pKey, idx) => {
+                const mod = data[pKey];
+                document.getElementById(`${pKey}Badge`).innerText = mod.badge;
+                document.getElementById(`${pKey}Title`).innerText = mod.title;
+                document.getElementById(`${pKey}Desc`).innerText = mod.desc;
+                document.getElementById(`${pKey}Video`).src = mod.video;
+            });
+
+            // Render Video Gallery
+            const vidContainer = document.getElementById('videoGalleryContainer');
+            vidContainer.innerHTML = '';
+            data.videos.forEach(v => {
+                vidContainer.innerHTML += `
+                    <div class="sports-card rounded-2xl overflow-hidden border border-slate-700">
+                        <div class="relative w-full" style="padding-bottom: 56.25%;">
+                            <iframe class="absolute top-0 left-0 w-full h-full" src="${v.url}" title="${v.title}" frameborder="0" allowfullscreen></iframe>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-heading font-bold text-white text-sm">${v.title}</h3>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // --- Navigation Logic ---
+        function navigateTo(sectionId) {
+            document.querySelectorAll('.page-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            
+            const target = document.getElementById(sectionId);
+            if(target) {
+                target.classList.add('active');
+                document.querySelector('main').scrollTo(0,0);
             }
 
-            const origin = encodeURIComponent(window.location.origin);
-            const embedUrl = `https://www.youtube.com/embed/${encodeURIComponent(data.videoId)}?autoplay=1&rel=0&playsinline=1&origin=${origin}`;
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('bg-sportPrimary/20', 'text-white', 'border-sportPrimary/30');
+                link.classList.add('text-slate-300');
+                if(link.getAttribute('data-target') === sectionId) {
+                    link.classList.remove('text-slate-300');
+                    link.classList.add('bg-sportPrimary/20', 'text-white', 'border', 'border-sportPrimary/30');
+                }
+            });
 
-            container.innerHTML = `
-                <iframe
-                    class="w-full h-full rounded-2xl shadow-inner border-0"
-                    src="${embedUrl}"
-                    title="${data.videoTitle}"
-                    loading="lazy"
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                </iframe>
-            `;
-        }
-
-        function toggleTarget(targetId) {
-            appData.checklists[targetId] = !appData.checklists[targetId];
-            saveState();
-        }
-
-        function toggleModuleComplete(num) {
-            appData.completedModules[num - 1] = !appData.completedModules[num - 1];
-            saveState();
-            renderModuleContent(num);
-            if (appData.completedModules[num - 1]) {
-                playSound('correct');
-                showToast("Pertemuan Selesai!", `Selamat, kamu telah melengkapi Pertemuan ${num}!`);
+            if(window.innerWidth < 768) {
+                const sidebar = document.getElementById('sidebar');
+                const overlay = document.getElementById('sidebarOverlay');
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
             }
         }
 
-        const quizQuestions = [
-            {
-                category: "Sepak Bola",
-                question: "Teknik menghentikan atau mengontrol bola yang melayang di udara dapat menggunakan bagian tubuh berikut, KECUALI...",
-                options: ["Dada", "Paha", "Telapak Tangan", "Punggung Kaki"],
-                answer: 2,
-                explanation: "Dalam permainan sepak bola, pemain lapangan selain kiper dilarang menyentuh bola menggunakan tangan atau lengan."
-            },
-            {
-                category: "Sepak Bola",
-                question: "Untuk menghasilkan tendangan melambung jauh (passing jarak jauh), perkenaan bola yang benar pada kaki adalah...",
-                options: ["Ujung jari kaki", "Kaki bagian dalam", "Punggung kaki bagian bawah bola", "Tumit kaki"],
-                answer: 2,
-                explanation: "Menendang bagian bawah bola dengan punggung kaki memberi daya angkat dan jarak tempuh yang jauh."
-            },
-            {
-                category: "Bola Voli",
-                question: "Saat melakukan passing bawah bola voli, posisi kedua lengan yang benar adalah...",
-                options: ["Ditekuk di depan dada", "Direnggangkan selebar bahu", "Rapat dan lurus dikunci di depan bawah", "Ditinggikan di atas kepala"],
-                answer: 2,
-                explanation: "Kedua lengan harus dirapatkan dan diluruskan agar permukaan bidang pantul bola rata dan stabil."
-            },
-            {
-                category: "Bola Voli",
-                question: "Pukulan keras dan tajam menukik ke area lapangan lawan untuk mematikan pertahanan disebut...",
-                options: ["Passing", "Smash / Spike", "Servis", "Blocking"],
-                answer: 1,
-                explanation: "Smash atau spike adalah pukulan serangan utama yang dilakukan dengan lompatan tinggi dan pukulan menukik."
-            },
-            {
-                category: "Bola Basket",
-                question: "Operan mendatar setinggi dada dalam permainan bola basket dinamakan...",
-                options: ["Bounce Pass", "Overhead Pass", "Chest Pass", "Baseball Pass"],
-                answer: 2,
-                explanation: "Chest pass adalah teknik mengumpan bola lurus mendatar setinggi dada rekan satu tim."
-            },
-            {
-                category: "Bola Basket",
-                question: "Jumlah langkah maksimal yang diperbolehkan saat memegang bola sebelum melompat pada gerakan Lay-Up Shoot adalah...",
-                options: ["1 Langkah", "2 Langkah", "3 Langkah", "Bebas"],
-                answer: 1,
-                explanation: "Lay-up shoot diawali dengan gerakan memasukkan bola dengan melangkah maksimal 2 langkah lalu melompat dekat ring."
-            },
-            {
-                category: "Sepak Bola",
-                question: "Variasi gerak menggiring bola (dribbling) zig-zag bertujuan untuk melatih...",
-                options: ["Kekuatan pukulan", "Kelincahan dan kontrol bola", "Ketinggian lompatan", "Daya tahan pernapasan"],
-                answer: 1,
-                explanation: "Dribbling zig-zag mengasah kelincahan kelenturan tubuh serta kontrol jarak bola dengan kaki."
-            },
-            {
-                category: "Bola Voli",
-                question: "Pemain yang bertugas khusus sebagai pemain bertahan dan bebas keluar masuk tanpa servis dinamakan...",
-                options: ["Tosser / Setter", "Spaker", "Libero", "Universalist"],
-                answer: 2,
-                explanation: "Libero adalah pemain spesialis bertahan yang memakai jersey berbeda warna."
-            },
-            {
-                category: "Bola Basket",
-                question: "Gerakan memutar badan dengan satu kaki sebagai poros pertumpuan untuk melindungi bola dinamakan...",
-                options: ["Pivot", "Rebound", "Screen", "Dribble"],
-                answer: 0,
-                explanation: "Pivot adalah gerakan menyelamatkan bola dari sergapan lawan dengan berputar pada satu kaki tumpuan."
-            },
-            {
-                category: "Evaluasi PJOK",
-                question: "Nilai utama yang paling penting dijunjung tinggi saat mengikuti mini tournament olahraga adalah...",
-                options: ["Menang dengan segala cara", "Sportivitas dan kerja sama tim", "Menghina lawan saat unggul", "Bermain secara individu"],
-                answer: 1,
-                explanation: "Sportivitas, saling menghormati, dan kerja sama tim adalah nilai karakter utama dalam pembelajaran PJOK."
-            }
-        ];
-
-        let currentQuizIndex = 0;
-        let selectedAnswers = new Array(quizQuestions.length).fill(null);
-
-        function initQuiz() {
-            currentQuizIndex = 0;
-            selectedAnswers = new Array(quizQuestions.length).fill(null);
-            document.getElementById('quiz-active-block').classList.remove('hidden');
-            document.getElementById('quiz-result-block').classList.add('hidden');
-            renderQuizQuestion();
-        }
-
-        function renderQuizQuestion() {
-            const q = quizQuestions[currentQuizIndex];
-            document.getElementById('quiz-progress-text').innerText = `${currentQuizIndex + 1} / ${quizQuestions.length}`;
-            document.getElementById('quiz-category').innerText = q.category;
-            document.getElementById('quiz-question').innerText = q.question;
-
-            const prevBtn = document.getElementById('quiz-prev-btn');
-            prevBtn.disabled = currentQuizIndex === 0;
-
-            const nextBtn = document.getElementById('quiz-next-btn');
-            if (currentQuizIndex === quizQuestions.length - 1) {
-                nextBtn.innerHTML = `Selesai & Lihat Hasil <i class="fa-solid fa-check-double ml-1"></i>`;
+        // --- Sidebar Mobile Toggle ---
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            
+            if (sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.remove('-translate-x-full', 'hidden');
+                sidebar.classList.add('fixed', 'z-40');
+                overlay.classList.remove('hidden');
             } else {
-                nextBtn.innerHTML = `Berikutnya <i class="fa-solid fa-arrow-right ml-1"></i>`;
+                sidebar.classList.add('-translate-x-full');
+                setTimeout(() => {
+                    sidebar.classList.remove('fixed', 'z-40');
+                    overlay.classList.add('hidden');
+                }, 300);
             }
+        }
+
+        window.addEventListener('resize', () => {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebarOverlay');
+            if (window.innerWidth >= 768) {
+                sidebar.classList.remove('-translate-x-full', 'fixed', 'z-40');
+                sidebar.classList.add('md:translate-x-0', 'relative', 'md:flex');
+                overlay.classList.add('hidden');
+            }
+        });
+
+        // --- Quiz Logic ---
+        let currentQuestion = 0;
+        let score = 0;
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-start-container').classList.add('hidden');
+            document.getElementById('quiz-result-container').classList.add('hidden');
+            document.getElementById('quiz-question-container').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const quizData = curriculumData[currentUser.grade][currentUser.semester].quiz;
+            const q = quizData[currentQuestion];
+            document.getElementById('quiz-question-text').innerText = q.question;
+            document.getElementById('quiz-progress').innerText = `Soal ${currentQuestion + 1}/${quizData.length}`;
+            document.getElementById('quiz-score-display').innerText = `Skor: ${score}`;
+            document.getElementById('quiz-progress-bar').style.width = `${((currentQuestion) / quizData.length) * 100}%`;
 
             const optionsContainer = document.getElementById('quiz-options');
-            const feedbackBox = document.getElementById('quiz-feedback');
-            feedbackBox.classList.add('hidden');
+            optionsContainer.innerHTML = '';
 
-            optionsContainer.innerHTML = q.options.map((opt, idx) => {
-                const isSelected = selectedAnswers[currentQuizIndex] === idx;
-                let activeStyle = "bg-slate-50 border-slate-200 text-slate-700 hover:bg-slate-100";
-                if (isSelected) {
-                    activeStyle = "bg-orange-500 border-orange-500 text-white font-bold shadow-md";
-                }
-
-                return `
-                    <button onclick="selectQuizOption(${idx})" class="w-full text-left p-4 rounded-xl border text-sm transition-all duration-200 flex items-center justify-between ${activeStyle}">
-                        <span><strong class="mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
-                        ${isSelected ? '<i class="fa-solid fa-circle-check"></i>' : '<i class="fa-regular fa-circle text-slate-400"></i>'}
-                    </button>
-                `;
-            }).join('');
-
-            if (selectedAnswers[currentQuizIndex] !== null) {
-                const isCorrect = selectedAnswers[currentQuizIndex] === q.answer;
-                feedbackBox.classList.remove('hidden');
-                if (isCorrect) {
-                    feedbackBox.className = "p-4 rounded-2xl border text-sm space-y-1 bg-emerald-50 border-emerald-200 text-emerald-800";
-                    document.getElementById('quiz-feedback-title').innerHTML = `<i class="fa-solid fa-circle-check text-emerald-600"></i> Jawaban Tepat!`;
-                } else {
-                    feedbackBox.className = "p-4 rounded-2xl border text-sm space-y-1 bg-amber-50 border-amber-200 text-amber-800";
-                    document.getElementById('quiz-feedback-title').innerHTML = `<i class="fa-solid fa-circle-exclamation text-amber-600"></i> Penjelasan Ringkas`;
-                }
-                document.getElementById('quiz-feedback-text').innerText = q.explanation;
-            }
-        }
-
-        function selectQuizOption(idx) {
-            selectedAnswers[currentQuizIndex] = idx;
-            if (idx === quizQuestions[currentQuizIndex].answer) {
-                playSound('correct');
-            } else {
-                playSound('wrong');
-            }
-            renderQuizQuestion();
-        }
-
-        function prevQuestion() {
-            if (currentQuizIndex > 0) {
-                currentQuizIndex--;
-                renderQuizQuestion();
-            }
-        }
-
-        function nextQuestion() {
-            if (selectedAnswers[currentQuizIndex] === null) {
-                showToast("Pilih Jawaban", "Silakan pilih salah satu opsi jawaban sebelum melanjutkan.");
-                return;
-            }
-
-            if (currentQuizIndex < quizQuestions.length - 1) {
-                currentQuizIndex++;
-                renderQuizQuestion();
-            } else {
-                finishQuiz();
-            }
-        }
-
-        function finishQuiz() {
-            let correctCount = 0;
-            quizQuestions.forEach((q, idx) => {
-                if (selectedAnswers[idx] === q.answer) correctCount++;
-            });
-
-            const score = Math.round((correctCount / quizQuestions.length) * 100);
-            appData.quizScore = score;
-            appData.quizCompleted = true;
-            saveState();
-
-            document.getElementById('quiz-active-block').classList.add('hidden');
-            document.getElementById('quiz-result-block').classList.remove('hidden');
-            document.getElementById('final-quiz-score').innerText = score;
-
-            let msg = "Tetap semangat berlatih dan pelajari materi lagi!";
-            if (score >= 80) msg = "Luar biasa! Pemahaman teori dan teknik kamu sangat mantap! 🏆";
-            else if (score >= 60) msg = "Bagus! Kamu sudah memahami konsep dasar bola besar dengan baik! 👍";
-            document.getElementById('quiz-score-message').innerText = msg;
-
-            playSound('correct');
-            showToast("Kuis Selesai", `Skor kamu: ${score}/100`);
-        }
-
-        function resetQuiz() {
-            initQuiz();
-        }
-
-        function setRating(val) {
-            appData.reflection.rating = val;
-            updateRatingStars(val);
-        }
-
-        function updateRatingStars(val) {
-            const stars = document.querySelectorAll('#star-rating-container .star-btn');
-            stars.forEach((star, index) => {
-                if (index < val) {
-                    star.className = 'fa-solid fa-star star-btn text-amber-400 cursor-pointer';
-                } else {
-                    star.className = 'fa-regular fa-star star-btn text-slate-300 cursor-pointer';
-                }
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'w-full text-left p-3.5 rounded-2xl bg-slate-800/80 border border-slate-700 hover:border-amber-500 hover:bg-slate-800 transition font-medium text-slate-200 text-xs md:text-sm focus:outline-none';
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
             });
         }
 
-        function saveReflection(event) {
-            event.preventDefault();
-            const bestTech = document.getElementById('ref-best-tech').value;
-            const notes = document.getElementById('ref-notes').value;
+        function checkAnswer(selectedIndex, btnElement) {
+            const quizData = curriculumData[currentUser.grade][currentUser.semester].quiz;
+            const correctIndex = quizData[currentQuestion].correct;
+            const allBtns = document.getElementById('quiz-options').querySelectorAll('button');
+            
+            allBtns.forEach(b => b.disabled = true);
 
-            appData.reflection = {
-                bestTech: bestTech,
-                rating: appData.reflection.rating || 4,
-                notes: notes
-            };
-
-            saveState();
-            playSound('correct');
-            showToast("Refleksi Tersimpan", "Catatan evaluasi diri kamu berhasil diperbarui!");
-        }
-
-        function renderJournal() {
-            const container = document.getElementById('journal-list');
-            if (!container) return;
-
-            if (appData.journal.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 italic text-center py-4">Belum ada catatan jurnal. Klik tombol (+ Tambah Entri) di atas.</p>`;
-                return;
+            if (selectedIndex === correctIndex) {
+                score += 20;
+                btnElement.classList.replace('bg-slate-800/80', 'bg-emerald-950');
+                btnElement.classList.replace('border-slate-700', 'border-emerald-500');
+                btnElement.classList.add('text-emerald-200');
+                btnElement.innerHTML += ' <i class="fas fa-check-circle float-right mt-1 text-emerald-400"></i>';
+            } else {
+                btnElement.classList.replace('bg-slate-800/80', 'bg-rose-950');
+                btnElement.classList.replace('border-slate-700', 'border-rose-500');
+                btnElement.classList.add('text-rose-200');
+                btnElement.innerHTML += ' <i class="fas fa-times-circle float-right mt-1 text-rose-400"></i>';
+                
+                allBtns[correctIndex].classList.replace('border-slate-700', 'border-emerald-500');
+                allBtns[correctIndex].classList.add('bg-emerald-950/50');
             }
-
-            container.innerHTML = appData.journal.map((item, idx) => `
-                <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex justify-between items-center text-xs">
-                    <div class="space-y-0.5">
-                        <span class="text-[10px] font-bold text-slate-400 block">${item.date}</span>
-                        <h6 class="font-bold text-slate-800">${item.activity}</h6>
-                    </div>
-                    <div class="flex items-center space-x-2">
-                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 uppercase">${item.status}</span>
-                        <button onclick="deleteJournalEntry(${idx})" class="text-slate-400 hover:text-red-500 transition-colors p-1">
-                            <i class="fa-solid fa-trash-can"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function addJournalEntry() {
-            const act = prompt("Masukkan aktivitas fisik/latihan mandiri yang dilakukan:");
-            if (act && act.trim() !== '') {
-                const today = new Date().toISOString().split('T')[0];
-                appData.journal.unshift({
-                    date: today,
-                    activity: act.trim(),
-                    status: 'Selesai'
-                });
-                saveState();
-                renderJournal();
-                showToast("Entri Ditambahkan", "Aktivitas latihan berhasil dicatat di jurnal!");
-            }
-        }
-
-        function deleteJournalEntry(index) {
-            appData.journal.splice(index, 1);
-            saveState();
-            renderJournal();
-            showToast("Dihapus", "Catatan jurnal berhasil dihapus.");
-        }
-
-        function showToast(title, message) {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-
-            document.getElementById('toast-title').innerText = title;
-            document.getElementById('toast-message').innerText = message;
-
-            toast.classList.remove('translate-y-20', 'opacity-0');
-            toast.classList.add('translate-y-0', 'opacity-100');
 
             setTimeout(() => {
-                toast.classList.remove('translate-y-0', 'opacity-100');
-                toast.classList.add('translate-y-20', 'opacity-0');
-            }, 3000);
+                currentQuestion++;
+                if (currentQuestion < quizData.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1000);
         }
+
+        function showResults() {
+            document.getElementById('quiz-question-container').classList.add('hidden');
+            const resultContainer = document.getElementById('quiz-result-container');
+            resultContainer.classList.remove('hidden');
+            document.getElementById('final-score').innerText = score;
+        }
+
+        window.onload = () => {
+            if(window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('-translate-x-full');
+            }
+        };
     </script>
 </body>
 </html>
