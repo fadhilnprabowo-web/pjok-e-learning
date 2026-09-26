@@ -81,11 +81,12 @@
                     <i class="fa-solid font-black fa-volleyball text-3xl"></i>
                 </div>
                 <h2 class="text-2xl font-extrabold text-slate-800">EduSport IX</h2>
-                <p class="text-xs text-slate-500">Masukkan nama lengkap kamu. Progres belajarmu akan tersimpan otomatis.</p>
+                <p class="text-xs text-slate-500">SMP Bina Bangsa Mandiri • Guru: Drs. H. Heru Prabowo</p>
+                <p class="text-[11px] text-slate-400">Masukkan nama lengkap siswa untuk mulai belajar & menyimpan progres.</p>
             </div>
             
             <div class="relative z-10">
-                <input type="text" id="login-input-name" placeholder="Ketik Nama Lengkap..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 text-center" onkeypress="handleEnter(event)">
+                <input type="text" id="login-input-name" placeholder="Ketik Nama Lengkap Siswa..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3.5 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-orange-500 text-center" onkeypress="handleEnter(event)">
             </div>
 
             <button onclick="handleLogin()" class="relative z-10 w-full py-3.5 rounded-xl bg-orange-500 text-white font-bold text-sm hover:bg-orange-600 shadow-lg shadow-orange-500/30 transition-all flex items-center justify-center space-x-2">
@@ -102,11 +103,11 @@
                 <!-- Logo / Title -->
                 <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('dashboard')">
                     <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-orange-500 to-amber-400 flex items-center justify-center text-white shadow-lg shadow-orange-500/30">
-                        <i class="fa-solid font-black fa-volleyball text-xl animate-spin-slow"></i>
+                        <i class="fa-solid font-black fa-volleyball text-xl"></i>
                     </div>
                     <div>
-                        <span class="font-extrabold text-xl tracking-tight bg-gradient-to-r from-white via-slate-100 to-orange-400 bg-clip-text text-transparent">EduSport IX</span>
-                        <span class="text-xs block text-slate-400 font-medium -mt-1">PJOK Kelas 9 • Bola Besar</span>
+                        <span class="font-extrabold text-lg tracking-tight bg-gradient-to-r from-white via-slate-100 to-orange-400 bg-clip-text text-transparent">EduSport IX</span>
+                        <span class="text-[11px] block text-slate-400 font-medium -mt-1">SMP Bina Bangsa Mandiri • Drs. H. Heru Prabowo</span>
                     </div>
                 </div>
 
@@ -118,7 +119,7 @@
                     </button>
                     <button onclick="switchTab('materi')" id="nav-materi" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
                         <i class="fa-solid fa-book-open"></i>
-                        <span>Pertemuan (4 Module)</span>
+                        <span>Pertemuan (4 Modul)</span>
                     </button>
                     <button onclick="switchTab('kuis')" id="nav-kuis" class="nav-btn px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center space-x-2 text-slate-300 hover:text-white hover:bg-slate-800">
                         <i class="fa-solid fa-trophy"></i>
@@ -132,10 +133,10 @@
 
                 <!-- Student Quick Badge -->
                 <div class="hidden lg:flex items-center space-x-3 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700 cursor-pointer hover:bg-slate-700 transition-colors" onclick="handleLogout()" title="Klik untuk keluar / ganti akun">
-                    <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold">
-                        <i class="fa-solid fa-user-ninja"></i>
+                    <div class="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white">
+                        <i class="fa-solid fa-user"></i>
                     </div>
-                    <span id="student-name-display" class="text-xs font-medium text-slate-200">Siswa Atletik</span>
+                    <span id="student-name-display" class="text-xs font-medium text-slate-200">Siswa</span>
                     <span class="bg-orange-500/20 text-orange-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-orange-500/30" id="header-progress-text">0% Done</span>
                 </div>
 
@@ -156,7 +157,7 @@
             </button>
             <button onclick="switchTab('materi')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
                 <i class="fa-solid fa-book-open w-5"></i>
-                <span>Pertemuan (4 Module)</span>
+                <span>Pertemuan (4 Modul)</span>
             </button>
             <button onclick="switchTab('kuis')" class="w-full text-left px-4 py-2.5 rounded-lg text-sm font-semibold flex items-center space-x-3 text-white hover:bg-slate-800">
                 <i class="fa-solid fa-trophy w-5"></i>
@@ -188,7 +189,7 @@
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
 
         <!-- VIEW 1: DASHBOARD -->
-        <section id="view-dashboard" class="tab-view space-y-8 animate-fade-in hidden">
+        <section id="view-dashboard" class="tab-view space-y-8 animate-fade-in">
             <!-- Hero Banner -->
             <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-blue-950 text-white p-6 sm:p-10 shadow-2xl border border-slate-800">
                 <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
@@ -196,23 +197,29 @@
                 </div>
                 
                 <div class="relative z-10 max-w-2xl space-y-4">
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">
-                        <i class="fa-solid fa-fire mr-1.5"></i> Pembelajaran PJOK Semester 1
-                    </span>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 uppercase tracking-wider">
+                            <i class="fa-solid fa-school mr-1.5"></i> SMP Bina Bangsa Mandiri
+                        </span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30 uppercase tracking-wider">
+                            <i class="fa-solid fa-chalkboard-user mr-1.5"></i> Guru: Drs. H. Heru Prabowo
+                        </span>
+                    </div>
+
                     <h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight">
                         Selamat Datang, <span id="dash-student-name" class="text-orange-400">Siswa PJOK</span>! 👋
                     </h1>
                     <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                        Kuasai variasi dan kombinasi teknik dasar Sepak Bola, Bola Voli, dan Bola Basket melalui modul interaktif, latihan fisik, serta kuis seru berhadiah skor maksimal!
+                        Mata Pelajaran PJOK Kelas IX • Kurikulum Merdeka (4 Kali Pertemuan). Pembelajaran aktif, interaktif, menyenangkan, kontekstual, kolaboratif, dan berpusat pada peserta didik.
                     </p>
 
                     <div class="pt-2 flex flex-wrap gap-3">
                         <button onclick="switchTab('materi')" class="px-5 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-bold text-sm shadow-lg shadow-orange-500/30 transition-all transform hover:-translate-y-0.5 flex items-center space-x-2">
-                            <span>Lanjutkan Belajar</span>
+                            <span>Mulai Pembelajaran</span>
                             <i class="fa-solid fa-arrow-right"></i>
                         </button>
                         <button onclick="handleLogout()" class="px-4 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-sm font-semibold transition-all flex items-center space-x-2">
-                            <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Ganti Akun</span>
+                            <i class="fa-solid fa-arrow-right-from-bracket"></i> <span>Ganti Akun Siswa</span>
                         </button>
                     </div>
                 </div>
@@ -549,19 +556,18 @@
     <!-- Footer -->
     <footer class="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800 mt-12">
         <div class="max-w-7xl mx-auto px-4 text-center space-y-2">
-            <p class="font-semibold text-slate-300">Website Pembelajaran Interaktif PJOK Kelas IX • Permainan Bola Besar</p>
-            <p class="text-slate-500">Dikembangkan sesuai Kurikulum Merdeka SMP. Siap Digunakan untuk Guru & Siswa.</p>
+            <p class="font-semibold text-slate-300">SMP Bina Bangsa Mandiri • Mata Pelajaran PJOK Kelas IX</p>
+            <p class="text-slate-500">Guru Pengampu: Drs. H. Heru Prabowo • Kurikulum Merdeka (4 Pertemuan Permainan Bola Besar)</p>
             <p class="text-slate-600 pt-2">© 2026 EduSport PJOK IX. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         /* APP STATE & LOCALSTORAGE ENGINE (MULTI-USER) */
-        const DB_KEY = 'PJOK_DB_USERS_V3';
+        const DB_KEY = 'PJOK_DB_USERS_BBM_V1';
         let usersDatabase = {};
         let currentUser = null;
-
-        let appData = {}; // Menyimpan data user yang sedang aktif
+        let appData = {};
 
         function createDefaultData(name) {
             return {
@@ -582,7 +588,6 @@
         // Initialize App
         window.addEventListener('DOMContentLoaded', () => {
             loadDatabase();
-            // Default show login screen
             document.getElementById('login-overlay').classList.remove('hidden');
         });
 
@@ -612,29 +617,25 @@
         function handleLogin() {
             const inputName = document.getElementById('login-input-name').value.trim();
             if (!inputName) {
-                showToast("Peringatan", "Nama tidak boleh kosong!");
+                showToast("Peringatan", "Nama lengkap siswa tidak boleh kosong!");
                 return;
             }
 
             currentUser = inputName;
             
-            // Cek apakah user sudah ada di database
             if (usersDatabase[currentUser]) {
                 appData = usersDatabase[currentUser];
-                showToast("Berhasil Masuk", `Selamat datang kembali, ${currentUser}! Progres dimuat.`);
+                showToast("Berhasil Masuk", `Selamat datang kembali, ${currentUser}! Progres berhasil dimuat.`);
             } else {
-                // User baru
                 appData = createDefaultData(currentUser);
                 usersDatabase[currentUser] = appData;
-                showToast("Akun Dibuat", `Halo ${currentUser}! Selamat mulai belajar.`);
+                showToast("Akun Dibuat", `Halo ${currentUser}! Selamat mulai belajar PJOK bersama Drs. H. Heru Prabowo.`);
             }
             
             saveState();
             
-            // Sembunyikan layar login
             document.getElementById('login-overlay').classList.add('hidden');
             
-            // Inisialisasi antarmuka untuk user tersebut
             renderDashboard();
             switchTab('dashboard');
             switchModuleTab(1);
@@ -678,9 +679,7 @@
                     osc.start();
                     osc.stop(ctx.currentTime + 0.25);
                 }
-            } catch (e) {
-                // Audio not allowed or unsupported
-            }
+            } catch (e) {}
         }
 
         /* NAVIGATION & TABS */
@@ -714,32 +713,27 @@
             document.getElementById('dash-student-name').innerText = appData.studentName;
             document.getElementById('student-name-display').innerText = appData.studentName;
 
-            // Calculate overall percentage
             const completedCount = appData.completedModules.filter(Boolean).length;
-            const quizScoreContribution = (appData.quizScore / 100) * 25; // 25% weight
-            const lessonContribution = (completedCount / 4) * 75; // 75% weight
+            const quizScoreContribution = (appData.quizScore / 100) * 25;
+            const lessonContribution = (completedCount / 4) * 75;
             const totalPercent = Math.round(lessonContribution + quizScoreContribution);
 
             document.getElementById('dash-percentage').innerText = `${totalPercent}%`;
             document.getElementById('header-progress-text').innerText = `${totalPercent}% Done`;
             document.getElementById('dash-progress-fill').style.width = `${totalPercent}%`;
 
-            // Stat counters
             document.getElementById('stat-completed-lessons').innerText = `${completedCount} / 4`;
             document.getElementById('stat-quiz-score').innerText = `${appData.quizScore} / 100`;
 
-            // Checked target tasks
             const checkedTargets = Object.values(appData.checklists).filter(Boolean).length;
             document.getElementById('stat-target-count').innerText = `${checkedTargets} / 12`;
 
-            // Badge determination
             let badge = 'Pemula';
             if (totalPercent >= 90) badge = 'Master Bola Besar 🏆';
             else if (totalPercent >= 60) badge = 'Atlit Berbakat 🌟';
             else if (totalPercent >= 30) badge = 'Pemain Aktif 🏃';
             document.getElementById('stat-badge-name').innerText = badge;
 
-            // Module status badges
             const moduleBadges = ['m1-status-badge', 'm2-status-badge', 'm3-status-badge', 'm4-status-badge'];
             const dotBadges = ['p1-dot', 'p2-dot', 'p3-dot', 'p4-dot'];
 
@@ -763,7 +757,6 @@
             switchModuleTab(num);
         }
 
-        /* MODULE DATA & CONTENT GENERATOR WITH VERIFIED YOUTUBE EMBED CODES */
         const moduleContents = {
             1: {
                 title: "Pertemuan 1: Sepak Bola (Variasi & Kombinasi)",
@@ -946,7 +939,7 @@
                             </div>
                         </div>
 
-                        <!-- Right: Interactive Dynamic Video Player with Dual-Access -->
+                        <!-- Right: Interactive Dynamic Video Player -->
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <h4 class="font-bold text-slate-800 text-base flex items-center">
@@ -956,7 +949,6 @@
 
                             <!-- Dynamic Player Box -->
                             <div id="video-player-box-${num}" class="bg-slate-900 rounded-2xl overflow-hidden shadow-lg border border-slate-800 aspect-video relative group flex items-center justify-center">
-                                <!-- Default Poster View -->
                                 <img src="https://img.youtube.com/vi/${data.videoId}/hqdefault.jpg" alt="${data.videoTitle}" loading="lazy" referrerpolicy="no-referrer" class="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-500 pointer-events-none">
                                 
                                 <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent flex flex-col justify-between p-5 z-10">
@@ -980,16 +972,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Helpful Notice for Video Playback -->
-                            <div class="bg-blue-50 border border-blue-200 rounded-xl p-3 text-xs text-slate-700 flex items-start space-x-2.5 shadow-sm">
-                                <i class="fa-solid fa-circle-info text-blue-600 text-sm mt-0.5"></i>
-                                <div class="space-y-1">
-                                    <p class="text-[11px] font-medium leading-relaxed">
-                                        <strong class="text-slate-900">Petunjuk Pemutaran:</strong> Klik <span class="font-bold text-orange-600">"Putar Langsung di Web"</span> untuk memutar video dengan Iframe YouTube. 
-                                    </p>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -998,20 +980,35 @@
             document.getElementById('module-content-area').innerHTML = html;
         }
 
-        /* FUNCTION TO LOAD NATIVE YOUTUBE IFRAME PLAYER (FIXED FREEZING ISSUE) */
         function playEmbeddedVideo(moduleNum) {
             const data = moduleContents[moduleNum];
             const container = document.getElementById(`video-player-box-${moduleNum}`);
             if (!container || !data) return;
 
-            /*
-             * Saat website dijalankan melalui HTTP/HTTPS (misal via Github Pages), 
-             * iframe ini dijamin berjalan normal anti-freeze!
-             */
+            const isLocalFile = window.location.protocol === 'file:';
+
+            if (isLocalFile) {
+                container.innerHTML = `
+                    <div class="absolute inset-0 flex flex-col items-center justify-center text-center p-6 bg-slate-900 text-white">
+                        <div class="w-16 h-16 rounded-2xl bg-red-500/15 text-red-400 flex items-center justify-center text-3xl mb-4">
+                            <i class="fa-brands fa-youtube"></i>
+                        </div>
+                        <h5 class="font-bold text-base mb-2">Video siap ditonton</h5>
+                        <p class="text-xs text-slate-400 max-w-md leading-relaxed mb-5">
+                            File sedang dibuka secara lokal (<code>file://</code>). Klik tombol di bawah untuk membuka video di YouTube.
+                        </p>
+                        <a href="${data.youtubeUrl}" target="_blank" rel="noopener noreferrer"
+                           class="px-5 py-2.5 rounded-xl bg-red-600 hover:bg-red-700 text-white font-bold text-xs shadow-lg transition-all inline-flex items-center gap-2">
+                            <i class="fa-brands fa-youtube"></i>
+                            <span>Tonton di YouTube</span>
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
             const origin = encodeURIComponent(window.location.origin);
-            const embedUrl =
-                `https://www.youtube.com/embed/${encodeURIComponent(data.videoId)}` +
-                `?autoplay=1&rel=0&playsinline=1&origin=${origin}`;
+            const embedUrl = `https://www.youtube.com/embed/${encodeURIComponent(data.videoId)}?autoplay=1&rel=0&playsinline=1&origin=${origin}`;
 
             container.innerHTML = `
                 <iframe
